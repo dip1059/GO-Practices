@@ -15,7 +15,7 @@ func main() {
 	r := gin.Default()
 
 	r.GET("/", DisplayString)
-	r.GET("/json/:name", JsonData)
+	r.GET("/json/:name/:sex/:age", JsonData)
 
 	r.LoadHTMLGlob("html/*.html")
 	r.GET("/page", LoadPage)
@@ -32,8 +32,12 @@ func DisplayString(c *gin.Context) {
 
 func JsonData(c *gin.Context) {
 	name := c.Param("name")
+	sex := c.Param("sex")
+	age, _ := strconv.Atoi(c.Param("age"))
 	c.JSON(http.StatusOK, gin.H{
 		"name": name,
+		"sex":  sex,
+		"age":  age,
 	})
 }
 
