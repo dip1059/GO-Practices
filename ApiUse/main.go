@@ -13,12 +13,19 @@ type Data struct {
 	Age int
 }
 
-
+var mp =make(map[string]*Data)
 
 func main() {
 	resp,_ := http.Get("http://localhost:2000/json/Dipankar Saha/Male/25")
 	Bytes,_ := ioutil.ReadAll(resp.Body)
-	var d Data
-	_ = json.Unmarshal(Bytes, &d)
-	_, _ = fmt.Println(d)
+	var d []*Data
+	json.Unmarshal(Bytes, &d)
+	for _, val := range d {
+		mp[val.Name] = val
+		fmt.Println(*mp[val.Name])
+	}
+	//mp["Dipanka Saha"].Name = "DK"
 }
+
+
+

@@ -8,6 +8,7 @@ import (
 
 type Data struct {
 	Name string
+	Sex  string
 	Age  int
 }
 
@@ -34,11 +35,19 @@ func JsonData(c *gin.Context) {
 	name := c.Param("name")
 	sex := c.Param("sex")
 	age, _ := strconv.Atoi(c.Param("age"))
-	c.JSON(http.StatusOK, gin.H{
-		"name": name,
-		"sex":  sex,
-		"age":  age,
-	})
+	var data = []*Data{
+		{
+			Name: name,
+			Sex:  sex,
+			Age:  age,
+		},
+		{
+			Name: name,
+			Sex:  sex,
+			Age:  age + 2,
+		},
+	}
+	c.JSON(http.StatusOK, &data)
 }
 
 func LoadPage(c *gin.Context) {

@@ -2,18 +2,14 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
-	"time"
 )
 
 func main() {
-	start := time.Now()
-	r := rand.Intn(100)
-	for {
+	var arr = []string{"hello", "world", "what's", "up"}
 
-		fmt.Printf("%d %.2fs\n", r, time.Since(start).Seconds())
-	}
-	//var st2 string = "1000"
-	fmt.Printf("%d %.2fs\n", r, time.Since(start).Seconds())
-
+	var parr []string
+	parr = arr
+	arr[0] = "Hello"
+	fmt.Println(parr[0])
+	fmt.Println(arr[0])
 }
