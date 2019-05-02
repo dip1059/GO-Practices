@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="cad4ebbc-2492-496d-ad4b-a22fd320fb68" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/algo/algo.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/in.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,10 +30,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="284">
-              <caret line="74" column="6" selection-start-line="74" selection-start-column="6" selection-end-line="74" selection-end-column="6" />
+            <state relative-caret-position="459">
+              <caret line="27" column="34" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
               <folding>
-                <element signature="e#14#31#0" expanded="true" />
+                <element signature="e#14#47#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -175,15 +173,15 @@
     </recent_temporary>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1456" height="886" extended-state="6" />
+    <frame x="-8" y="-8" width="1376" height="754" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16260745" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16945289" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.39707837" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.39613527" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3997344" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -232,12 +230,19 @@
     <entry file="file://$PROJECT_DIR$/algo/algo.go" />
     <entry file="file:///usr/local/go/src/math/bits.go" />
     <entry file="file:///usr/local/go/src/math/sqrt.go" />
+    <entry file="file://$PROJECT_DIR$/../BIG-int-Add/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="61" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="74" column="6" selection-start-line="74" selection-start-column="6" selection-end-line="74" selection-end-column="6" />
+        <state relative-caret-position="459">
+          <caret line="27" column="34" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
           <folding>
-            <element signature="e#14#31#0" expanded="true" />
+            <element signature="e#14#47#0" expanded="true" />
           </folding>
         </state>
       </provider>
