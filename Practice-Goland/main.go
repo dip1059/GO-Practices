@@ -3,110 +3,84 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
+	"net/http"
 )
 
+var (
+	Msg Message
+)
+
+type Users struct {
+	Users []User
+	Count int
+	Msg Message
+}
+
 type User struct {
-	ID    int
-	Name  sql.NullString
+	ID int
+	Name sql.NullString
 	Email sql.NullString
 }
 
+type Message struct {
+	Success string
+	Fail string
+}
+
 func main() {
-	var i = 0
+	r := gin.Default()
+	r.LoadHTMLGlob("view/*.html")
+	r.GET("/", Welcome)
+	r.GET("/add-user", AddUserGet)
+	r.POST("/add-user", AddUserPost)
+	r.GET("/all-user", AllUser)
+	r.GET("/view-user/:id", ViewUser)
 
-	db, _ := sql.Open("mysql", "root:razu@tcp(127.0.0.1:3306)/go_crud")
+	r.Run(":2000")
+}
 
-	create, err := db.Query(`CREATE TABLE users (
-										id int(10) not null AUTO_INCREMENT,
-										full_name varchar(40) not null,
-										email varchar(40) UNIQUE,
-										PRIMARY KEY(id)
-									);`)
+func Welcome(c *gin.Context) {
+	c.HTML(http.StatusOK, "welcome.html", nil)
+}
 
-	if err != nil {
-		panic(err.Error())
+func AddUserGet(c *gin.Context)  {
+	c.HTML(http.StatusOK, "add-user.html", Msg)
+	Msg.Success = ""
+	Msg.Fail = ""
+}
+
+func AddUserPost(c *gin.Context) {
+	user := User{}
+
+	user.Name.String = c.PostForm("full_name")
+	user.Email.String = c.PostForm("email")
+
+	success := Insert(user)
+	if success {
+		Msg.Success = "Successfully Added."
+		c.Redirect(http.StatusFound, "/add-user")
+	} else {
+		Msg.Fail = "Some error occurred, please try again."
+		c.Redirect(http.StatusInternalServerError, "/add-user")
 	}
+}
 
-	if create != nil {
-		fmt.Println("Table Created Successfully.\n")
+func AllUser(c *gin.Context) {
+	var users Users
+	var success bool
+	users.Users, success = Read()
+	if success {
+		users.Count = len(users.Users)
+		c.HTML(http.StatusOK, "all-user.html", users)
+		users.Msg.Fail = ""
+	} else {
+		users.Msg.Fail = "Some error occurred, please try again."
+		c.HTML(http.StatusOK, "all-user.html", users)
 	}
+}
 
-	insert, err := db.Query("INSERT INTO go_crud.users(full_name, email) SELECT full_name, email FROM medicare2.users;")
-
-	if err != nil {
-		panic(err.Error())
-	}
-
-	if insert != nil {
-		fmt.Println("Data Inserterd Successfully.\n")
-	}
-
-	results, err := db.Query("SELECT * FROM users where full_name like ?", "%")
-	if err != nil {
-		panic(err.Error())
-	}
-
-	fmt.Println("ID", " FULL_NAME", "       EMAIL")
-	var user = make([]User, 0)
-	for i = 0; results.Next(); i++ {
-		var data User
-		err = results.Scan(&data.ID, &data.Name, &data.Email)
-		if err != nil {
-			panic(err.Error())
-		}
-		user = append(user, data)
-		fmt.Print(user[i].ID, "   ", user[i].Name.String, "        ")
-		if user[i].Email.String == "" {
-			fmt.Println("NULL")
-		} else {
-			fmt.Println(user[i].Email.String)
-		}
-	}
-
-	if len(user) <= 0 {
-		fmt.Println("No Data Found.\n")
-	}
-	fmt.Println("Total:", len(user), "\n")
-
-	update, err := db.Query("UPDATE users SET email='dipankarsaha1059@gmail.com' WHERE id=2")
-	if err != nil {
-		panic(err.Error())
-	}
-
-	if update != nil {
-		fmt.Println("Data Updated Successfully.\n")
-	}
-
-	results, err = db.Query("SELECT * FROM users where id=2")
-	if err != nil {
-		panic(err.Error())
-	}
-
-	fmt.Println("ID", " FULL_NAME", "       EMAIL")
-	//var user= make([]User, 0)
-	for i = 0; results.Next(); i++ {
-		var data User
-		err = results.Scan(&data.ID, &data.Name, &data.Email)
-		if err != nil {
-			panic(err.Error())
-		}
-		//user = append(user, data)
-		fmt.Print(data.ID, "   ", data.Name.String, "        ")
-		if data.Email.String == "" {
-			fmt.Println("NULL")
-		} else {
-			fmt.Println(data.Email.String)
-		}
-	}
-	//fmt.Println("Total:", len(user))
-	if i <= 0 {
-		fmt.Println("No Data Found.\n")
-	}
-
-	defer db.Close()
-	defer create.Close()
-	defer insert.Close()
-	defer results.Close()
-	defer update.Close()
+func ViewUser(c *gin.Context) {
+	fmt.Println("Yo")
 }
