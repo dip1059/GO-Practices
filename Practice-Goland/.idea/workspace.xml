@@ -2,15 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cad4ebbc-2492-496d-ad4b-a22fd320fb68" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crud.go" beforeDir="false" afterPath="$PROJECT_DIR$/crud.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/all-user.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/all-user.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../github.com/gin-gonic/gin" beforeDir="false" afterPath="$PROJECT_DIR$/../github.com/gin-gonic/gin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../github.com/golang/protobuf" beforeDir="false" afterPath="$PROJECT_DIR$/../github.com/golang/protobuf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../github.com/mattn/go-isatty" beforeDir="false" afterPath="$PROJECT_DIR$/../github.com/mattn/go-isatty" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../github.com/ugorji/go" beforeDir="false" afterPath="$PROJECT_DIR$/../github.com/ugorji/go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../golang.org/x/net" beforeDir="false" afterPath="$PROJECT_DIR$/../golang.org/x/net" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../golang.org/x/sys" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../hello/hello" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -37,20 +38,29 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="765">
-              <caret line="78" column="65" lean-forward="true" selection-start-line="78" selection-start-column="65" selection-end-line="78" selection-end-column="65" />
+            <state relative-caret-position="97">
+              <caret line="124" column="5" selection-start-line="124" selection-start-column="5" selection-end-line="124" selection-end-column="5" />
               <folding>
-                <element signature="e#14#116#0" expanded="true" />
+                <element signature="e#14#123#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/view/all-user.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
+            <state relative-caret-position="314">
+              <caret line="64" column="4" selection-start-line="64" selection-start-column="4" selection-end-line="64" selection-end-column="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/view/add-user.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="146">
+              <caret line="11" selection-end-line="35" />
             </state>
           </provider>
         </entry>
@@ -58,20 +68,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/crud.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="532">
-              <caret line="132" column="47" lean-forward="true" selection-start-line="132" selection-start-column="47" selection-end-line="132" selection-end-column="47" />
+            <state relative-caret-position="539">
+              <caret line="193" column="15" selection-start-line="193" selection-start-column="15" selection-end-line="193" selection-end-column="15" />
               <folding>
                 <element signature="e#14#85#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/view/add-user.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="16" column="16" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -100,7 +101,7 @@
       <replace>s</replace>
     </replaceStrings>
   </component>
-  <component name="GOROOT" path="C:\Go" />
+  <component name="GOROOT" path="/usr/local/go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
@@ -114,10 +115,12 @@
         <option value="$PROJECT_DIR$/add.go" />
         <option value="$PROJECT_DIR$/web.go" />
         <option value="$PROJECT_DIR$/view/welcome.html" />
-        <option value="$PROJECT_DIR$/main.go" />
-        <option value="$PROJECT_DIR$/crud.go" />
-        <option value="$PROJECT_DIR$/view/all-user.html" />
         <option value="$PROJECT_DIR$/view/add-user.html" />
+        <option value="$PROJECT_DIR$/view/view-user.html" />
+        <option value="$PROJECT_DIR$/view/edit-user.html" />
+        <option value="$PROJECT_DIR$/crud.go" />
+        <option value="$PROJECT_DIR$/main.go" />
+        <option value="$PROJECT_DIR$/view/all-user.html" />
       </list>
     </option>
   </component>
@@ -164,7 +167,7 @@
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/go/src/github.com/qor/qor-example" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="configurable.group.build" />
@@ -219,8 +222,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Go Build.go build asd.go" />
       <item itemvalue="Go Build.go build Practice-Goland" />
+      <item itemvalue="Go Build.go build asd.go" />
       <item itemvalue="Go Build.go build main.go" />
     </list>
     <recent_temporary>
@@ -232,15 +235,15 @@
     </recent_temporary>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1376" height="754" extended-state="6" />
+    <frame x="42" y="-11" width="1325" height="780" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2287234" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21613155" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.47987118" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.47982064" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3997344" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -295,13 +298,7 @@
       </provider>
     </entry>
     <entry file="file:///usr/local/go/src/database/sql/sql.go" />
-    <entry file="file://C:/Go/src/builtin/builtin.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3030">
-          <caret line="188" column="5" selection-start-line="188" selection-start-column="5" selection-end-line="188" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://C:/Go/src/builtin/builtin.go" />
     <entry file="file://$PROJECT_DIR$/../github.com/gin-gonic/gin/binding/default_validator.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="142">
@@ -332,44 +329,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/Go/src/text/template/funcs.go">
+    <entry file="file://C:/Go/src/text/template/funcs.go" />
+    <entry file="file://$PROJECT_DIR$/view/view-user.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="37" column="16" selection-start-line="37" selection-start-column="16" selection-end-line="37" selection-end-column="16" />
+        <state relative-caret-position="150">
+          <caret line="10" column="6" lean-forward="true" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.go">
+    <entry file="file://$PROJECT_DIR$/view/add-user.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="78" column="65" lean-forward="true" selection-start-line="78" selection-start-column="65" selection-end-line="78" selection-end-column="65" />
-          <folding>
-            <element signature="e#14#116#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="146">
+          <caret line="11" selection-end-line="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/edit-user.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="23" lean-forward="true" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/crud.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="132" column="47" lean-forward="true" selection-start-line="132" selection-start-column="47" selection-end-line="132" selection-end-column="47" />
+        <state relative-caret-position="539">
+          <caret line="193" column="15" selection-start-line="193" selection-start-column="15" selection-end-line="193" selection-end-column="15" />
           <folding>
             <element signature="e#14#85#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/view/all-user.html">
+    <entry file="file://$PROJECT_DIR$/main.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
+        <state relative-caret-position="97">
+          <caret line="124" column="5" selection-start-line="124" selection-start-column="5" selection-end-line="124" selection-end-column="5" />
+          <folding>
+            <element signature="e#14#123#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/view/add-user.html">
+    <entry file="file://$PROJECT_DIR$/view/all-user.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="16" column="16" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
+        <state relative-caret-position="314">
+          <caret line="64" column="4" selection-start-line="64" selection-start-column="4" selection-end-line="64" selection-end-column="4" />
         </state>
       </provider>
     </entry>
