@@ -2,7 +2,7 @@ package main
 
 import (
 	//custom package
-	"Practice-Goland/algo"
+	"Custom_Package/algo"
 	//
 	"fmt"
 	"time"

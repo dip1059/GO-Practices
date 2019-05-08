@@ -2,8 +2,11 @@ package main
 
 import (
 	"database/sql"
+	"encoding/json"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
+	"io/ioutil"
 	"net/http"
 	"strconv"
 )
@@ -41,6 +44,8 @@ func main() {
 	r.GET("/add-user", AddUserGet)
 	r.POST("/add-user", AddUserPost)
 	r.GET("/all-user", AllUser)
+	r.GET("/api/all-user", ApiAllUser)
+	r.GET("/use-api-all-user", UseApi)
 	r.GET("/view-user/:id", ViewUser)
 	r.GET("/edit-user/:id", EditUser)
 	r.POST("/update-user", UpdateUser)
@@ -95,6 +100,25 @@ func AllUser(c *gin.Context) {
 	}
 }
 
+func ApiAllUser(c *gin.Context) {
+	var success bool
+	users.Users, success = Read()
+	if success {
+		users.Count = len(users.Users)
+		for _, user := range users.Users {
+			mUsers[user.ID] = user
+			//fmt.Println(mUsers[user.ID])
+		}
+		c.JSON(http.StatusOK, users)
+
+		users.Msg.Success = ""
+		users.Msg.Fail = ""
+	} else {
+		users.Msg.Fail = "Some error occurred, please try again."
+		c.HTML(http.StatusOK, "all-user.html", users)
+	}
+}
+
 func ViewUser(c *gin.Context) {
 	id,_ := strconv.Atoi(c.Param("id"))
 	user := mUsers[id]
@@ -132,4 +156,15 @@ func DeleteUser(c *gin.Context) {
 		users.Msg.Fail = "Some error occurred, please try again."
 		c.Redirect(http.StatusInternalServerError, "/all-user")
 	}
+}
+
+func UseApi(c *gin.Context) {
+	resp, err := http.Get("http://localhost:2000/api/all-user")
+	if err !=nil {
+		fmt.Println(err.Error())
+	}
+	Bytes, err := ioutil.ReadAll(resp.Body)
+
+	json.Unmarshal(Bytes, users)
+	fmt.Println(users.Users[0].Name.String)
 }

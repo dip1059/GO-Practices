@@ -97,7 +97,7 @@ import (
 }*/
 
 func DBConnect() (*sql.DB, error){
-	db, _ := sql.Open("mysql", "root:razu@tcp(127.0.0.1:3306)/go_crud")
+	db, _ := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/go_crud")
 	return db, nil
 }
 
