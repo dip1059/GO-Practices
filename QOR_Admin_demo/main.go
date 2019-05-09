@@ -24,7 +24,7 @@ type Product struct {
 
 func main() {
 	// Set up the database
-	DB, _ := gorm.Open("mysql", "root:@tcp(127.0.0.1:3306)/qor_start")
+	DB, _ := gorm.Open("mysql", "root:razu@tcp(127.0.0.1:3306)/qor_start?parseTime=true")
 	DB.AutoMigrate(&User{}, &Product{})
 
 	// Initalize
