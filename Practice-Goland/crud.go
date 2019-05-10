@@ -7,7 +7,7 @@ import (
 )
 
 func DBConnect() (*sql.DB, error) {
-	db, _ := sql.Open("mysql", "root:razu@tcp(127.0.0.1:3306)/go_crud")
+	db, _ := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/go_crud")
 	return db, nil
 }
 
@@ -34,7 +34,7 @@ func Read(user User) (User, bool) {
 	var err error
 	var data User
 
-	results, err = db.Query("SELECT id, full_name, email, password FROM users WHERE email=? and password=?;", user.Email, user.Password)
+	results, err = db.Query("SELECT * FROM users WHERE email=? and password=?;", user.Email, user.Password)
 	if err != nil {
 		fmt.Println(err.Error())
 		return data, false

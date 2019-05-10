@@ -76,7 +76,7 @@ func AddUserPost(c *gin.Context) {
 		c.Redirect(http.StatusFound, "/add-user")
 	} else {
 		Msg.Fail = "Some error occurred, please try again."
-		c.Redirect(http.StatusInternalServerError, "/add-user")
+		c.Redirect(http.StatusFound, "/add-user")
 	}
 }
 
