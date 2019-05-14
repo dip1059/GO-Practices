@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>CRUD | Login</title>
+    <title>CRUD | Registration</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -16,20 +16,21 @@
     {{else if (ne .Fail "")}}
         <br><br><span class="alert alert-danger">{{ .Fail }}</span><br><br>
     {{end}}
-    <h2>Login</h2>
-    <form action="/login" method="post">
+    <h2>Registration</h2>
+    <form action="/register" method="post">
+        <div class="form-group">
+            <label for="full_name">Full Name:</label>
+            <input type="text" class="form-control" id="full_name" placeholder="Enter Full Name" name="full_name">
+        </div>
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+            <input type="email" class="form-control" id="email" placeholder="Enter Email" name="email">
         </div>
         <div class="form-group">
             <label for="password">Password:</label>
-            <input type="password" class="form-control" id="password" placeholder="Enter Password" name="password">
+            <input type="password" class="form-control" id="PAssword" placeholder="Enter Password" name="password">
         </div>
-        <div class="form-group">
-            <input type="checkbox" name="remember_token" value="1">&nbsp&nbsp<b>Remember Me</b>
-        </div>
-        <button type="submit" class="btn btn-info">Login</button>
+        <button type="submit" class="btn btn-info">Submit</button>
     </form>
 </div>
 
