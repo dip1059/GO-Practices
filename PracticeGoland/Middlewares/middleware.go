@@ -12,7 +12,7 @@ import (
 
 func IsGuest(c *gin.Context, store *sessions.CookieStore, sc *securecookie.SecureCookie) bool {
 	session, _ := store.Get(c.Request, "login_token")
-	data := session.Values["userId"]
+	data := session.Values["userEmail"]
 	cookie, err := c.Cookie("remember_token")
 	if data != nil || err == nil {
 		if data != nil {
@@ -43,7 +43,7 @@ func IsGuest(c *gin.Context, store *sessions.CookieStore, sc *securecookie.Secur
 
 func IsAuthUser(c *gin.Context, store *sessions.CookieStore, sc *securecookie.SecureCookie) bool {
 	session, _ := store.Get(c.Request, "login_token")
-	data := session.Values["userId"]
+	data := session.Values["userEmail"]
 
 	cookie, err := c.Cookie("remember_token")
 
@@ -80,7 +80,7 @@ func IsAuthUser(c *gin.Context, store *sessions.CookieStore, sc *securecookie.Se
 
 func IsAuthAdminUser(c *gin.Context, store *sessions.CookieStore, sc *securecookie.SecureCookie) bool {
 	session, _ := store.Get(c.Request, "login_token")
-	data := session.Values["userId"]
+	data := session.Values["userEmail"]
 
 	cookie, err := c.Cookie("remember_token")
 

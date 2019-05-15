@@ -3,11 +3,11 @@ package Services
 import (
 	G "PracticeGoland/Globals"
 	H "PracticeGoland/Helpers"
+	"encoding/base64"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/securecookie"
 	"log"
 	"net/http"
-	"strconv"
 )
 
 var(
@@ -31,10 +31,10 @@ func SetRememberToken(c *gin.Context,sc *securecookie.SecureCookie) {
 
 
 func SendVerificationEmail() bool {
-	id := H.Encrypt([]byte(strconv.Itoa(G.User.ID)),"secret")
-	templateData.EncId = string(id)
+	encEmail := base64.URLEncoding.EncodeToString([]byte(G.User.Email))
+	templateData.EncEmail = encEmail
 	templateData.User = G.User
-	htmlString, err := H.ParseTemplate("View/email-verify.html", templateData)
+	htmlString, err := H.ParseTemplate("View/Email/email-verify.html", templateData)
 	if err != nil {
 		log.Println("AuthService.go Log1", err.Error())
 		return false
@@ -51,12 +51,28 @@ func SendVerificationEmail() bool {
 	return true
 }
 
-func ResendVerificationEmail() bool {
+
+func SendPasswordResetLinkEmail() bool {
+	encEmail := base64.URLEncoding.EncodeToString([]byte(G.User.Email))
+	templateData.EncEmail = encEmail
+	templateData.User = G.User
+	templateData.PS = G.PS
+	htmlString, err := H.ParseTemplate("View/Email/reset-password-email.html", templateData)
+	if err != nil {
+		log.Println("AuthService.go Log2", err.Error())
+		return false
+	}
+
+	emailData.From = "Gophers <gopher@mail.com>"
+	emailData.To = G.User.Email
+	emailData.Subject = "Reset Password Link"
+	emailData.HtmlString = htmlString
 	if !SendEmail(emailData.From, emailData.To, emailData.Subject, emailData.HtmlString) {
-		G.Msg.Fail = "Verification Email Not Sent, <a href='http://localhost:2000/resend-email-verification'>Click Here To Resend</a>."
+		G.Msg.Fail = "Failed To Send Link, Please Try Again Later."
 		return false
 	}
 	return true
 }
+
 
 

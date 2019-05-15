@@ -38,7 +38,7 @@ func Register(user M.User) (M.User, bool) {
 	var err error
 	var success bool
 
-	_, err = db.Query("INSERT INTO users(full_name, email, password, email_verification) VALUES(?, ?, ?, ?);", user.Name, user.Email, user.Password, user.EmailVf)
+	_, err = db.Query("INSERT INTO users(full_name, email, password, role_id, email_verification) VALUES(?, ?, ?, ?, ?);", user.Name, user.Email, user.Password, user.Role, user.EmailVf)
 	if err != nil {
 		log.Println("AuthRepo.go Log2", err.Error())
 		return user, false
@@ -68,7 +68,6 @@ func Login(user M.User) (M.User, bool) {
 
 func ActivateAccount(user M.User) (M.User, bool) {
 	db, _ := DBConnect()
-	var results *sql.Rows
 	var success bool
 
 	results, err := db.Query("SELECT * FROM users WHERE email=? and email_verification=?;", user.Email, user.EmailVf.String)
@@ -94,4 +93,64 @@ func ActivateAccount(user M.User) (M.User, bool) {
 	defer db.Close()
 	defer results.Close()
 	return user, true
+}
+
+
+func SendPasswordResetLink(ps M.PasswordReset) bool {
+	db, _ := DBConnect()
+
+		results, err := db.Query("INSERT INTO password_resets(email,token) VALUES(?, ?);", ps.Email, ps.Token)
+		if err != nil {
+			log.Println("AuthRepo.go Log5", err.Error())
+			return false
+		}
+
+	defer db.Close()
+	defer results.Close()
+	return true
+}
+
+
+func ResetPasswordGet(ps M.PasswordReset) bool {
+	db, _ := DBConnect()
+
+	results, err := db.Query("SELECT * from password_resets where email=? and token=? and status=0;", ps.Email, ps.Token)
+	if err != nil {
+		log.Println("AuthRepo.go Log6", err.Error())
+		return false
+	}
+	if !results.Next() {
+		return false
+	}
+
+	defer db.Close()
+	defer results.Close()
+	return true
+}
+
+
+func ResetPasswordPost(user M.User, ps M.PasswordReset) bool {
+	db, _ := DBConnect()
+
+	results, err := db.Query("UPDATE users SET password=? where email=?;", user.Password, user.Email)
+	if err != nil {
+		log.Println("AuthRepo.go Log7", err.Error())
+		return false
+	}
+
+	results, err = db.Query("UPDATE password_resets SET status=1 where email=? and token=?;", ps.Email, ps.Token)
+	if err != nil {
+		log.Println("AuthRepo.go Log8", err.Error())
+		return false
+	}
+
+	results, err = db.Query("UPDATE password_resets SET token=NULL where email=?;", ps.Email)
+	if err != nil {
+		log.Println("AuthRepo.go Log9", err.Error())
+		return false
+	}
+
+	defer db.Close()
+	defer results.Close()
+	return true
 }

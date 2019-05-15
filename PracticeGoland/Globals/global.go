@@ -17,11 +17,14 @@ type EmailGenerals struct {
 type UserDataForEmail struct {
 	EncEmail string
 	User Mod.User
+	PS Mod.PasswordReset
 }
 
 var (
 	Msg Message
 	User Mod.User
+	Role Mod.Role
+	PS Mod.PasswordReset
 )
 
 const (

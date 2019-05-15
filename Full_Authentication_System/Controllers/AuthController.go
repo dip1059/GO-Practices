@@ -6,17 +6,19 @@ import (
 	M "PracticeGoland/Middlewares"
 	R "PracticeGoland/Repositories"
 	S "PracticeGoland/Services"
+	"encoding/base64"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/securecookie"
 	"github.com/gorilla/sessions"
 	"golang.org/x/crypto/bcrypt"
 	"html/template"
+	"log"
 	"net/http"
 	"strconv"
 )
 
 var (
-	sc = securecookie.New([]byte("secret"),nil)
+	sc    = securecookie.New([]byte("secret"), nil)
 	store = sessions.NewCookieStore([]byte("secret"))
 )
 
@@ -27,7 +29,7 @@ func Welcome(c *gin.Context) {
 	return
 }
 
-func RegisterGet(c *gin.Context)  {
+func RegisterGet(c *gin.Context) {
 	if M.IsGuest(c, store, sc) {
 		c.HTML(http.StatusOK, "register.html", G.Msg)
 		G.Msg.Success = ""
@@ -37,37 +39,84 @@ func RegisterGet(c *gin.Context)  {
 }
 
 func RegisterPost(c *gin.Context) {
+	var success bool
 	G.User.Name = c.PostForm("full_name")
 	G.User.Email = c.PostForm("email")
+	_, success = R.ReadWithEmail(G.User)
+	if success {
+		G.Msg.Fail = "User Already Exists With This Email."
+		c.Redirect(http.StatusFound, "/register")
+		return
+	}
 	password := c.PostForm("password")
+	confirmPass := c.PostForm("confirm-password")
+	if password != confirmPass {
+		G.Msg.Fail = "Confirm Password Doesn't Match."
+		c.Redirect(http.StatusFound, "/register")
+		return
+	}
 	cost := bcrypt.DefaultCost
-	hash,_ := bcrypt.GenerateFromPassword([]byte(password), cost)
+	hash, _ := bcrypt.GenerateFromPassword([]byte(password), cost)
 	G.User.Password = string(hash)
 	G.User.EmailVf.String = H.RandomString(60)
 	G.User.EmailVf.Valid = true
-	var success bool
+	G.User.Role = 2
+
 	G.User, success = R.Register(G.User)
 	if success {
 		if S.SendVerificationEmail() {
 			var link template.HTML
 			link = "<a href='http://localhost:2000/resend-email-verification'>Click Here To Resend</a>"
-			G.Msg.Success = "Successfully Registered. Please Check Your Verification Email. If You Don't Get it "+link+"."
+			G.Msg.Success = "Successfully Registered. Please Check Your Verification Email. If You Don't Get it " + link + "."
 		}
 		c.Redirect(http.StatusFound, "/register")
 	} else {
-		G.Msg.Fail = "Some error occurred, please try again."
+		if G.Msg.Fail == "" {
+			G.Msg.Fail = "Some Internal Server Error Occurred, Please Try Again."
+		}
 		c.Redirect(http.StatusFound, "/register")
 	}
 }
 
 func ResendEmailVf(c *gin.Context) {
-	if S.ResendVerificationEmail() {
-		var link template.HTML
-		link = "<a href='http://localhost:2000/resend-email-verification'>Click Here To Resend</a>"
-		G.Msg.Success = "Email Has Been Sent Successfully. If You Don't Get it "+link+"."
+	if G.User.Email != "" {
+		if G.User.ActiveStauts == 0 {
+			if S.SendVerificationEmail() {
+				G.Msg.Success = "Email Has Been Sent Successfully."
+			}
+		} else {
+			G.Msg.Success = "Already Activated."
+		}
 	}
-	c.Redirect(http.StatusFound, "/register")
+	c.Redirect(http.StatusFound, "/login")
 }
+
+
+func ActivateAccount(c * gin.Context) {
+	encEmail := c.Param("encEmail")
+	emailVf := c.Param("emailVf")
+	var err error
+	var decoded []byte
+	decoded, err = base64.URLEncoding.DecodeString(encEmail)
+	if err != nil {
+		log.Println("AuthController.go Log1", err.Error())
+		c.HTML(http.StatusOK, "404.html",nil)
+		return
+	}
+
+	G.User.Email = string(decoded)
+	G.User.EmailVf.String = emailVf
+	var success bool
+
+	G.User, success = R.ActivateAccount(G.User)
+	if success {
+		G.Msg.Success = "Congratulations, Your Account Is Activated."
+		c.Redirect(http.StatusFound, "/login")
+	} else {
+		c.HTML(http.StatusOK, "404.html",nil)
+	}
+}
+
 
 func LoginGet(c *gin.Context) {
 	if M.IsGuest(c, store, sc) {
@@ -83,73 +132,154 @@ func LoginPost(c *gin.Context) {
 	password := c.PostForm("password")
 	rememberToken, _ := strconv.Atoi(c.PostForm("remember_token"))
 	var success bool
-	G.User, success = R.Read(G.User)
+	G.User, success = R.Login(G.User)
 	if success {
+
 		err := bcrypt.CompareHashAndPassword([]byte(G.User.Password), []byte(password))
 		if err != nil {
 			G.Msg.Fail = "Wrong Credentials."
 			c.Redirect(http.StatusFound, "/login")
 		} else {
-			session, _ := store.Get(c.Request, "login_token")
-			session.Values["userId"] = G.User.ID
-			session.Values["userName"] = G.User.Name
-			session.Values["userEmail"] = G.User.Email
-			session.Values["userRole"] = G.User.Role
-			session.Values["userActiveStatus"] = G.User.ActiveStauts
-			session.Save(c.Request, c.Writer)
-			if rememberToken == 1 {
-				S.SetRememberToken(c, sc)
+			if G.User.ActiveStauts == 1 {
+				session, _ := store.Get(c.Request, "login_token")
+				session.Values["userEmail"] = G.User.Email
+				session.Save(c.Request, c.Writer)
+				if rememberToken == 1 {
+					S.SetRememberToken(c, sc)
+				}
+				if G.User.Role == 1 {
+					c.Redirect(http.StatusFound, "/dashboard")
+				} else if G.User.Role == 2 {
+					c.Redirect(http.StatusFound, "/home")
+				}
+			} else if G.User.ActiveStauts == 2 {
+				if G.Msg.Fail == "" {
+					G.Msg.Fail = "You Are Suspended. Contact With The Authority Quickly."
+				}
+				c.Redirect(http.StatusFound, "/login")
+			} else {
+				var link template.HTML
+				link = "<a href='http://localhost:2000/resend-email-verification'>Click Here To Send Verification Email</a>"
+				if G.Msg.Fail == "" {
+					G.Msg.Fail = "Please Activate Your Account, " + link + "."
+				}
+				c.Redirect(http.StatusFound, "/login")
 			}
-			c.Redirect(http.StatusFound, "/home")
 		}
+
 	} else {
-		G.Msg.Fail = "User Not Found Or Some Internal Server Error Occured."
+		if G.Msg.Fail == "" {
+			G.Msg.Fail = "User Not Found."
+		}
 		c.Redirect(http.StatusFound, "/login")
 	}
 }
 
-func Home( c *gin.Context) {
-	if M.IsAuthUser(c, store, sc) {
-		/*session, _ := store.Get(c.Request, "login_token")
-		data := session.Values["userId"]
-		if  data == nil{
-			val,_ := c.Cookie("remember_token")
-			if err := sc.Decode("remember_token", val, &val); err == nil {
-				data = val
-			}
-		}*/
-		c.HTML(http.StatusOK, "User/home.html",G.User)
-	} else {
-		G.Msg.Fail = "You are not Logged in."
+
+func ForgotPassword(c *gin.Context) {
+	if M.IsGuest(c, store, sc) {
+		c.HTML(http.StatusOK, "forgot-password.html", G.Msg)
+		G.Msg.Success = ""
+		G.Msg.Fail = ""
 	}
 }
 
-func Dashboard( c *gin.Context) {
-	if M.IsAuthUser(c, store, sc) {
-		c.HTML(http.StatusOK, "Admin/dashboard.html",G.User)
-	} else {
-		G.Msg.Fail = "You are not Logged in."
+
+func SendPasswordResetLink(c *gin.Context) {
+	var success bool
+	G.User.Email = c.PostForm("email")
+	G.User, success = R.ReadWithEmail(G.User)
+	if !success {
+		G.Msg.Fail = "User Not Found With This Email."
+		c.Redirect(http.StatusFound, "/forgot-password")
+		return
 	}
+	G.PS.Email = G.User.Email
+	G.PS.Token.String = H.RandomString(60)
+	G.PS.Token.Valid = true
+	if !R.SendPasswordResetLink(G.PS) {
+		return
+	}
+	if S.SendPasswordResetLinkEmail() {
+		G.Msg.Success = "Reset Password Link Sent Successfully. Check Your Email."
+	}
+	c.Redirect(http.StatusFound, "/login")
+}
+
+
+func ResetPasswordGet(c *gin.Context) {
+	encEmail := c.Param("email")
+	var err error
+	var decoded []byte
+	decoded, err = base64.URLEncoding.DecodeString(encEmail)
+	if err != nil {
+		log.Println("AuthController.go Log2", err.Error())
+		c.HTML(http.StatusOK, "404.html",nil)
+		return
+	}
+
+	G.PS.Email = string(decoded)
+	G.PS.Token.String = c.Param("token")
+	G.PS.Token.Valid = true
+	if !R.ResetPasswordGet(G.PS) {
+		c.HTML(http.StatusOK, "404.html", nil)
+		return
+	}
+	c.HTML(http.StatusOK, "reset-password.html", G.Msg)
+}
+
+
+func ResetPasswordPost(c *gin.Context) {
+	password := c.PostForm("password")
+	confirmPass := c.PostForm("confirm-password")
+	if password != confirmPass {
+		G.Msg.Fail = "Confirm Password Doesn't Match."
+		encEmail := base64.URLEncoding.EncodeToString([]byte(G.PS.Email))
+		c.Redirect(http.StatusFound, "/reset-password/"+encEmail+"/"+G.PS.Token.String)
+		return
+	}
+	cost := bcrypt.DefaultCost
+	hash, _ := bcrypt.GenerateFromPassword([]byte(password), cost)
+	G.User.Password = string(hash)
+	G.User.Email = G.PS.Email
+	if !R.ResetPasswordPost(G.User, G.PS) {
+		G.Msg.Fail = "Some Internal Server Error Occurred, Please Try Again Later."
+		encEmail := base64.URLEncoding.EncodeToString([]byte(G.PS.Email))
+		c.Redirect(http.StatusFound, "/reset-password/"+encEmail+"/"+G.PS.Token.String)
+		return
+	}
+	G.Msg.Success = "Your Password Is Reset Successfully."
+	c.Redirect(http.StatusFound, "/login")
+}
+
+
+func Home(c *gin.Context) {
+	if M.IsAuthUser(c, store, sc) {
+		c.HTML(http.StatusOK, "home.html", G.User)
+	}
+	return
+}
+
+func Dashboard(c *gin.Context) {
+	if M.IsAuthAdminUser(c, store, sc) {
+		c.HTML(http.StatusOK, "dashboard.html", G.User)
+	}
+	return
 }
 
 func Logout(c *gin.Context) {
 	session, _ := store.Get(c.Request, "login_token")
 	session.Save(c.Request, c.Writer)
 	cookie := http.Cookie{
-		Name:     "login_token",
-		MaxAge:   -1,
+		Name:   "login_token",
+		MaxAge: -1,
 	}
 	http.SetCookie(c.Writer, &cookie)
 
 	cookie2 := http.Cookie{
-		Name:     "remember_token",
-		MaxAge:   -1,
+		Name:   "remember_token",
+		MaxAge: -1,
 	}
 	http.SetCookie(c.Writer, &cookie2)
 	c.Redirect(http.StatusFound, "/login")
 }
-
-
-
-
-

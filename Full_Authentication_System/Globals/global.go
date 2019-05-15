@@ -15,11 +15,18 @@ type EmailGenerals struct {
 }
 
 type UserDataForEmail struct {
-	EncId string
+	EncEmail string
 	User Mod.User
+	PS Mod.PasswordReset
 }
 
 var (
 	Msg Message
 	User Mod.User
+	Role Mod.Role
+	PS Mod.PasswordReset
+)
+
+const (
+	DbName string = "go_crud"
 )
