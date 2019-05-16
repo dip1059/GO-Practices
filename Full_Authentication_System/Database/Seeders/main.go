@@ -10,7 +10,7 @@ var success, fail int
 const DbName string = "go_crud"
 
 func DBConnect() (*sql.DB, error) {
-	db, _ := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/"+DbName+"?parseTime=true")
+	db, _ := sql.Open("mysql", "root:razu@tcp(127.0.0.1:3306)/"+DbName+"?parseTime=true")
 	return db, nil
 }
 

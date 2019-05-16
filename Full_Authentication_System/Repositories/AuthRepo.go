@@ -8,7 +8,7 @@ import (
 )
 
 func DBConnect() (*sql.DB, error) {
-	db, _ := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/"+G.DbName+"?parseTime=true")
+	db, _ := sql.Open("mysql", "root:razu@tcp(127.0.0.1:3306)/"+G.DbName+"?parseTime=true")
 	return db, nil
 }
 
@@ -66,6 +66,22 @@ func Login(user M.User) (M.User, bool) {
 	}
 }
 
+
+func SetRememberToken(user M.User) bool {
+	db, _ := DBConnect()
+
+	results, err := db.Query("UPDATE users set remember_token=? where email=?;", user.RememberToken, user.Email)
+	if err != nil {
+		log.Println("AuthRepo.go Log4", err.Error())
+		return false
+	}
+
+	defer db.Close()
+	defer results.Close()
+	return true
+}
+
+
 func ActivateAccount(user M.User) (M.User, bool) {
 	db, _ := DBConnect()
 	var success bool
@@ -76,7 +92,7 @@ func ActivateAccount(user M.User) (M.User, bool) {
 		results, err = db.Query("UPDATE users SET activestatus=1, email_verification=NULL WHERE email=? and email_verification=?;", user.Email, user.EmailVf.String)
 
 		if err != nil {
-			log.Println("AuthRepo.go Log4", err.Error())
+			log.Println("AuthRepo.go Log5", err.Error())
 			return user, false
 		}
 
@@ -101,7 +117,7 @@ func SendPasswordResetLink(ps M.PasswordReset) bool {
 
 		results, err := db.Query("INSERT INTO password_resets(email,token) VALUES(?, ?);", ps.Email, ps.Token)
 		if err != nil {
-			log.Println("AuthRepo.go Log5", err.Error())
+			log.Println("AuthRepo.go Log6", err.Error())
 			return false
 		}
 
@@ -116,7 +132,7 @@ func ResetPasswordGet(ps M.PasswordReset) bool {
 
 	results, err := db.Query("SELECT * from password_resets where email=? and token=? and status=0;", ps.Email, ps.Token)
 	if err != nil {
-		log.Println("AuthRepo.go Log6", err.Error())
+		log.Println("AuthRepo.go Log7", err.Error())
 		return false
 	}
 	if !results.Next() {
@@ -134,23 +150,38 @@ func ResetPasswordPost(user M.User, ps M.PasswordReset) bool {
 
 	results, err := db.Query("UPDATE users SET password=? where email=?;", user.Password, user.Email)
 	if err != nil {
-		log.Println("AuthRepo.go Log7", err.Error())
+		log.Println("AuthRepo.go Log8", err.Error())
 		return false
 	}
 
 	results, err = db.Query("UPDATE password_resets SET status=1 where email=? and token=?;", ps.Email, ps.Token)
 	if err != nil {
-		log.Println("AuthRepo.go Log8", err.Error())
+		log.Println("AuthRepo.go Log9", err.Error())
 		return false
 	}
 
 	results, err = db.Query("UPDATE password_resets SET token=NULL where email=?;", ps.Email)
 	if err != nil {
-		log.Println("AuthRepo.go Log9", err.Error())
+		log.Println("AuthRepo.go Log10", err.Error())
 		return false
 	}
 
 	defer db.Close()
 	defer results.Close()
 	return true
+}
+
+
+func Logout(user M.User) {
+	db, _ := DBConnect()
+
+	results, err := db.Query("UPDATE users set remember_token=NULL where email=?;", user.Email)
+	if err != nil {
+		log.Println("AuthRepo.go Log11", err.Error())
+		return
+	}
+
+	defer db.Close()
+	defer results.Close()
+	return
 }

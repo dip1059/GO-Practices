@@ -2,13 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cad4ebbc-2492-496d-ad4b-a22fd320fb68" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../Full_Authentication_System/Controllers/AuthController.go" beforeDir="false" afterPath="$PROJECT_DIR$/../Full_Authentication_System/Controllers/AuthController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Full_Authentication_System/Database/Migrations/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/../Full_Authentication_System/Database/Migrations/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Full_Authentication_System/Database/Seeders/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/../Full_Authentication_System/Database/Seeders/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Full_Authentication_System/Middlewares/middleware.go" beforeDir="false" afterPath="$PROJECT_DIR$/../Full_Authentication_System/Middlewares/middleware.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Full_Authentication_System/Repositories/AuthRepo.go" beforeDir="false" afterPath="$PROJECT_DIR$/../Full_Authentication_System/Repositories/AuthRepo.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Full_Authentication_System/Services/AuthService.go" beforeDir="false" afterPath="$PROJECT_DIR$/../Full_Authentication_System/Services/AuthService.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Full_Authentication_System/View/Guest/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Full_Authentication_System/View/Guest/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/AuthController.go" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/AuthController.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Database/Migrations/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/Database/Migrations/main.go" afterDir="false" />
@@ -80,7 +73,7 @@
         <entry file="file://$PROJECT_DIR$/Middlewares/middleware.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-1113">
-              <caret line="11" selection-start-line="11" selection-end-line="11" />
+              <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
               <folding>
                 <element signature="e#21#205#0" expanded="true" />
               </folding>
@@ -735,7 +728,7 @@
     <entry file="file://$PROJECT_DIR$/Middlewares/middleware.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1113">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
           <folding>
             <element signature="e#21#205#0" expanded="true" />
           </folding>

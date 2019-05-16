@@ -4,6 +4,7 @@ import (
 	G "PracticeGoland/Globals"
 	H "PracticeGoland/Helpers"
 	M "PracticeGoland/Middlewares"
+	"PracticeGoland/Models"
 	R "PracticeGoland/Repositories"
 	S "PracticeGoland/Services"
 	"encoding/base64"
@@ -17,10 +18,12 @@ import (
 	"strconv"
 )
 
+
 var (
 	sc    = securecookie.New([]byte("secret"), nil)
 	store = sessions.NewCookieStore([]byte("secret"))
 )
+
 
 func Welcome(c *gin.Context) {
 	if M.IsGuest(c, store, sc) {
@@ -28,6 +31,7 @@ func Welcome(c *gin.Context) {
 	}
 	return
 }
+
 
 func RegisterGet(c *gin.Context) {
 	if M.IsGuest(c, store, sc) {
@@ -37,6 +41,7 @@ func RegisterGet(c *gin.Context) {
 	}
 	return
 }
+
 
 func RegisterPost(c *gin.Context) {
 	var success bool
@@ -77,6 +82,7 @@ func RegisterPost(c *gin.Context) {
 		c.Redirect(http.StatusFound, "/register")
 	}
 }
+
 
 func ResendEmailVf(c *gin.Context) {
 	if G.User.Email != "" {
@@ -127,25 +133,37 @@ func LoginGet(c *gin.Context) {
 	return
 }
 
+
 func LoginPost(c *gin.Context) {
 	G.User.Email = c.PostForm("email")
 	password := c.PostForm("password")
-	rememberToken, _ := strconv.Atoi(c.PostForm("remember_token"))
+	rememberMe, _ := strconv.Atoi(c.PostForm("remember_me"))
 	var success bool
 	G.User, success = R.Login(G.User)
 	if success {
-
 		err := bcrypt.CompareHashAndPassword([]byte(G.User.Password), []byte(password))
 		if err != nil {
 			G.Msg.Fail = "Wrong Credentials."
 			c.Redirect(http.StatusFound, "/login")
 		} else {
 			if G.User.ActiveStauts == 1 {
+				G.User.RememberToken.String = H.RandomString(60)
+				G.User.RememberToken.Valid = true
+
+				if !R.SetRememberToken(G.User) {
+					G.Msg.Fail = "Some Internal Server Error Occurred. Please Try Again."
+					c.Redirect(http.StatusFound, "/login")
+					return
+				}
+
 				session, _ := store.Get(c.Request, "login_token")
 				session.Values["userEmail"] = G.User.Email
+				session.Values["remember_token"] = G.User.RememberToken.String
 				session.Save(c.Request, c.Writer)
-				if rememberToken == 1 {
-					S.SetRememberToken(c, sc)
+
+				if rememberMe == 1 {
+					session.Options.MaxAge = 60 * 60 * 24 * 365
+					session.Save(c.Request, c.Writer)
 				}
 				if G.User.Role == 1 {
 					c.Redirect(http.StatusFound, "/dashboard")
@@ -260,6 +278,7 @@ func Home(c *gin.Context) {
 	return
 }
 
+
 func Dashboard(c *gin.Context) {
 	if M.IsAuthAdminUser(c, store, sc) {
 		c.HTML(http.StatusOK, "dashboard.html", G.User)
@@ -267,19 +286,16 @@ func Dashboard(c *gin.Context) {
 	return
 }
 
+
 func Logout(c *gin.Context) {
 	session, _ := store.Get(c.Request, "login_token")
+	session.Options.MaxAge = -1
 	session.Save(c.Request, c.Writer)
-	cookie := http.Cookie{
-		Name:   "login_token",
-		MaxAge: -1,
-	}
-	http.SetCookie(c.Writer, &cookie)
 
-	cookie2 := http.Cookie{
-		Name:   "remember_token",
-		MaxAge: -1,
-	}
-	http.SetCookie(c.Writer, &cookie2)
+	R.Logout(G.User)
+
+	var user Models.User
+	G.User = user
+
 	c.Redirect(http.StatusFound, "/login")
 }

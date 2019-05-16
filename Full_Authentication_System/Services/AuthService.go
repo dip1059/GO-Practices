@@ -3,6 +3,7 @@ package Services
 import (
 	G "PracticeGoland/Globals"
 	H "PracticeGoland/Helpers"
+	R "PracticeGoland/Repositories"
 	"encoding/base64"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/securecookie"
@@ -16,7 +17,7 @@ var(
 )
 
 
-func SetRememberToken(c *gin.Context,sc *securecookie.SecureCookie) {
+func SetRememberToken(c *gin.Context,sc *securecookie.SecureCookie) bool {
 	val := G.User.Email
 	encoded, _ := sc.Encode("remember_token", val)
 
@@ -27,6 +28,12 @@ func SetRememberToken(c *gin.Context,sc *securecookie.SecureCookie) {
 	}
 
 	http.SetCookie(c.Writer, &cookie1)
+	G.User.RememberToken.String = encoded
+	G.User.RememberToken.Valid = true
+	if !R.SetRememberToken(G.User) {
+		return false
+	}
+	return true
 }
 
 
