@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/GORM_crud_TEST.iml" filepath="$PROJECT_DIR$/.idea/GORM_crud_TEST.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Custom_Package.iml" filepath="$PROJECT_DIR$/.idea/Custom_Package.iml" />
     </modules>
   </component>
 </project>

@@ -2,7 +2,7 @@ package main
 
 import (
 	//custom package
-	"Custom_Package/algo"
+	"SMALL_TEST_PROJECTS/Custom_Package/algo"
 	//
 	"fmt"
 	"time"
