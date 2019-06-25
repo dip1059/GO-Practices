@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "bidrace",
+  "private_key_id": "fa1799950676351649bbadf0797c5fe2e0c4dc67",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCyQvDcJWkJWCVK\ntAI+/i2temHys5vGM/PuDprI9UX3YaXYiJTMwHP640oSuy0zVbw4GCJladZcj8am\nhKJEvTOYOcu3Rp4+kTRvrtYKD9OS4dMHFBAa2RnMD/bGx0+sjd8HxlMQqPkSbqvK\nNk3/ew1apPgD3vmli6enwUDgq/X/2Hvtu9s2rT7wlI9U/zath0ijQjNiSk+uOcEq\nkxc8e2DqsFNNgYG3sLALF0o1TEIDKmDRupes4L5CCuj/CYTlW32KIQ+XqXsjc9Xq\nFs2eaLC+cHAecD4Dww6COzeC9DUzpc2A1AjYoF3uLPtXkQdNmECK9O8/8B97WHKq\nyFsFjQ9rAgMBAAECggEAQmES96cmmcgs+shVHcfgknzEBHBFTWUDLF5b3QEYcKn3\n683QOv5fMcl5R8hTaI5AbFLwW/sxS35uZot1MUuS7th2t2SggIPplrzwDwcdrdBR\nmI0sAhNdu9Ml/ZcyX/rkVizPuaByPx7e8YmPOddEfcB4aliZdb+vSpR36DGghQgk\nYVag0SxGvVu5RNhfwiUEjIds4Dt9VSMfsmincUmzs9wpTEo7AN4PHzCffJDlEYvb\nfQvVPx0rSCCAdVsygSw+b5OwNDhN5yY2G+1hLAiae9X4hYiLCkSjtgwMZ7Nv+iOF\nATTP1GaG1oVrPVMXKn94A+nZih4NI+QNBEzUPMa64QKBgQDng0JjcFsB1ZSbvtC/\nSuAvA2I+UR7v2ubgLLu6DqA8hYSTlxKh8QcYbW7QAEaD6t9lVbW9ifeZsB4X4ESw\nwZMIOlYk4pLiEA8qoy7gAdE5zgNKsNdW02tl/a2tLWYhi2lC/4gmIOlAOpCHC+IF\n9tMPH/QJDY1TBJ0vZjxTixmSfwKBgQDFHcgJdosNzIzTphv0nExPx3GWPYSGC3Y+\nIJ9pU8aydN2Qi2MBuzz1Aab7DgmLNp7Zp6oxl76yIW6Cl8k8aEaC3ePX87rO9WPx\nSU2WJspWCaPGWegeQNYQYiXfY/Lz6ysi8Hjl75TtJHtUQEm1NMv22QvAbtAntQe0\neRqa04B1FQKBgEtK8xJn/hEQpy4n1rf/3/0qOo9NzqPvK1sI8VzHWPGV8tIVNegY\n/VfCb2GSVVydzF2mjF7COhZvorndJDngGrN4VX/VeDOxSV1yiNIthSApkgR+kuoY\nBDu9TvidZTPPpUI23M6ZsYJECbEB+lY6OdYXbERtdeLkA0LhGwmImZ59AoGBAKba\nTcCM4qn8ktx5SEKnpwUFC0YkrrAUtbNjQ+0RaCkZOY+oHVeS2cd+7Yyn1jZMNuyA\nu1UdYONB31yWBVan4b/W+Y2MF34mQ8IzzYQjM7Telg5Jfm1Vbp4RpoNRBI+qaio6\nKexg/8w4zFiFzp6foWNDWGo8ouBpoasHtBiInbz9AoGBAJw1XwN3a9W8Sz0No4yd\nwNKQRLREYCx5JJsL5g/8riErblMApE6TEYrwYnE4vhKdxghW1N5rGINjSVkrN1OD\nDgL9EcCqS5FAD1CLBeqi9Bh44+FxdyVw5nPxIOsfKhz/H//BQcx/8Yb+ua4f4kfC\n9qOMaS4YRoi3yYSACgrG9gBv\n-----END PRIVATE KEY-----\n",
+  "client_email": "bidrace-service-account@bidrace.iam.gserviceaccount.com",
+  "client_id": "110624231713559095660",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/bidrace-service-account%40bidrace.iam.gserviceaccount.com"
+}
