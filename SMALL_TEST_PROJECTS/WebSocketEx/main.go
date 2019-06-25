@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
+	"log"
 	"net/http"
 )
 
@@ -13,7 +13,7 @@ func main() {
 
 	r.GET("/", Welcome)
 	r.GET("/welcome2", Welcome2)
-	r.GET("/ws", WS)
+	r.GET("/websock", WS)
 
 	r.Run(":2000")
 }
@@ -42,7 +42,7 @@ var wsupgrader = websocket.Upgrader{
 func wshandler(r *http.Request, w http.ResponseWriter) {
 	conn, err := wsupgrader.Upgrade(w, r, nil)
 	if err != nil {
-		fmt.Println("Failed to set websocket upgrade: %+v", err)
+		log.Println("Failed to set websocket upgrade: %+v", err.Error())
 		return
 	}
 
@@ -53,6 +53,7 @@ func wshandler(r *http.Request, w http.ResponseWriter) {
 		if err != nil {
 			break
 		}
+		//log.Println(i)
 		conn.WriteMessage(t, msg)
 		if i == 5 {
 			conn.Close()

@@ -11,13 +11,15 @@
 <script>
     var input = document.getElementById("input");
     var output = document.getElementById("output");
-    var socket = new WebSocket("ws://localhost:2000/ws");
+    var socket = new WebSocket("ws://localhost:2000/websock");
 
     socket.onopen = function () {
         output.innerHTML += "Status: Connected\n";
     };
 
     socket.onmessage = function (e) {
+        window.location.reload()
+
         output.innerHTML += "Server: " + e.data + "\n";
     };
 

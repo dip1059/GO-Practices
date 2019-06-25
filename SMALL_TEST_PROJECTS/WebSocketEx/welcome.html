@@ -8,7 +8,7 @@
 <pre id="output"></pre>
 
 <script>
-    url = 'ws://localhost:2000/ws';
+    url = 'ws://localhost:2000/websock';
     c = new WebSocket(url);
 
     send = function(data){
@@ -23,7 +23,7 @@
     }
 
     c.onclose = function(event){
-        c.close()
+        //c.close()
         alert('WebSocket is closed from server end');
     }
 
@@ -32,10 +32,11 @@
     }
 
     c.onopen = function(){
+        console.log("in c.onopen()")
         setInterval(
             function(){
                 if (c.readyState == c.OPEN) {
-                    send("ping")
+                    send("\"event\":\"pusher:ping\",\"data\":{}}")
                 }
             }, 3000 )
         //send("ping")
