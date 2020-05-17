@@ -18,8 +18,8 @@
     };
 
     socket.onmessage = function (e) {
-        window.location.reload()
-
+        //window.location.reload()
+        console.log(e);
         output.innerHTML += "Server: " + e.data + "\n";
     };
 
