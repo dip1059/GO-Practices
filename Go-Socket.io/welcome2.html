@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input id="input" type="text" />
+<button onclick="send()">Send</button>
+<pre id="output"></pre>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<script>
+    var input = document.getElementById("input");
+    var output = document.getElementById("output");
+    const socket = io("http://localhost:3000", {path : '/websock'});
+
+    socket.on("connection", (msg) => {
+        console.log(msg);
+        output.innerHTML += "Status: Connected\n";
+        output.innerHTML += "Server: " + msg + "\n";
+    });
+
+    socket.on("", (msg) => {
+        //window.location.reload()
+        console.log(msg);
+        output.innerHTML += "Server: for all room members- " + msg + "\n";
+    });
+
+    socket.on("notice2",(msg) => {
+        //window.location.reload()
+        console.log(msg);
+        output.innerHTML += "Server: " + msg + "\n";
+    });
+
+    function send() {
+        socket.emit("notice2", input.value);
+        input.value = "";
+    }
+</script>
+</body>
+</html>
