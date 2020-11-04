@@ -1,0 +1,18 @@
+{{template "adminHeader" .}}
+<h3 class="card-title mb-3">Transfer ID: {{.Transfer.TransferID}}</h3>
+    <div class="container">
+        <br><br>
+        <h4>Shipping Information</h4><br>
+        <p><strong>Name:</strong> &nbsp{{.Transfer.ShipAddress.FirstName}} {{.Transfer.ShipAddress.LastName}}</p>
+        <p><strong>Address:</strong> &nbsp{{.Transfer.ShipAddress.Address}}</p>
+        <p><strong>Apartment:</strong> &nbsp{{.Transfer.ShipAddress.Apartment}}</p>
+        <p><strong>City:</strong> &nbsp{{.Transfer.ShipAddress.City}}</p>
+        <p><strong>Zip Code:</strong> &nbsp{{.Transfer.ShipAddress.ZipCode}}</p>
+        <p><strong>State:</strong> &nbsp{{.Transfer.ShipAddress.State}}</p>
+        <p><strong>Country:</strong> &nbsp{{.Transfer.ShipAddress.Country}}</p>
+        <p><strong>Phone:</strong> &nbsp{{.Transfer.ShipAddress.Phone}}</p>
+
+        <p><strong>Tracking Code:</strong> &nbsp{{.Transfer.TrackCode}}</p>
+    </div>
+
+{{template "adminFooter" .}}

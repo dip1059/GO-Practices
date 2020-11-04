@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+{{template "adminHeader" .}}
+{{template "transferTrackCode" .}}
+
+<h4 class="card-title mb-3">Gold Transfers</h4>
+
+<div class="col-md-12 mb-4">
+    <div class="card text-left">
+
+        <div class="card-body">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-basic-tab" data-toggle="tab" href="#homeBasic" role="tab" aria-controls="homeBasic" aria-selected="true">Processing And Cancelled</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-basic-tab" data-toggle="tab" href="#profileBasic" role="tab" aria-controls="profileBasic" aria-selected="false">Completed And Shipped</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="homeBasic" role="tabpanel" aria-labelledby="home-basic-tab">
+                    <div class="table-responsive">
+                        <table id="zero_configuration_table" class="display table table-striped table-bordered" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Transfer ID</th>
+                                <th>Transfer Type</th>
+                                <th>Sender</th>
+                                <th>Receiver</th>
+                                <th>Requested Amount</th>
+                                <th>Sender Fees</th>
+                                <th>Amount To Be Deducted</th>
+                                <th>Receiver Fees</th>
+                                <th>Receiver Will Get</th>
+                                <th>Status</th>
+                                <th>CreatedAt</th>
+                                <th>Option</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{range .Transfers}}
+                                {{if or (eq .Status 0) (eq .Status 2) (eq .Status 3)}}
+                                    <tr>
+                                        <td class="center">{{.TransferID}}</td>
+                                        {{if eq .DeliveryType 1}}
+                                            <td class="center">Wallet</td>
+                                        {{else if eq .DeliveryType 2}}
+                                            <td class="center">Shipping</td>
+                                        {{end}}
+                                        <td class="center">{{.SenderUser.Email}}</td>
+                                        <td class="center">{{.ReceiverUser.Email}}</td>
+                                        <td class="center">{{.GoldAmount}}g</td>
+                                        <td class="center">{{.SenderTotalFees}}g</td>
+                                        <td class="center">{{.AmountToDeduct}}g</td>
+                                        <td class="center">{{.ReceiverTotalFees}}g</td>
+                                        <td class="center">{{.ReceiverAmount}}g</td>
+                                        <td class="center">
+
+                                            {{if eq .DeliveryType 1}}
+                                                {{if eq .Status 0}}
+                                                    <span style="color: #fbfbfb" class="badge badge-pill badge-light p-2 m-1">Email verify pending</span>
+                                                {{else if eq .Status 1}}
+                                                    <span style="color: #fbfbfb" class="badge badge-pill badge-success p-2 m-1">Completed</span>
+                                                {{else if eq .Status 2}}
+                                                    <span style="color: #fbfbfb" class="badge badge-pill badge-info p-2 m-1">Processing</span>
+                                                {{else if eq .Status 3}}
+                                                    <span style="color: #fbfbfb" class="badge badge-pill badge-danger p-2 m-1">Cancelled</span>
+                                                {{end}}
+
+                                            {{else if eq .DeliveryType 2}}
+                                                {{if eq .Status 0}}
+                                                    <span style="color: #fbfbfb" class="badge badge-pill badge-light p-2 m-1">Email verify pending</span>
+                                                {{else if eq .Status 4}}
+                                                    <span class="badge badge-pill badge-success p-2 m-1">Shipped</span>
+                                                {{else if eq .Status 2}}
+                                                    <span style="color: #fbfbfb" class="badge badge-pill badge-info p-2 m-1">Processing</span>
+                                                {{else if eq .Status 3}}
+                                                    <span style="color: #fbfbfb" class="badge badge-pill badge-danger p-2 m-1">Cancelled</span>
+                                                {{else if eq .Status 1}}
+                                                    <span style="color: #fbfbfb" class="badge badge-pill badge-success p-2 m-1">Completed</span>
+                                                {{end}}
+                                            {{end}}
+
+                                        </td>
+                                        <td class="center"><script>
+                                                str = {{.CreatedAt}};
+                                                d = str.substr(0, 10);
+                                                t = str.substr(11, 8);
+                                                dt = d + " " + t;
+                                                document.write(dt);
+                                            </script></td>
+
+                                        <td class="center">
+                                            <div class="dropdown">
+                                                <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Action
+                                                </button>
+                                                <div class="dropdown-menu window-size" aria-labelledby="dropdownMenuButton">
+                                                        <ul align="left">
+                                                                {{if eq .DeliveryType 2}}
+                                                                    {{if or (eq .Status 0) (eq .Status 2)}}
+                                                                    <li>
+                                                                        <a href="javascript:;" data-target="#transfer-track-code" data-toggle="modal" onclick="addTransferTrackCode({{.ID}})">
+                                                                            Add Track Code
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="/transfer-shipping-details/{{.ID}}">
+                                                                            View Shipping Details
+                                                                        </a>
+                                                                    </li>
+                                                                    {{end}}
+                                                                {{end}}
+                                                                {{if eq .Status 0}}
+                                                                    <li>
+                                                                        <a class="confirm-anchor" data-header="Cancel The Transfer?" href="/make-transfer-cancel/{{.ID}}">
+                                                                            Make Cancelled
+                                                                        </a>
+                                                                    </li>
+                                                                {{end}}
+
+                                                            {{/*<li>
+                                                                <a class="confirm-anchor" data-header="Want to Delete?" href="/delete-transfer/{{.ID}}">
+                                                                    Delete
+                                                                </a>
+                                                            </li>*/}}
+                                                        </ul>
+                                                    </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {{end}}
+                            {{end}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="profileBasic" role="tabpanel" aria-labelledby="profile-basic-tab">
+                    <div class="table-responsive">
+                        <table id="zero_configuration_table2" class="display table table-striped table-bordered" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Transfer ID</th>
+                                <th>Transfer Type</th>
+                                <th>Sender</th>
+                                <th>Receiver</th>
+                                <th>Requested Amount</th>
+                                <th>Sender Fees</th>
+                                <th>Amount To Be Deducted</th>
+                                <th>Receiver Fees</th>
+                                <th>Receiver Will Get</th>
+                                <th>Status</th>
+                                <th>Created At</th>
+                                <th>Option</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{range .Transfers}}
+                                {{if or (eq .Status 1) (eq .Status 4)}}
+                                    <tr>
+                                        <td class="center">{{.TransferID}}</td>
+                                        {{if eq .DeliveryType 1}}
+                                            <td class="center">Wallet</td>
+                                        {{else if eq .DeliveryType 2}}
+                                            <td class="center">Shipping</td>
+                                        {{end}}
+                                        <td class="center">{{.SenderUser.Email}}</td>
+                                        <td class="center">{{.ReceiverUser.Email}}</td>
+                                        <td class="center">{{.GoldAmount}}g</td>
+                                        <td class="center">{{.SenderTotalFees}}g</td>
+                                        <td class="center">{{.AmountToDeduct}}g</td>
+                                        <td class="center">{{.ReceiverTotalFees}}g</td>
+                                        <td class="center">{{.ReceiverAmount}}g</td>
+                                        <td class="center">
+
+                                            {{if eq .DeliveryType 1}}
+                                                {{if eq .Status 0}}
+                                                    <span style="color: #fbfbfb" class="badge badge-pill badge-light p-2 m-1">Email verify pending</span>
+                                                {{else if eq .Status 1}}
+                                                    <span style="color: #fbfbfb" class="badge badge-pill badge-success p-2 m-1">Completed</span>
+                                                {{else if eq .Status 2}}
+                                                    <span style="color: #fbfbfb" class="badge badge-pill badge-info p-2 m-1">Processing</span>
+                                                {{else if eq .Status 3}}
+                                                    <span style="color: #fbfbfb" class="badge badge-pill badge-danger p-2 m-1">Cancelled</span>
+                                                {{end}}
+
+                                            {{else if eq .DeliveryType 2}}
+                                                {{if eq .Status 0}}
+                                                    <span style="color: #fbfbfb" class="badge badge-pill badge-light p-2 m-1">Email verify pending</span>
+                                                {{else if eq .Status 4}}
+                                                    <span class="badge badge-pill badge-success p-2 m-1">Shipped</span>
+                                                {{else if eq .Status 2}}
+                                                    <span style="color: #fbfbfb" class="badge badge-pill badge-info p-2 m-1">Processing</span>
+                                                {{else if eq .Status 3}}
+                                                    <span style="color: #fbfbfb" class="badge badge-pill badge-danger p-2 m-1">Cancelled</span>
+                                                {{else if eq .Status 1}}
+                                                    <span style="color: #fbfbfb" class="badge badge-pill badge-success p-2 m-1">Completed</span>
+                                                {{end}}
+                                            {{end}}
+
+                                        </td>
+                                        <td class="center"><script>
+                                                str = {{.CreatedAt}};
+                                                d = str.substr(0, 10);
+                                                t = str.substr(11, 8);
+                                                dt = d + " " + t;
+                                                document.write(dt);
+                                            </script></td>
+
+                                        <td class="center">
+                                            <div class="dropdown">
+                                                <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Action
+                                                </button>
+                                                {{if and (ne .Status 1) (ne .DeliveryType 1)}}
+                                                    <div class="dropdown-menu window-size" aria-labelledby="dropdownMenuButton">
+                                                    <ul align="left">
+                                                        {{if eq .DeliveryType 2}}
+                                                            <li>
+                                                                <a href="/transfer-shipping-details/{{.ID}}">
+                                                                    View Shipping Details
+                                                                </a>
+                                                            </li>
+                                                        {{end}}
+                                                        {{/*<li>
+                                                            <a class="confirm-anchor" data-header="Want to Delete?" href="/delete-transfer/{{.ID}}">
+                                                                Delete
+                                                            </a>
+                                                        </li>*/}}
+                                                    </ul>
+                                                </div>
+                                                {{end}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {{end}}
+                            {{end}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function addTransferTrackCode(id) {
+        $("#transfer-id").val(id);
+    }
+</script>
+
+{{template "adminFooter" .}}

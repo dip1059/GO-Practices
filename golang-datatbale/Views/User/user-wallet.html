@@ -1,0 +1,318 @@
+{{template "userHeader" . }}
+
+<div class="gold-cart-area">
+    <div class="container">
+        <div class="row">
+            {{template "userAccountSideNav" . }}
+
+            <div class="col-lg-8">
+                <div class="gold-cart-left gold-account-cart-left gold-wallet-transfer-cart-left">
+                    <div class="card-header">
+                        <div class="gold-wishlist-header">
+                            <h4>my wallet</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="gold-wishlist-area">
+                            <div class="gold-single-cart">
+                                <div class="row align-items-center">
+                                    {{/*<div class="col-md-1">
+                                        <div class="gold-cart-img">
+
+                                        </div>
+                                    </div>*/}}
+                                    <div class="col-md-12">
+                                        <div class="gold-cart-info">
+                                            <ul class="d-flex justify-content-between align-items-center">
+                                                <li class="date"><span><b>Last Updated: </b></span>
+                                                    <script>
+                                                        str = {{.User.Wallet.UpdatedAt}};
+                                                        d = str.substr(0, 10);
+                                                        t = str.substr(11, 8);
+                                                        dt = d + " " + t;
+                                                        document.write(dt);
+                                                    </script></li>
+                                            </ul>
+                                            {{/*<h4 class="gold-cart-title">Balance</h4>*/}}
+                                            <div class="gold-cart-option mt-3">
+                                                <ul>
+                                                    <li class="wallet-transfer-price mb-3">
+                                                        <h3><span><b>Balance: </b></span> {{.User.Wallet.GoldAmount}} g</h3>
+                                                    </li>
+                                                    <li id="ship">
+                                                        <a class="gold-wishlist-add-card" href="javascript:;" onclick="sendGold(this,2)">
+                                                            <i class="fa fa-truck mr-1"></i>
+                                                            Ship to an address
+                                                        </a>
+                                                    </li>
+                                                    <li id="wallet">
+                                                        <a class="gold-wishlist-add-card" href="javascript:;" onclick="sendGold(this,1)">
+                                                            <i class="fa fa-arrow-right mr-1"></i>
+                                                            Send to another user's wallet
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <div id="send-form-div" hidden="">
+                                                    <form id="send-form" action="/send-gold" method="post">
+                                                        <input name="delivery_type" id="type" type="hidden" required>
+                                                        <div id="email" class="form-group">
+                                                            <label>Email</label>
+                                                            <input disabled type="email" class="form-control wallet" placeholder="Type the user's email you want to send" name="email"
+                                                                   required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Amount in gram (3 digits after decimal point will be accepted)</label>
+                                                            <input type="text" class="form-control" placeholder="Type gold amount" name="amount"
+                                                                   id="amount" required>
+                                                        </div>
+                                                        <div id="shipping-div" hidden>
+                                                            <div class="form-group">
+                                                                <label>First Name</label>
+                                                                <input disabled type="text" class="form-control ship" placeholder="Type your first name" name="first_name"
+                                                                       value="{{.User.DefaultAddress.FirstName}}" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Last Name</label>
+                                                                <input disabled type="text" class="form-control ship" placeholder="Type your last name" name="last_name"
+                                                                       value="{{.User.DefaultAddress.LastName}}" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Phone</label>
+                                                                <input disabled type="text" class="form-control ship" placeholder="Type your phone number" name="phone"
+                                                                       value="{{.User.DefaultAddress.Phone}}" autocomplete="off" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="gold-select-group">
+                                                                    <label>Country</label>
+                                                                    <select disabled class="form-control ship" id="country" name="country" required>
+                                                                        {{$userCountry := .User.DefaultAddress.Country}}
+                                                                        {{range .Countries}}
+                                                                            <option value="{{.Key}}"
+                                                                                    {{if (eq .Value $userCountry)}} selected {{end}}>
+                                                                                {{.Value}}
+                                                                            </option>
+                                                                        {{end}}
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>City</label>
+                                                                <input disabled type="text" class="form-control ship" placeholder="Type your city name" name="city"
+                                                                       value="{{.User.DefaultAddress.City}}" autocomplete="off" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Address</label>
+                                                                <input disabled type="text" class="form-control ship" placeholder="Type your address" name="address"
+                                                                       value="{{.User.DefaultAddress.Address}}" autocomplete="off" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>State</label>
+                                                                <input disabled type="text" class="form-control ship" placeholder="Type your state name" name="state"
+                                                                       autocomplete="off" value="{{.User.DefaultAddress.State}}" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Appartment, Unit,Etc</label>
+                                                                <input disabled type="text" class="form-control ship" placeholder="Type your apartment or unit number" name="apartment"
+                                                                       autocomplete="off" value="{{.User.DefaultAddress.Apartment}}" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Zip Code</label>
+                                                                <input disabled type="text" class="form-control ship" placeholder="Type your zip code" name="zip_code"
+                                                                       value="{{.User.DefaultAddress.ZipCode}}" autocomplete="off" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group m-0">
+                                                            <button class="btn gold-truck-order-btn" type="submit">Send</button>
+                                                            <button id="cancel" onclick="cancelSending()" class="btn gold-truck-order-btn" type="reset">Cancel</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gold-cart-left gold-account-cart-left gold-wallet-transfer-cart-left">
+                    <div class="card-header">
+                        <div class="gold-wishlist-header">
+                            <h4>gold transfers ({{len .User.GoldTransfers}})</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="gold-wishlist-area">
+
+                            <div class="table-responsive">
+                                <table id="zero_configuration_table" class="display table table-striped table-bordered" style="width:100%">
+                                    <thead>
+                                    <tr>
+                                        <th>Transfer ID</th>
+                                        <th>Receiver</th>
+                                        <th>Gold Amount</th>
+                                        <th>Status</th>
+                                        <th>Created At</th>
+                                        <th>Option</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {{if .User.GoldTransfers}}
+                                        {{range .User.GoldTransfers}}
+                                            <tr>
+                                                <td class="center">{{.TransferID}}</td>
+                                                <td class="center">{{.ReceiverUser.Email}}</td>
+                                                <td class="center">{{.GoldAmount}}g</td>
+                                                <td class="center">
+
+                                                    {{if eq .DeliveryType 1}}
+                                                        {{if eq .Status 0}}
+                                                            <span style="color: #fbfbfb" class="badge badge-pill badge-dark p-2 m-1">verify email</span>
+                                                        {{else if eq .Status 1}}
+                                                            <span style="color: #fbfbfb" class="badge badge-pill badge-success p-2 m-1">Completed</span>
+                                                        {{else if eq .Status 2}}
+                                                            <span style="color: #fbfbfb" class="badge badge-pill badge-info p-2 m-1">processing</span>
+                                                        {{else if eq .Status 3}}
+                                                            <span style="color: #fbfbfb" class="badge badge-pill badge-danger p-2 m-1">Cancelled</span>
+                                                        {{end}}
+
+                                                    {{else if eq .DeliveryType 2}}
+                                                        {{if eq .Status 0}}
+                                                            <span style="color: #fbfbfb" class="badge badge-pill badge-dark p-2 m-1">verify email</span>
+                                                        {{else if eq .Status 4}}
+                                                            <a target="_blank" href="https://t.17track.net/en#nums={{.TrackCode}}" class="btn gold-truck-order-btn">
+                                                                    <img src="/assets/Public/User/images/icons/truck-icon.png" class="img-fluid mr-2" alt="">
+                                                                    Track Shipping
+                                                                </a>
+                                                        {{else if eq .Status 2}}
+                                                            <span class="d-flex align-items-center gold-shipping-processing">
+                                                                <img src="/assets/Public/User/images/icons/truck-icon-2.png" class="img-fluid" alt="">
+                                                                <span style="color: #fbfbfb" class="badge badge-pill badge-info p-2 m-1 mr-3">Processing</span>
+                                                            </span>
+
+                                                        {{else if eq .Status 3}}
+                                                                <span style="color: #fbfbfb" class="badge badge-pill badge-danger p-2 m-1">Cancelled</span>
+                                                        {{else if eq .Status 1}}
+                                                                <img src="/assets/Public/User/images/icons/truck-icon-2.png" class="img-fluid mr-2" alt="">
+                                                                <span style="color: #fbfbfb" class="badge badge-pill badge-success p-2 m-1">Completed</span>
+                                                        {{end}}
+                                                    {{end}}
+
+                                                </td>
+                                                <td class="center"><script>
+                                                        str = {{.CreatedAt}};
+                                                        d = str.substr(0, 10);
+                                                        t = str.substr(11, 8);
+                                                        dt = d + " " + t;
+                                                        document.write(dt);
+                                                    </script></td>
+
+                                                <td class="center">
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Action
+                                                        </button>
+                                                        <div class="dropdown-menu window-size" aria-labelledby="dropdownMenuButton">
+                                                            <ul align="left" class="text-center">
+                                                                <li>
+                                                                    <a href="/transfer-details/{{.TransferID}}">View Details</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {{end}}
+                                    {{else}}
+                                        <tr><td colspan="6"><h5>No data available.</h5></td></tr>
+                                    {{end}}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            {{/*<div class="gold-single-cart">
+                                <div class="row align-items-center">
+                                    <div class="col-md-3">
+                                        <div class="gold-cart-img">
+                                            <img src="images/Gold_Bar.png" class="img-fluid" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="gold-cart-info">
+                                            <ul class="d-flex justify-content-between align-items-center">
+                                                <li class="date">November 26, 2020</li>
+                                                <li class="slno">No.123456789000</li>
+                                            </ul>
+                                            <h4 class="gold-cart-title">Lorem Ipsum Dolor Sit Amet</h4>
+                                            <div class="gold-cart-option mt-3">
+                                                <ul class="d-flex align-items-center">
+                                                    <li class="wallet-transfer-price">
+                                                        <h3>€ 13459.45 <span><del>€ 13459.45</del></span></h3>
+                                                    </li>
+                                                    <li class="gold-cart-dropdown"><span>Qty:</span> 1</li>
+                                                    <li><a class="gold-wishlist-add-card" href="javascript:;"><i class="fa fa-truck mr-1"></i> Shipping</a></li>
+                                                    <li><a class="gold-wishlist-add-card" href="javascript:;"><i class="fa fa-arrow-right mr-1"></i> Transfer</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>*/}}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{{template "userFooterWithoutScripts" . }}
+
+
+{{template "userFooterWithScripts" . }}
+
+{{/*write scripts here*/}}
+
+
+<script>
+
+    function sendGold(elem,type) {
+        //console.log(elem.parentElement.parentElement.id);
+        if (elem.parentElement.id === "ship") {
+            $("#wallet").hide();
+        }else if (elem.parentElement.id === "wallet") {
+            $("#ship").hide();
+        }
+
+        //$("#cancel").trigger("click");
+        $("#type").val(type);
+        //$("#send-buttons").hide();
+        $("#send-form-div").removeAttr("hidden");
+        $("#send-form-div").show();
+        if (type === 2) {
+            $(".ship").removeAttr("disabled");
+            $("#shipping-div").removeAttr("hidden");
+            $("#shipping-div").show();
+            $("#email").hide();
+        } else if(type === 1) {
+            $("#email").show();
+            $(".wallet").removeAttr("disabled");
+        }
+    }
+
+    function cancelSending() {
+        $(".ship").attr("disabled","");
+        $(".wallet").attr("disabled", "");
+        $("#ship").show();
+        $("#wallet").show();
+        $("#send-form-div").hide();
+        $("#shipping-div").hide();
+    }
+
+</script>
+
+
+{{template "userFooterFinal" . }}

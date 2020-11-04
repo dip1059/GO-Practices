@@ -1,0 +1,432 @@
+
+{{define "userHeader" }}
+
+    {{$active := .Active}}
+
+    <!doctype html>
+    <html lang="en" class="no-js">
+
+        <head>
+
+            <!-- Required meta tags -->
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            <meta name="description" content="html5 responsive bootstrap template">
+            <meta name="keywords" content="HTML,CSS,XML,JavaScript,html5,css3, responsive, bootstrap,jquery,">
+
+            <link rel="shortcut icon" type="image/png" href="/assets/Public/User/images/logo.png">
+
+            <title>{{.AppEnv.Name}} | {{.Lang.ConvertString .Title}}</title>
+
+            <!-- Bootstrap CSS -->
+            <link rel="stylesheet" href="/assets/Public/User/css/bootstrap.min.css">
+            <!-- Font Awesome -->
+            <link rel="stylesheet" href="/assets/Public/User/css/font-awesome.min.css">
+            <!-- Owl Carousel -->
+            <link rel="stylesheet" href="/assets/Public/User/css/owl.carousel.min.css">
+            <link rel="stylesheet" href="/assets/Public/User/css/owl.theme.default.min.css">
+            <!-- Swiper Slider -->
+            <!--<link rel="stylesheet" href="/assets/Public/User/vendors/swiper-master/css/swiper.min.css">-->
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.1/css/swiper.min.css" rel="stylesheet" />
+            <!-- Slicknav -->
+            <link rel="stylesheet" href="/assets/Public/User/css/slicknav.min.css">
+            <!-- magnific popup -->
+            <link rel="stylesheet" href="/assets/Public/User/css/magnific-popup.css">
+            <!-- Site Style -->
+            <link rel="stylesheet" href="/assets/Public/User/css/style.css">
+            <link rel="stylesheet" href="/assets/Public/User/css/responsive.css">
+
+            <!-- Modernizr Js -->
+            <script src="/assets/Public/User/vendors/modernizr-js/modernizr.js"></script>
+
+            <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+            <![endif]-->
+
+        </head>
+
+        <body class="gold-body-light">
+
+            <!-- =============================================
+                        (01) Start Header section
+            ============================================== -->
+
+            <header class="gold-header">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-xl-4 col-lg-2 col-sm-3 col-4 order-0">
+                            <div class="gold-logo">
+                                <a href="/">
+                                    <img class="img-fluid" src="/assets{{range .Wbsts}}{{if (eq .ContentName "Header Logo")}}{{.Content}}{{end}}{{end}}" alt="Header logo">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-5 col-lg-6 col-sm-2 col-2 order-lg-0 order-sm-2 order-1">
+                            <nav class="gold-nav">
+                                <ul class="d-flex justify-content-md-end" id="navigation">
+                                    <li {{if eq $active "Home"}}class="gold-active"{{end}}><a href="/">{{.Lang.ConvertString "Home"}}</a></li>
+                                    {{/*<li {{if eq $active "Shop"}}class="gold-active"{{end}}><a href="/shop">{{.Lang.ConvertString "Shop"}}</a></li>*/}}
+                                    <li {{if eq $active "Account"}}class="gold-active"{{end}}><a href="/account/orders">{{.Lang.ConvertString "My Account"}}</a></li>
+                                    {{range .Menus}}
+                                        {{if (and (eq .ParentID 4) (eq .Type 2) (eq .Level 2) (eq .Status 1))}}
+                                            <li {{if eq $active .Title}}class="gold-active"{{end}}><a href="/page/{{.PageUrl}}">{{.Title}}</a></li>
+                                        {{else if (and (eq .ParentID 4) (eq .Type 1) (eq .Level 2) (eq .Status 1))}}
+                                            <li {{if eq $active .Title}}class="gold-active"{{end}}><a target="_blank" href="{{.PageUrl}}">{{.Title}}</a></li>
+                                        {{end}}
+                                    {{end}}
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="col-xl-3 col-lg-4 col-sm-7 col-md-6 order-lg-0 order-sm-1 order-2">
+                            <ul class="gold-user-option d-flex align-items-center justify-content-center">
+
+                                {{if .User.ID}}
+                                    <li>
+                                        <a href="/logout">
+                                            {{.Lang.ConvertString "Logout"}}
+                                        </a>
+                                    </li>
+                                {{else}}
+                                    <li><a href="/login">Login</a></li>
+                                    <li><a href="/register">Sign up</a></li>
+                                {{end}}
+
+                                <li>
+                                    <a href="/show-cart"><img src="/assets/Public/User/images/icons/cart.png" class="img-fluid" alt="Cart"></a>
+                                    {{if .Carts}}
+                                        <span class="gold-cart-select">
+                                            <select disabled>
+                                                <option selected>{{.Carts}}</option>
+                                            </select>
+                                        </span>
+                                    {{end}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="responsive-menu-wrap"></div>
+                        </div>
+                    </div>
+                </div>
+
+                {{/*<div class="gold-search">
+                    <img src="/assets/Public/User/images/icons/search.png" class="img-fluid" alt="search">
+                </div>*/}}
+
+            </header>
+
+
+            <!-- =============================================
+                        (01) End Header section
+            ============================================== -->
+
+            {{if (ne .Msg.Success "")}}
+                <div class="alert alert-card alert-success" id="success-alert" role="alert">
+                    <strong class="text-capitalize">{{.Lang.ConvertHtml .Msg.Success}}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {{else if (ne .Msg.Fail "")}}
+                <div class="alert alert-card alert-danger" id="danger-alert" role="alert">
+                    <strong class="text-capitalize">{{.Lang.ConvertHtml .Msg.Fail}}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {{end}}
+
+            <div id="frontend-alert-message">
+
+            </div>
+
+{{end}}
+
+
+
+{{define "userFooterWithoutScripts" }}
+
+    {{$active := .Active}}
+            <!-- =============================================
+                        (00) Start Footer section
+            ============================================== -->
+
+            <footer class="gold-footer">
+                <div class="container">
+                    <div class="gold-top-footer">
+                        <div class="row align-items-center">
+                            <div class="col-xl-5 col-md-8 order-md-0 order-1">
+                                <nav class="gold-footer-menu">
+                                    <ul class="d-flex justify-content-md-end" id="navigation">
+                                        <li {{if eq $active "Home"}}class="gold-active"{{end}}><a href="/">{{.Lang.ConvertString "Home"}}</a></li>
+                                        {{/*<li {{if eq $active "Shop"}}class="gold-active"{{end}}><a href="/shop">{{.Lang.ConvertString "Shop"}}</a></li>*/}}
+                                        <li {{if eq $active "Account"}}class="gold-active"{{end}}><a href="/account/orders">{{.Lang.ConvertString "My Account"}}</a></li>
+                                        {{range .Menus}}
+                                            {{if (and (eq .ParentID 4) (eq .Type 2) (eq .Level 2) (eq .Status 1))}}
+                                                <li {{if eq $active .Title}}class="gold-active"{{end}}><a href="/page/{{.PageUrl}}">{{.Title}}</a></li>
+                                            {{else if (and (eq .ParentID 4) (eq .Type 1) (eq .Level 2) (eq .Status 1))}}
+                                                <li {{if eq $active .Title}}class="gold-active"{{end}}><a target="_blank" href="{{.PageUrl}}">{{.Title}}</a></li>
+                                            {{end}}
+                                        {{end}}
+                                    </ul>
+                                </nav>
+                            </div>
+                            <div class="col-xl-2 offset-xl-5 col-md-4 order-md-0 order-0">
+                                <ul class="gold-footer-social d-flex">
+                                    {{range .Menus}}
+                                        {{if and (eq .Title "Facebook") (eq .Status 1)}}<li><a href="{{.PageUrl}}"><i class="fa fa-facebook"></i></a></li>{{end}}
+                                        {{if and (eq .Title "YouTube") (eq .Status 1)}}<li><a href="{{.PageUrl}}"><i class="fa fa-youtube-play"></i></a></li>{{end}}
+                                        {{if and (eq .Title "Twitter") (eq .Status 1)}}<li><a href="{{.PageUrl}}"><i class="fa fa-twitter"></i></a></li>{{end}}
+                                        {{if and (eq .Title "Telegram") (eq .Status 1)}}<li><a href="{{.PageUrl}}"><i class="fa fa-paper-plane"></i></a></li>{{end}}
+                                    {{end}}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gold-widgets">
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-4 col-md-6 col-12">
+                                <div class="gold-footer-logo">
+                                    <a href="/">
+                                        <img class="img-fluid" src="/assets{{range .Wbsts}}{{if (eq .ContentName "Footer Logo")}}{{.Content}}{{end}}{{end}}" alt="Footer logo">
+                                    </a>
+                                </div>
+                                <p class="gold-footer-text">
+                                    {{range .Wbsts}}{{if (eq .ContentName "Footer Text")}}{{.Content}}{{end}}{{end}}
+                                </p>
+                                <div class="gold-footer-address">
+                                    <ul>
+                                        <li class="gold-footer-address-icon-gps"><li>{{.Adm.Company_Address.Value.String}}</li></li>
+                                        <li class="gold-footer-address-icon-phone"><li>{{.Adm.Company_Phone.Value.String}}</li></li>
+                                        <li class="gold-footer-address-icon-mail"><li>{{.Adm.Company_Email.Value.String}}</li></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-12 mt-md-0 mt-4">
+                                <h5 class="gold-widget-title">{{range .Menus}}{{if and (eq .Position.String "Footer Left") (eq .ParentID 0)}}{{.Title}}{{end}}{{end}}</h5>
+                                <ul class="gold-widget-list">
+                                    {{range .Menus}}
+                                        {{if (and (eq .ParentID 1) (eq .Type 2) (eq .Level 2) (eq .Status 1))}}
+                                            <li><a href="/page/{{.PageUrl}}">{{.Title}}</a></li>
+                                        {{else if (and (eq .ParentID 1) (eq .Type 1) (eq .Level 2) (eq .Status 1))}}
+                                            <li><a href="{{.PageUrl}}">{{.Title}}</a></li>
+                                        {{end}}
+                                    {{end}}
+                                </ul>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-12 mt-lg-0 mt-4">
+                                <h5 class="gold-widget-title">{{range .Menus}}{{if and (eq .Position.String "Footer Middle") (eq .ParentID 0)}}{{.Title}}{{end}}{{end}}</h5>
+                                <ul class="gold-widget-list">
+                                    {{range .Menus}}
+                                        {{if (and (eq .ParentID 2) (eq .Type 2) (eq .Level 2) (eq .Status 1))}}
+                                            <li><a href="/page/{{.PageUrl}}">{{.Title}}</a></li>
+                                        {{else if (and (eq .ParentID 2) (eq .Type 1) (eq .Level 2) (eq .Status 1))}}
+                                            <li><a href="{{.PageUrl}}">{{.Title}}</a></li>
+                                        {{end}}
+                                    {{end}}
+                                </ul>
+                            </div>
+                            <div class="col-xl-3 col-lg-2 col-md-6 col-12 mt-lg-0 mt-4">
+                                <h5 class="gold-widget-title">{{range .Menus}}{{if and (eq .Position.String "Footer Right") (eq .ParentID 0)}}{{.Title}}{{end}}{{end}}</h5>
+                                <ul class="gold-widget-list">
+                                    {{range .Menus}}
+                                        {{if (and (eq .ParentID 3) (eq .Type 2) (eq .Level 2) (eq .Status 1))}}
+                                            <li><a href="/page/{{.PageUrl}}">{{.Title}}</a></li>
+                                        {{else if (and (eq .ParentID 3) (eq .Type 1) (eq .Level 2) (eq .Status 1))}}
+                                            <li><a href="{{.PageUrl}}">{{.Title}}</a></li>
+                                        {{end}}
+                                    {{end}}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gold-btm-footer">
+                        <div class="row">
+                            <div class="col-md-6 col-12 order-md-0 order-1 mt-md-0 mt-4">
+                                <p>{{range .Wbsts}}{{if (eq .ContentName "Copyright Text")}}{{.Content}}{{end}}{{end}}</p>
+                            </div>
+                            <div class="col-md-6 col-12 order-md-0 order-0 text-right">
+                                <img src="/assets/Public/User/images/icons/payment-gateway.png" class="img-fluid" alt="payment gateway">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- =============================================
+                        (00) End Footer section
+            ============================================== -->
+
+
+            <!-- Search option -->
+
+            <div class="gold-search-form  gold-search-hide">
+                <div class="gold-search-form-inner">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6">
+                                <div class="search-close">
+                                    <i class="fa fa-times"></i>
+                                </div>
+                                <div class="gold-search-form-area">
+                                    <form>
+                                        <div class="form-group m-0">
+                                            <input type="search" class="form-control" placeholder="Search..." name="search">
+                                        </div>
+                                        <div class="form-group m-0">
+                                            <button class="btn gold-search-btn" type="submit">
+                                                <img src="/assets/Public/User/images/icons/search.png" class="img-fluid" alt="">
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search option -->
+
+{{end}}
+
+
+
+{{define "userFooterWithScripts"}}
+            <!-- =============================================
+                           Jquery plugins
+            ============================================== -->
+
+            <script src="/assets/Public/User/js/jquery.min.js"></script>
+
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+            <!-- Bootstrap -->
+            <script src="/assets/Public/User/js/bootstrap.min.js"></script>
+            <!-- Owl Carousel -->
+            <script src="/assets/Public/User/js/owl.carousel.min.js"></script>
+            <!-- Counterup -->
+            <script src="/assets/Public/User/js/waypoints.min.js"></script>
+            <script src="/assets/Public/User/js/counterup.min.js"></script>
+            <!-- Slicknav -->
+            <script src="/assets/Public/User/js/jquery.slicknav.min.js"></script>
+            <!-- magnific popup -->
+            <script src="/assets/Public/User/js/magnific-popup.min.js"></script>
+            <!-- Swiper Slider -->
+            <!-- <script src="/assets/Public/User/vendors/swiper-master/js/swiper.min.js"></script> -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.1/js/swiper.min.js"></script>
+
+            <!-- main js -->
+            <script src="/assets/Public/User/js/scripts.js"></script>
+
+            <script>
+                $(`[type="password"]`).change(function () {
+                    var val = $(this).val();
+                    if (val.length < 6 ) {
+                        $(this).val("");
+                        alert("Password must contain at least six characters");
+                    }
+                });
+
+            </script>
+
+            <script>
+
+                $(document).ready(function() {
+                    var productSlider = new Swiper('.product-slider', {
+                        nextButton: '.swiper-button-next',
+                        prevButton: '.swiper-button-prev',
+                        spaceBetween: 10
+                    });
+                    var productThumbs = new Swiper('.product-thumbs', {
+                        // spaceBetween: 5,
+                        // centeredSlides: true,
+                        // slidesPerView: 'auto',
+                        // touchRatio: 0.2,
+                        // slideToClickedSlide: true,
+                        // direction: 'vertical',
+                        // loop: true,
+                        // loopedSlides: 4,
+
+                        // spaceBetween: 10,
+                        // centeredSlides: true,
+                        slidesPerView: 4,
+                        // touchRatio: 0.2,
+                        // slideToClickedSlide: true,
+                        direction: 'vertical',
+                        // loop: true,
+                        // loopedSlides: 4
+                    });
+                    productSlider.params.control = productThumbs;
+                    productThumbs.params.control = productSlider;
+                });
+            </script>
+
+
+            <script>
+                let deviceResolution = '';
+
+                $(document).ready(function () {
+
+                    deviceResolution = window.screen.width+' x '+window.screen.height;
+                    console.log(deviceResolution);
+                    if(window.screen.width === 768 ) {
+                        $("#min-max-custom").css("margin-left","18px");
+                    }
+
+                    let currentPage = {{.Active}};
+                    if (currentPage === "Home") {
+                        $("body").removeAttr("class");
+                    } else if (currentPage === "Product-Details") {
+                        $("body").attr("class", "gold-body-light gold-product-body-light");
+                    }
+
+                });
+            </script>
+
+            <script>
+                Number.prototype.countDecimals = function () {
+                    if(Math.floor(this.valueOf()) === this.valueOf()) return 0;
+                    return this.toString().split(".")[1].length || 0;
+                }
+            </script>
+
+            <script>
+                getFullDate = function (theDate) {
+                    var month = (theDate.getMonth()+1);
+                    if (month < 10) {
+                        month = "0"+month;
+                    }
+                    var day = theDate.getDate();
+                    if (day < 10) {
+                        day = "0"+day;
+                    }
+                    var hour = theDate.getHours();
+                    if (hour < 10) {
+                        hour = "0"+hour;
+                    }
+                    var minute = theDate.getMinutes();
+                    if (minute < 10) {
+                        minute = "0"+minute;
+                    }
+
+                    var date = theDate.getFullYear()+'-'+month+'-'+day;
+                    var time = hour + ":" + minute;
+                    return date + ' ' + time;
+                }
+            </script>
+
+{{end}}
+
+
+{{define "userFooterFinal"}}
+        </body>
+
+    </html>
+
+{{end}}

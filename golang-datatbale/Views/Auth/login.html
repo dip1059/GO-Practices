@@ -1,0 +1,93 @@
+
+{{template "authHeader" . }}
+
+    <div class="gold-user-area-content">
+    <div class="container">
+        <div class="gold-user-area-title">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h3>Login</h3>
+                    {{/*<p>Lorem Ipsum Dolor Sit Amet Delirium</p>*/}}
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-md-6 mb-md-0 mb-5">
+                <div class="gold-login-form-border">
+                    <form action="/login?val={{.Url}}" method="post">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" class="form-control" placeholder="Type your email" required name="email">
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" class="form-control" placeholder="Type your password" required name="password">
+                        </div>
+                        <div class="form-group">
+                            <a class="gold-user-forgetpass" href="/forgot-password">Forgot my password?</a>
+                        </div>
+                        <div class="form-group m-0">
+                            <button class="btn gold-user-submit-btn" type="submit">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="gold-login-form-border-left">
+                    <div class="gold-social-login">
+                        <a class="gold-solcial-login-btn gold-solcial-login-btn-facebook " href="/social-login?driver=facebook">
+                            <img style="margin-right: 9px;" src="/assets/Public/User/images/icons/facebook.png" class="img-fluid" alt="">
+                            Login with Facebook
+                        </a>
+                        <a class="gold-solcial-login-btn gold-solcial-login-btn-google " href="/social-login?driver=google">
+                            <img style="margin-right: 5px;" src="/assets/Public/User/images/icons/google.png" class="img-fluid" alt="">
+                            Login with Google
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center mt-5">
+                <a class="gold-user-forgetpass" href="/register">Don't have an account?</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{/*<div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-auto-logout-link="false" data-use-continue-as="false"></div>*/}}
+
+
+{{template "authFooterWithScripts" . }}
+
+
+{{/*<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v5.0&appId=167060107937462&autoLogAppEvents=1"></script>*/}}
+
+{{/*<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '167060107937462',
+            cookie     : true,
+            xfbml      : true,
+            version    : 'v5.0'
+        });
+
+        FB.AppEvents.logPageView();
+
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>*/}}
+
+{{template "authFooterFinal" . }}
+
+
+
+

@@ -1,0 +1,26 @@
+{{template "adminHeader" .}}
+
+<h2> Edit Karat </h2>
+<form action="/update-karat" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <input type="hidden" name="id" value="{{.Karat.ID}}">
+
+        <div class="col-md-6 form-group mb-3">
+            <label for="firstName1">Title</label>
+            <input type="text" class="form-control" id="firstName1" placeholder="Enter a title" name="title" value="{{.Karat.Title}}"
+                   required>
+        </div>
+
+        <div class="col-md-6 form-group mb-3">
+            <label for="firstName1">Amount in karat</label>
+            <input type="text" class="form-control" id="firstName1" placeholder="Enter karat amount" name="amount" value="{{.Karat.Amount}}"
+                   required>
+        </div>
+
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+    </div>
+</form>
+
+{{template "adminFooter" .}}

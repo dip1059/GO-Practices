@@ -1,0 +1,109 @@
+{{template "userHeader" . }}
+
+<div class="gold-cart-area">
+    <div class="container">
+        <div class="row">
+            {{template "userAccountSideNav" . }}
+            <div class="col-lg-8">
+
+                <div class="gold-cart-left gold-account-cart-left gold-address-card">
+                    <div class="card-header">
+                        <div class="gold-address-header">
+                            <h4>my address</h4>
+                            <a href="/account/add-address" class="gold-new-address">add new address</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="gold-address-area">
+                            {{if .User.ShippingAddresses}}
+                            {{range .User.ShippingAddresses}}
+                                <div class="gold-single-address" {{if eq .Status 1}}style="border: 1px solid #be933e;" {{end}}>
+                                    <h4>{{.FirstName}} {{.LastName}}</h4>
+                                    <span class="phone">{{.Phone}}</span>
+                                    <p>{{.Apartment}}, {{.Address}}, {{.State}}, {{.City}}, {{.ZipCode}}, {{.Country}}</p>
+                                    <ul class="gold-address-options">
+                                        {{if eq .Status 1}}
+                                            <li><span>default</span></li>
+                                            <li><a href="/account/unset-as-default-address?id={{.ID}}">unset as default</a></li>
+                                        {{else}}
+                                            <li><a href="/account/set-as-default-address?id={{.ID}}">set as default</a></li>
+                                        {{end}}
+                                        <li><a href="/account/edit-address?id={{.ID}}">edit</a></li>
+                                        <li><a href="/account/delete-address?id={{.ID}}">delete</a></li>
+                                    </ul>
+                                </div>
+                            {{end}}
+                            {{else}}
+                                <h5>No address available.</h5>
+                            {{end}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{template "userFooterWithoutScripts" . }}
+
+
+{{template "userFooterWithScripts" . }}
+
+{{/*write scripts here*/}}
+
+
+
+<script>
+
+    function updateCart(proId) {
+
+        let type = $('#type-'+proId).val();
+        let qty = $('#proQty-'+proId).val();
+        let url = '/add-cart/'+proId+'/'+qty+'/cart?process=update&ajax=true';
+        let method = 'get';
+        let data = {};
+
+        if (type == 2) {
+            method = 'post';
+            url = '/add-cart?process=update&ajax=true';
+            data = {
+                'id': proId,
+                'amount': qty,
+                'data': "cart"
+            };
+        }
+
+        $.ajax({
+            url: url,
+            method: method,
+            data: data
+
+        }).done(function (data) {
+            window.location.reload();
+        }).fail(function (error) {
+            window.location.reload();
+        });
+    }
+
+</script>
+
+<script>
+    $(document).on("click", ".quantity-btn", function (event) {
+        let proId = $(this).data("pro-id");
+        let qty = parseInt($('#proQty-'+proId).val());
+        let min = parseInt($('#proQty-'+proId).attr("min"));
+        let max = parseInt($('#proQty-'+proId).attr("max"));
+        let type = $('#type-'+proId).val();
+
+        if (type == 2) {
+            if (qty < min) {
+                $('#proQty-' + proId).val(min);
+            } else if (qty > max) {
+                $('#proQty-' + proId).val(max);
+            }
+        }
+    });
+</script>
+
+
+{{template "userFooterFinal" . }}

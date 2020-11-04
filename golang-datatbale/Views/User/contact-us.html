@@ -1,0 +1,102 @@
+{{template "userHeader" . }}
+
+<div class="gold-contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                {{.Page.TextContent}}
+                {{/*<div class="gold-contact-social">
+                    <ul>
+                        <li><a href="javascript:;"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="javascript:;"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="javascript:;"><i class="fa fa-youtube-play"></i></a></li>
+                        <li><a href="javascript:;"><i class="fa fa-paper-plane"></i></a></li>
+                    </ul>
+                </div>*/}}
+            </div>
+            <div class="col-lg-8">
+                <div class="gold-contact-form">
+                    <form action="/contact-us" method="post">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" name="full_name" required placeholder="Your full name">
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>Email</label>
+                                    <input type="email" class="form-control" name="email" required placeholder="Your email">
+                                </div>
+                            </div>
+                            {{/*<div class="row mt-4">
+                                <div class="col-lg-6">
+                                    <label>Country</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                                <span class="input-group-text country-flag">
+                                                    <img src="images/flag.png" class="img-fluid" alt="Flag">
+                                                </span>
+                                        </div>
+                                        <select id="inputState" class="form-control">
+                                            <option selected>Portugal</option>
+                                            <option>...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>Mobile</label>
+                                    <input type="text" class="form-control" placeholder="Type your mobile number">
+                                </div>
+                            </div>*/}}
+                            <div class="row mt-4">
+                                <div class="col-lg-6">
+                                    <label>Phone number</label>
+                                    <input type="text" class="form-control" name="phone" required placeholder="Type your phone number">
+                                </div>
+                                {{/*<div class="col-lg-6">
+                                    <label>Subject</label>
+                                    <input type="text" class="form-control" placeholder="Type a subject">
+                                </div>*/}}
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-12">
+                                    <label>Message</label>
+                                    <textarea name="message" class="form-control" required placeholder="Type your message"></textarea>
+                                </div>
+                            </div>
+                            <div class="row mt-5 align-items-center">
+                                {{/*<div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exampleRadios"
+                                               id="exampleRadios2" value="option2">
+                                        <label class="form-check-label" for="exampleRadios2">
+                                            Agree Terms & Conditions
+                                        </label>
+                                    </div>
+                                </div>*/}}
+                                <div class="col-md-6">
+                                    <button type="reset" class="btn gold-cart-button">Cancel</button>
+                                    <button type="submit" class="btn gold-cart-button">Send Message</button>
+                                    {{/*<ul class="gold-contact-btn-area">
+                                        <li><a href="javascript:;">Cancel</a></li>
+                                        <li><a class="btn gold-message-send-btn" href="javascript:;">Send Message</a></li>
+                                    </ul>*/}}
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{template "userFooterWithoutScripts" . }}
+
+
+{{template "userFooterWithScripts" . }}
+
+{{/*write scripts here*/}}
+
+
+{{template "userFooterFinal" . }}

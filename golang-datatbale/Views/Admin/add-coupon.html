@@ -1,0 +1,135 @@
+{{template "adminHeader" .}}
+
+<h2>Add Coupon</h2>
+<form action="/add-coupon" method="post">
+    <div class="col-md-6 form-group mb-3">
+        <label for="firstName1">Title</label>
+        <input type="text" class="form-control" id="firstName1"
+               placeholder="Enter a title" name="Title" required>
+    </div>
+
+    <div class="col-md-6 form-group mb-3">
+        <label for="picker1">Type</label>
+        <select id="coup-type" class="form-control" name="Type" required>
+            <option value="1">Discount(%)</option>
+            {{/*<option value="2">Free Bids</option>*/}}
+        </select>
+    </div>
+
+    <div class="col-md-6 form-group mb-3" id="validity" hidden>
+        <label for="firstName1">Validity(in days)</label>
+        <input id="validity-input" type="text" class="form-control" id="firstName1"
+               placeholder="" autocomplete="off" name="Validity">
+    </div>
+
+    <div class="col-md-6 form-group mb-3">
+        <label id="type-value-label" for="firstName1">Discount</label>
+        <div id="type-value-div" class="inside-input-wrap">
+            <input id="type-value-input" type="text" class="form-control" id="firstName1"
+                   placeholder="Enter discount amount" name="Amount" required>
+            <span class="inside-value">%</span>
+        </div>
+    </div>
+
+    {{/*<div class="col-md-6 form-group mb-3">
+                        <label for="firstName1">Start Date</label>
+                        <input id="start_date" type="text" class="form-control" id="firstName1"
+                               placeholder="" autocomplete="off" name="start_date" required>
+                    </div>*/}}
+
+    <div class="col-md-6 form-group mb-3">
+        <label for="firstName1">End Date</label>
+        <input id="end_date" type="text" class="form-control" id="firstName1"
+               placeholder="Enter UTC Time" name="end_date" autocomplete="off" required>
+    </div>
+
+    <div class="col-md-6 form-group mb-3">
+        <label for="firstName1">Coupon Code</label>
+        <input type="text" class="form-control" id="firstName1"
+               placeholder="Enter a new coupon code" name="Code" required>
+    </div>
+
+    <div class="col-md-12 form-group mb-3">
+        <label for="exampleInputEmail1">Description</label>
+        <textarea class="form-control" aria-label="With textarea" id="summernote"
+                  name="Description" rows="10"></textarea>
+    </div>
+    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+
+    <div class="col-md-6 form-group mb-3">
+        <label class="checkbox checkbox-primary">
+            <input type="checkbox" value="1" name="Status">
+            <span>Active Status</span>
+            <span class="checkmark"></span>
+        </label>
+    </div>
+    <div class="col-md-12">
+        <button type="submit" class="btn btn-primary">Add Coupon</button>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        var today = new Date();
+        var dateTime = getFullDate(today);
+        $("#start_date").val(dateTime);
+
+        var startDate = new Date(dateTime);
+        $("#end_date").on("change paste keyup",function () {
+            var endDate = new Date($(this).val());
+            if (startDate.getTime() > endDate.getTime()) {
+                alert("End Date can't be less than Start Date.");
+                $(this).val("");
+            }
+        });
+
+        $("#coup-type").change(function () {
+            var val = $(this).val();
+            if (val === "1") {
+                $("#type-value-div").append(`<span class="inside-value">%</span>`);
+                $("#type-value-label").text("Discount");
+                $("#type-value-input").attr("placeholder", "Enter discount amount");
+                $("#validity").hide();
+                $("#validity-input").removeAttr("required");
+            } else if (val === "2") {
+                $(".inside-value").remove();
+                $("#type-value-label").text("Bid Amount");
+                $("#type-value-input").attr("placeholder", "Enter bid amount");
+                $("#validity-input").attr("required","");
+                $("#validity").removeAttr("hidden");
+                $("#validity").show();
+            }
+        });
+
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#type-value-input").on("change", function () {
+            var amount = $(this).val();
+            if (isNaN(amount)) {
+                $(this).val("");
+                alert("Only positive number is allowed.");
+
+            } else if (amount <= 0){
+                $(this).val("");
+                alert("Only positive number is allowed.");
+            }
+        });
+
+        $("#validity-input").on("change", function () {
+            var validity = $(this).val();
+            if (isNaN(validity)) {
+                $(this).val("");
+                alert("Only positive number is allowed.");
+
+            }  else if (validity <= 0){
+                $(this).val("");
+                alert("Only positive number is allowed.");
+            }
+        });
+    });
+</script>
+
+{{template "adminFooter" .}}

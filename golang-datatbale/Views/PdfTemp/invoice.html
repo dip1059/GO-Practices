@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Invoice</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900&display=swap" rel="stylesheet">
+</head>
+
+<body bgcolor="#ffffff" style="font-family: 'Roboto', sans-serif;" leftmargin="0" marginwidth="0" topmargin="0"
+      marginheight="0" offset="0">
+<table cellpadding="0" cellspacing="0"
+       style="max-width:800px; width:800px;margin:auto; padding: 35px;background: #fafafa">
+    <tbody>
+    <tr>
+        <td colspan="5" style="padding-bottom:15px;border-bottom:2px solid #e5e5e5;margin-bottom: 15px"
+            align="left">
+            <h1>BIDRACE S.A</h1>
+            {{/*<img width="150px" src="{{.AppEnv.Url}}/assets{{range .Wbsts}}{{if (eq .ContentName "Header Logo")}}{{.Content}}{{end}}{{end}}" alt="">*/}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p style="margin:25px 0px;">{{.Address}}
+                {{/*Av. Gran Via 84, 1D, 36203 VIGO,<br>
+                PONTEVEDRA <br>
+                ESPAÑA <br>
+                C.I.F. A27752435*/}}
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td style="padding-bottom:30px;"><strong>Fecha</strong> {{.Order.FormatDate .Order.CreatedAt}} </td>
+        <td style="padding-bottom:30px;">
+            <span style="display: block;border:3px dashed #000;padding: 10px;">
+                {{.Order.User.FirstName}} {{.Order.User.LastName}}
+                <small style="display: block;">{{.Order.User.FullAddress.String}} </small>
+            </span>
+        </td>
+    </tr>
+    <tr>
+        <td style="padding-bottom:20px;" colspan="5"><strong>Order ID</strong> #<script>document.write(10000+{{.Order.ID}});</script></td>
+    </tr>
+    <tr>
+        <td style="padding-bottom:20px;" colspan="5"><strong>Factura</strong> #<script>document.write(20000+{{.Order.Invoice.ID}});</script></td>
+    </tr>
+    <tr>
+        <td style="padding-bottom:30px;" colspan="5"><strong>Nature:</strong> Venta de consumables</td>
+    </tr>
+    <tr>
+        <td style="padding-bottom: 30px;" colspan="5">
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <th style="background: #f1f1f1;padding:10px;width: 400px;border-right: 1px solid #fafafa">
+                        Nome do Produto</th>
+                    <th style="background: #f1f1f1;padding:10px;width: 250px;border-right: 1px solid #fafafa">
+                        Consumable Montante</th>
+                    <th style=" background: #f1f1f1;padding:10px;width: 250px">Preço</th>
+                </tr>
+
+                {{range .Order.OrderDetails}}
+                <tr>
+                    <td style="border-bottom:1px solid #f1f1f1;border-left:1px solid #f1f1f1;padding:10px;"
+                        align="center">{{.ProductTitle}}</td>
+                    <td style="border-bottom:1px solid #f1f1f1;border-left:1px solid #f1f1f1;padding:10px;"
+                        align="center"><script>document.write(({{.ProductGrmAmount}}).toString());</script></td>
+                    <td style="border-bottom:1px solid #f1f1f1;border-right:1px solid #f1f1f1; border-left:1px solid #f1f1f1;padding:10px;"
+                        align="center"><script>document.write(({{.ProductPrice}}).toString());</script></td>
+                </tr>
+                {{end}}
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td width="550px"></td>
+        <td width="400px" style="padding-bottom: 40px">
+            <table>
+                <tr>
+                    <td width="250px" align="left">
+                        <b>Total consumables</b>
+                    </td>
+                    <td align="right" style="text-align: right"><script>document.write(({{.Order.TotalBids}}).toString());</script></td>
+                </tr>
+                <tr>
+                    <td width="250px"  align="left"> <b>Sub total Preço</b> </td>
+                    <td align="right"><script>document.write(({{.Order.SubTotal}}).toString());</script> €</td>
+                </tr>
+                <tr>
+                    <td width="250px"  align="left"><b>Tasa de procesamiento
+                            ({{.Adm.Fees.Value.String}}%)</b></td>
+                    <td align="right"><script>document.write(({{.Order.TotalFees}}).toString());</script> €</td>
+                </tr>
+                <tr>
+                    <td width="250px"  align="left"><b>IVA ({{.Adm.VAT.Value.String}}%)</b></td>
+                    <td align="right"><script>document.write(({{.Order.TotalVAT}}).toString());</script> €</td>
+                </tr>
+                <tr>
+                    <td width="250px"  align="left"><b>Descuento {{if .Order.IsDiscountCoupon}}del cupón{{end}}
+                            {{if .Order.IsDiscountCoupon}}
+                                ({{.Order.CouponOrder.Coupon.Amount}}%)
+                            {{else}}
+                                (0%)
+                            {{end}}
+                        </b> </td>
+                    <td align="right"><script>document.write(({{.Order.TotalDiscount}}).toString());</script> €</td>
+                </tr>
+                <tr>
+                    <td width="250px"  align="left"><b style="background: #f1f1f1;display: block;padding: 10px;margin-right: 30px">Total de
+                            factura</b> </td>
+                    <td align="right"><script>document.write(({{.Order.Total}}).toString());</script> €</td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+    <tr>
+        <td colspan="5">
+            <strong style="display: block;margin-bottom:10px;">Forma de pago </strong>
+            {{if eq .Order.PayMethodID 1}}
+                <span>Bank Transfer</span>
+            {{else if eq .Order.PayMethodID 2}}
+                <span>Card</span>
+            {{else if eq .Order.PayMethodID 4}}
+                <span>Lusopay</span>
+            {{else if eq .Order.PayMethodID 5}}
+                <span>Stripe</span>
+            {{else if eq .Order.PayMethodID 6}}
+                <span>Point Wallet</span>
+            {{else if eq .Order.PayMethodID 7}}
+                <span>Free Bids</span>
+            {{end}}
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+
+</html>

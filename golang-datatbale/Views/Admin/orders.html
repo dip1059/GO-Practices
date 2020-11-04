@@ -1,0 +1,398 @@
+{{template "adminHeader" .}}
+{{template "addTrackCode" .}}
+
+<div class="col-md-12 mb-4">
+    <div class="card text-left">
+
+        <div class="card-body">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-basic-tab" data-toggle="tab" href="#homeBasic" role="tab" aria-controls="homeBasic" aria-selected="true">Pending And Cancelled Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-basic-tab" data-toggle="tab" href="#profileBasic" role="tab" aria-controls="profileBasic" aria-selected="false">Completed And Shipped Orders</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+
+                <div class="tab-pane fade show active" id="homeBasic" role="tabpanel" aria-labelledby="home-basic-tab">
+                    <div class="table-responsive">
+                        <table id="zero_configuration_table" class="display table table-striped table-bordered"
+                               style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Order Id</th>
+                                <th>Delivery Type</th>
+                                <th>Customer Name</th>
+                                <th>Total Gram Amount</th>
+                                <th>Total Price</th>
+                                <th>Paid Amount</th>
+                                <th>Payment By</th>
+                                <th>Payment Status</th>
+                                <th>Order Status</th>
+                                <th>Unique Code</th>
+                                <th>Created At</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{$UserID := .UserID}}
+                            {{range .Orders}}
+                                {{if and (ne .OrderStatus 1) (ne .OrderStatus 3)}}
+                                    <tr>
+                                        <td>#<script>document.write(10000+{{.ID}});</script></td>
+                                        {{if eq .DeliveryType 1}}
+                                            <td class="center">Online Wallet</td>
+                                        {{else if eq .DeliveryType 2}}
+                                            <td class="center">Home</td>
+                                        {{end}}
+                                        <td class="center">{{.User.FirstName}} {{.User.LastName}}</td>
+                                        <td class="center"><script>document.write(({{.TotalGrmAmount}}).toString());</script></td>
+                                        <td class="center">€<script>document.write(({{.GrandTotal}}).toString());</script></td>
+                                        {{if eq .PayMethodID 6}}
+                                            <td class="center"><script>document.write(({{.PaidAmount}}).toString());</script> (Point)</td>
+                                        {{else}}
+                                            <td class="center">€<script>document.write(({{.PaidAmount}}).toString());</script></td>
+                                        {{end}}
+                                        <td class="center">{{.PayMethod.Method}}</td>
+                                        <td class="center">
+                                            {{if (eq .PaymentStatus 1)}}
+
+                                                <span class="badge badge-pill badge-success p-2 m-1">Done</span>
+
+                                            {{else if (eq .PaymentStatus 0)}}
+
+                                                <span class="badge badge-pill badge-light p-2 m-1">Pending</span>
+
+                                            {{else if (eq .PaymentStatus 2)}}
+
+                                                <span class="badge badge-pill badge-danger p-2 m-1">Fraudulent</span>
+
+                                            {{else if (eq .PaymentStatus 3)}}
+
+                                                <span class="badge badge-pill badge-danger p-2 m-1">Cancelled</span>
+
+                                            {{end}}
+                                        </td>
+                                        <td class="center">
+                                            {{if and (eq .OrderStatus 1) (eq .DeliveryType 1)}}
+
+                                                <span class="badge badge-pill badge-success p-2 m-1">Complete</span>
+
+                                            {{else if and (eq .OrderStatus 1) (eq .DeliveryType 2)}}
+
+                                                <span class="badge badge-pill badge-success p-2 m-1">Shipped</span>
+
+                                            {{else if (eq .OrderStatus 0)}}
+
+                                                <span class="badge badge-pill badge-light p-2 m-1">Pending</span>
+
+                                            {{else if (eq .OrderStatus 2)}}
+
+                                                <span class="badge badge-pill badge-danger p-2 m-1">Cancelled</span>
+
+                                            {{end}}
+                                        </td>
+
+                                        {{if eq .PayMethodID 1}}
+                                            <td class="center">{{.UniqueCode}} (Stripe_Charge_ID)</td>
+                                        {{else if eq .PayMethodID 2}}
+                                            <td class="center">{{.UniqueCode}} (Mollie_Payment_ID)</td>
+                                        {{else}}
+                                            <td class="center">N/A</td>
+                                        {{end}}
+
+                                        <td class="center">{{.FormatDateTime .CreatedAt}}</td>
+
+
+
+                                        {{/*<td class="center">
+                                            {{if (eq .PaymentStatus 1)}}
+                                                <a href="/make-payment-pending/{{.ID}}/{{$UserID}}">
+                                                    <img src="/assets/Public/Admin/images/thumb_down.png"
+                                                         style="height: 20px; width: 20px"
+                                                         title="Make Payment Pending">
+                                                </a>
+
+                                            {{else if (eq .PaymentStatus 0)}}
+                                                <a href="/make-payment-done/{{.ID}}/{{$UserID}}">
+                                                    <img src="/assets/Public/Admin/images/thumb_up.png"
+                                                         style="height: 15px; width: 15px"
+                                                         title="Make Payment Done">
+                                                </a>
+                                            {{end}}
+
+                                            {{if or (eq .OrderStatus 0) (eq .OrderStatus 2)}}
+                                                <a href="/make-order-complete/{{.ID}}/{{$UserID}}">
+                                                    &nbsp&nbsp<img src="/assets/Public/Admin/images/thumb_up.png"
+                                                                   style="height: 15px; width: 15px" title="Make Order Complete">
+                                                </a>
+                                            {{end}}
+
+                                            <a class="text-success mr-2" href="/order-details/{{.ID}}/{{$UserID}}">
+                                                <i class="nav-icon i-Eye font-weight-bold" title="View Order Details And Documents"></i>
+                                            </a>
+                                            <a class="text-danger mr-2 confirm-anchor" href="/delete-order/{{.ID}}/{{$UserID}}"
+                                                         class="confirm-anchor" data-header="Want to Delete?">
+                                                <i class="nav-icon i-Close-Window font-weight-bold" title="Delete"></i>
+                                            </a>
+                                        </td>*/}}
+
+
+                                        <td class="center">
+                                            <div class="dropdown">
+                                                <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Action
+                                                </button>
+                                                <div class="dropdown-menu window-size" aria-labelledby="dropdownMenuButton">
+                                                    <ul align="left">
+                                                        {{/*{{if (eq .PaymentStatus 0)}}
+                                                            <li>
+                                                                <a href="/make-payment-done/{{.ID}}/{{$UserID}}">
+                                                                    Make Payment Done
+                                                                </a>
+                                                            </li>
+                                                        {{else if (eq .PaymentStatus 1)}}
+                                                            <li>
+                                                                <a href="/make-payment-pending/{{.ID}}/{{$UserID}}">
+                                                                    Make Payment Pending
+                                                                </a>
+                                                            </li>
+                                                        {{end}}*/}}
+
+                                                        {{if (eq .OrderStatus 0)}}
+                                                            {{if eq .DeliveryType 1}}
+                                                            {{/*<li>
+                                                                <a class="confirm-anchor" data-header="Complete Order?" href="/make-order-complete/{{.ID}}/{{$UserID}}">
+                                                                    Make Order Complete
+                                                                </a>
+                                                            </li>*/}}
+                                                            {{else if eq .DeliveryType 2}}
+                                                                <li>
+                                                                    <a href="javascript:;" data-target="#add-track-code" data-toggle="modal" onclick="addTrackCode({{.ID}})">
+                                                                        Add Track Code
+                                                                    </a>
+                                                                </li>
+                                                            {{end}}
+                                                            <li>
+                                                                <a class="confirm-anchor" data-header="Cancel Order?" href="/make-order-cancel/{{.ID}}/{{$UserID}}">
+                                                                    Make Order Cancelled
+                                                                </a>
+                                                            </li>
+                                                        {{end}}
+                                                        <li>
+                                                            <a href="/order-details/{{.ID}}/{{$UserID}}">
+                                                                View Details
+                                                            </a>
+                                                        </li>
+
+                                                        <li>
+                                                            <a class="confirm-anchor" data-header="Want to Delete?" href="/delete-order/{{.ID}}/{{$UserID}}">
+                                                                Delete
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td>
+
+
+                                    </tr>
+                                {{end}}
+                            {{end}}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="profileBasic" role="tabpanel" aria-labelledby="profile-basic-tab">
+                    <div class="table-responsive">
+                        <table id="zero_configuration_table2" class="display table table-striped table-bordered"
+                               style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Order Id</th>
+                                <th>Delivery Type</th>
+                                <th>Customer Name</th>
+                                <th>Total Gram Amount</th>
+                                <th>Total Price</th>
+                                <th>Paid Amount</th>
+                                <th>Payment By</th>
+                                <th>Payment Status</th>
+                                <th>Order Status</th>
+                                <th>Unique Code</th>
+                                <th>Created At</th>
+                                <th>Option</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{$UserID2 := .UserID}}
+                            {{range .Orders}}
+                                {{if or (eq .OrderStatus 1) (eq .OrderStatus 3)}}
+                                    <tr>
+                                        <td>#<script>document.write(10000+{{.ID}});</script></td>
+                                        {{if eq .DeliveryType 1}}
+                                            <td class="center">Online Wallet</td>
+                                        {{else if eq .DeliveryType 2}}
+                                            <td class="center">Home</td>
+                                        {{end}}
+                                        <td class="center">{{.User.FirstName}} {{.User.LastName}}</td>
+                                        <td class="center"><script>document.write(({{.TotalGrmAmount}}).toString());</script></td>
+                                        <td class="center">€<script>document.write(({{.GrandTotal}}).toString());</script></td>
+                                        {{if eq .PayMethodID 6}}
+                                            <td class="center"><script>document.write(({{.PaidAmount}}).toString());</script> (Point)</td>
+                                        {{else}}
+                                            <td class="center">€<script>document.write(({{.PaidAmount}}).toString());</script></td>
+                                        {{end}}
+                                        <td class="center">{{.PayMethod.Method}}</td>
+                                        <td class="center">
+                                            {{if (eq .PaymentStatus 1)}}
+
+                                                <span class="badge badge-pill badge-success p-2 m-1">Done</span>
+
+                                            {{else if (eq .PaymentStatus 0)}}
+
+                                                <span class="badge badge-pill badge-light p-2 m-1">Pending</span>
+
+                                            {{else if (eq .PaymentStatus 2)}}
+
+                                                <span class="badge badge-pill badge-danger p-2 m-1">Fraudulent</span>
+
+                                            {{else if (eq .PaymentStatus 3)}}
+
+                                                <span class="badge badge-pill badge-danger p-2 m-1">Cancelled</span>
+
+                                            {{end}}
+                                        </td>
+                                        <td class="center">
+                                            {{if and (eq .OrderStatus 1)}}
+
+                                                <span class="badge badge-pill badge-success p-2 m-1">Complete</span>
+
+                                            {{else if and (eq .OrderStatus 3)}}
+
+                                                <span class="badge badge-pill badge-success p-2 m-1">Shipped</span>
+
+                                            {{else if (eq .OrderStatus 0)}}
+
+                                                <span class="badge badge-pill badge-light p-2 m-1">Pending</span>
+
+                                            {{else if (eq .OrderStatus 2)}}
+
+                                                <span class="badge badge-pill badge-danger p-2 m-1">Cancelled</span>
+
+                                            {{end}}
+                                        </td>
+
+                                        {{if eq .PayMethodID 1}}
+                                            <td class="center">{{.UniqueCode}} (Stripe_Charge_ID)</td>
+                                        {{else if eq .PayMethodID 2}}
+                                            <td class="center">{{.UniqueCode}} (Mollie_Payment_ID)</td>
+                                        {{else}}
+                                            <td class="center">N/A</td>
+                                        {{end}}
+
+                                        <td class="center">{{.FormatDateTime .CreatedAt}}</td>
+
+
+
+                                        {{/*<td class="center">
+                                            {{if (eq .PaymentStatus 1)}}
+                                                <a href="/make-payment-pending/{{.ID}}/{{$UserID}}">
+                                                    <img src="/assets/Public/Admin/images/thumb_down.png"
+                                                         style="height: 20px; width: 20px"
+                                                         title="Make Payment Pending">
+                                                </a>
+
+                                            {{else if (eq .PaymentStatus 0)}}
+                                                <a href="/make-payment-done/{{.ID}}/{{$UserID}}">
+                                                    <img src="/assets/Public/Admin/images/thumb_up.png"
+                                                         style="height: 15px; width: 15px"
+                                                         title="Make Payment Done">
+                                                </a>
+                                            {{end}}
+
+                                            {{if or (eq .OrderStatus 0) (eq .OrderStatus 2)}}
+                                                <a href="/make-order-complete/{{.ID}}/{{$UserID}}">
+                                                    &nbsp&nbsp<img src="/assets/Public/Admin/images/thumb_up.png"
+                                                                   style="height: 15px; width: 15px" title="Make Order Complete">
+                                                </a>
+                                            {{end}}
+
+                                            <a class="text-success mr-2" href="/order-details/{{.ID}}/{{$UserID}}">
+                                                <i class="nav-icon i-Eye font-weight-bold" title="View Order Details And Documents"></i>
+                                            </a>
+                                            <a class="text-danger mr-2 confirm-anchor" href="/delete-order/{{.ID}}/{{$UserID}}"
+                                                         class="confirm-anchor" data-header="Want to Delete?">
+                                                <i class="nav-icon i-Close-Window font-weight-bold" title="Delete"></i>
+                                            </a>
+                                        </td>*/}}
+
+
+                                        <td class="center">
+                                            <div class="dropdown">
+                                                <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Action
+                                                </button>
+                                                <div class="dropdown-menu window-size" aria-labelledby="dropdownMenuButton">
+                                                    <ul align="left">
+                                                        {{/*{{if (eq .PaymentStatus 0)}}
+                                                            <li>
+                                                                <a href="/make-payment-done/{{.ID}}/{{$UserID}}">
+                                                                    Make Payment Done
+                                                                </a>
+                                                            </li>
+                                                        {{else if (eq .PaymentStatus 1)}}
+                                                            <li>
+                                                                <a href="/make-payment-pending/{{.ID}}/{{$UserID}}">
+                                                                    Make Payment Pending
+                                                                </a>
+                                                            </li>
+                                                        {{end}}*/}}
+
+                                                        {{/*{{if (eq .OrderStatus 3)}}
+                                                            <li>
+                                                                <a href="/make-order-complete/{{.ID}}/{{$UserID}}">
+                                                                    Make Order Complete
+                                                                </a>
+                                                            </li>
+                                                        {{end}}*/}}
+                                                        <li>
+                                                            <a href="/order-details/{{.ID}}/{{$UserID}}">
+                                                                View Details
+                                                            </a>
+                                                        </li>
+
+                                                        <li>
+                                                            <a class="confirm-anchor" data-header="Want to Delete?" href="/delete-order/{{.ID}}/{{$UserID}}">
+                                                                Delete
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td>
+
+
+                                    </tr>
+                                {{end}}
+                            {{end}}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function addTrackCode(id) {
+        $("#order-id").val(id);
+    }
+</script>
+
+
+
+{{template "adminFooter" .}}

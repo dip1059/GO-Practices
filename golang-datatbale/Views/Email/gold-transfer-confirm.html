@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Playfair+Display&display=swap');
+        @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+        @media screen and (max-width:600px) {
+            #emailcontainer {
+                width: 100%;
+            }
+        }
+
+        @media screen and (max-width:480px){
+            td[class="main-text"],
+            td[class="main-text"] div{
+                font-size: 40px !important;
+            }
+
+            td[class="footer-top-left"],
+            td[class="footer-top-left"] table,
+            td[class="footer-top-right"] table,
+            td[class="footer-top-right"]{
+                width: 100% !important;
+                display: block;
+            }
+            td[class="footer-top-right"] table td,
+            td[class="footer-top-left"] table td{
+                width: 600px;
+            }
+            td[class="footer-top-left"] table td,
+            td[class="footer-top-right"] table td div{
+                text-align: center !important;
+            }
+            td[class="footer-top-left"] table td a img{
+                margin-bottom: 15px;
+            }
+
+            td[class="footer-bottom-left"],
+            td[class="footer-bottom-blank"],
+            td[class="footer-bottom-right"]{
+                display: block;
+                width: 100%;
+                text-align: center;
+            }
+            td[class="footer-bottom-right"] p{
+                text-align: center !important;
+                max-width: 200px;
+                display: table;
+                margin: 15px auto 0;
+            }
+            table[class="footer-text-area"] td div{
+                text-align: center;
+            }
+            table[class="footer-area"]{
+                padding: 30px 10px !important;
+            }
+            table[class="email-content-area"]{
+                padding: 30px !important;
+            }
+            table[class="email-logo"]{
+                padding-top: 0 !important;
+            }
+            table[class="email-welcome-text"] td{
+                padding-top: 30px !important;
+            }
+
+        }
+
+    </style>
+</head>
+<body bgcolor="#cccccc" leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
+
+<table id="emailcontainer" border="0" cellspacing="0" cellpadding="0" width="100%;" bgcolor="#1b1b1b" style="max-width: 600px;width: 100%;margin: 0 auto;padding: 0 10px;">
+
+    <tbody>
+    <tr>
+        <td align="center" valign="top">
+
+            <!-- Start email top -->
+            <table cellspacing="0" cellpadding="0" border="0" width="100%" style="padding: 16px 0">
+                <tbody>
+                <tr>
+                    <td align="center">
+                        <div style="color: #707070;font-size: 12px;font-family: 'Montserrat', sans-serif;">Go to goldstore <a href="{{.AppEnv.Url}}" style="color: #d0ad59;text-decoration: underline;">click here</a></div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!-- End email top -->
+
+            <!-- Email content area -->
+            <table cellspacing="0" cellpadding="0" border="0" width="100%" bgcolor="#000000" style="border-radius: 10px;padding: 60px;" class="email-content-area">
+                <tbody>
+                <tr>
+                    <td align="center" valign="top">
+
+                        <!-- logo -->
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="padding-top: 30px;" class="email-logo">
+                            <tbody>
+                            <tr>
+                                <td align="center" valign="top">
+                                    <a href="javascript:;">
+                                        <img src="{{.AppEnv.Url}}/assets{{range .Wbsts}}{{if (eq .ContentName "Header Logo")}}{{.Content}}{{end}}{{end}}" alt="email-logo-w" border="0">
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- logo -->
+
+<!-- Main text -->
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="padding: 0;">
+    <tbody>
+    <tr>
+        <td align="center" valign="top">
+            <!-- welcome -->
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" class="email-welcome-text" style="margin-top: 15px;">
+                <tbody>
+                <tr>
+                    <td align="center" valign="top">
+                        <div style="color: #ddaf52;font-size: 16px;font-family: 'Montserrat', sans-serif;font-weight: 600;">Hello</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!-- welcome -->
+            <!-- main text -->
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="padding-top: 15px;">
+                <tbody>
+                <tr>
+                    <td align="center" valign="top" class="main-text">
+                        <div style="color: #fff;font-size: 60px;font-family: 'Playfair Display', serif;font-weight: 700;">{{ .User.FirstName }} {{ .User.LastName }},</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!-- main text -->
+
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top: 30px;">
+                <tbody>
+                <tr>
+                    <td align="left" valign="top">
+                        <div style="color: #959595;font-weight: 700;font-family: 'Montserrat', sans-serif;font-size: 14px;">
+                            Please confirm your gold transfer.
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table border="0" cellspacing="0" cellspacing="0" width="100%" style="margin-top: 50px;">
+                <tbody>
+                <tr>
+                    <td valign="top">
+                        <table border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 15px;">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <div style="color: #ddaf52;text-transform: capitalize;font-weight: 700;font-family: 'Playfair Display', serif;font-size: 24px;">Transfer Details</div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- summary table -->
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <table class="order-summary-table" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                        <tbody>
+                                        <tr>
+                                            <td style="border-bottom: 1px solid #dcdcdc;font-family: 'Montserrat', sans-serif;padding: 15px 0;margin-bottom: 10px;color:#fff;">Transfer ID</td>
+                                            <td style="border-bottom: 1px solid #dcdcdc;font-family: 'Montserrat', sans-serif;padding: 15px 0;margin-bottom: 10px;color:#fff;">Receiver</td>
+                                            <td style="border-bottom: 1px solid #dcdcdc;font-family: 'Montserrat', sans-serif;padding: 15px 0;margin-bottom: 10px;color:#fff;">Gold Amount</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td style="border-bottom: 1px solid #dcdcdc;font-family: 'Montserrat', sans-serif;padding: 15px 0;margin-bottom: 10px;color:#b5b5b5;font-size: x-small;">{{.Transfer.TransferID}}</td>
+                                            <td style="border-bottom: 1px solid #dcdcdc;font-family: 'Montserrat', sans-serif;padding: 15px 0;margin-bottom: 10px;color:#b5b5b5;font-size: x-small;">{{.Transfer.ReceiverUser.Email}}</td>
+                                            <td style="border-bottom: 1px solid #dcdcdc;font-family: 'Montserrat', sans-serif;padding: 15px 0;margin-bottom: 10px;color:#b5b5b5;font-size: x-small;">{{.Transfer.GoldAmount}}g</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- summary table -->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- Button -->
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top: 30px;">
+                <tbody>
+                <tr>
+                    <td align="center" valign="top">
+                        <a href="{{.AppEnv.Url}}/send-gold-email-verify?encEmail={{.EncEmail}}&emailVf={{.Transfer.EmailVerification}}&id={{.Transfer.TransferID}}" style="max-width: 290px;width: 100%;color: #fff;border-radius: 50px;height: 38px;line-height: 38px;text-align: center;background: linear-gradient(to right, #cf9537 , #e3bc68);display: block;text-decoration: none;font-family: 'Montserrat', sans-serif;font-weight: 600;font-size: 14px;">Go to confirm page</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!-- Button -->
+
+            <!-- Thankyou text -->
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top: 30px;">
+                <tbody>
+                <tr>
+                    <td align="center" valign="top">
+                        <div style="color: #ddaf52;font-weight: 700;font-family: 'Playfair Display', serif;font-size: 24px;">Thank you!</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!-- Thankyou text -->
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- Main text -->
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!-- Email content area -->
+
+            <!-- Footer -->
+            <table border="0" cellspacing="0" cellpadding="0" width="100%"  style="padding: 30px;" class="footer-area">
+                <tbody>
+                <tr>
+                    <td align="center" valign="top">
+
+                        <!-- footer top -->
+                        <table border="0" cellspacing="0" cellpadding="0" width="100%">
+                            <tbody>
+                            <tr>
+                                <td width="150" class="footer-top-left">
+                                    <!-- Left -->
+                                    <table border="0" cellspacing="0" cellpadding="0" width="100%">
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <a href="javascript:;"><img src="{{.AppEnv.Url}}/assets{{range .Wbsts}}{{if (eq .ContentName "Footer Logo")}}{{.Content}}{{end}}{{end}}" alt="logo-2" border="0"></a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- Left -->
+                                </td>
+                                <td width="450" class="footer-top-right">
+                                    <!-- Right -->
+                                    <table border="0" cellspacing="0" cellpadding="0" width="100%">
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <div style="color: #b5b5b5;font-family: 'Montserrat', sans-serif;font-size: 12px;text-align: right;">GoldStore is ready for you, are you ready for GoldStore?</div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- Right -->
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- footer top -->
+
+                        <!-- join area -->
+                        <table border="0" cellspacing="0" cellpadding="0" width="100%" style="padding-top: 30px;">
+                            <tbody>
+                            <tr>
+                                <td width="300" class="footer-bottom-left">
+                                    <a href="{{.AppEnv.Url}}" style="font-family: 'Montserrat', sans-serif;color: #fff;font-weight: 700;text-decoration: none;text-align: left;">JOIN NOW!</a>
+                                </td>
+                                <td width="120" class="footer-bottom-blank"></td>
+                                <td width="180" class="footer-bottom-right">
+                                    <p {{/*style="color: #b5b5b5;border-bottom: 1px solid #e3bc68;display: block;text-align: right;padding-bottom: 5px;"*/}}>{{.Adm.Company_Email.Value.String}}</p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- join area -->
+
+                        <!-- footer text area -->
+                        {{/*<table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top: 30px;" class="footer-text-area">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <div style="color: #b5b5b5;font-family: 'Montserrat', sans-serif;font-size: 12px;margin-bottom: 15px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                                    <div style="color: #b5b5b5;font-family: 'Montserrat', sans-serif;font-size: 12px;">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo del consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla lim pariatur versus miel.</div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>*/}}
+                        <!-- footer text area -->
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!-- Footer -->
+
+
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+
+
+</body>
+</html>

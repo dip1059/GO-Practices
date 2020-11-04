@@ -1,0 +1,423 @@
+{{template "adminHeader" .}}
+
+<div class="col-md-12 mb-4">
+    <div class="card text-left">
+
+        <div class="card-body">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link {{if (eq .Data "prm")}} active {{end}}" id="home-basic-tab" data-toggle="tab"
+                       href="#homeBasic" role="tab"
+                       aria-controls="homeBasic" aria-selected="true">Primary Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{if (eq .Data "fees")}} active {{end}}" id="home-basic-tab" data-toggle="tab"
+                       href="#fees" role="tab"
+                       aria-controls="homeBasic" aria-selected="true">Fees Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{if (eq .Data "pmt")}} active {{end}}" id="contact-basic-tab" data-toggle="tab"
+                       href="#payMethod" role="tab"
+                       aria-controls="contactBasic" aria-selected="false">Payment Method Settings</a>
+                </li>
+                {{/*<li class="nav-item">
+                    <a class="nav-link {{if (eq .Data "bank")}} active {{end}}" id="profile-basic-tab" data-toggle="tab"
+                       href="#profileBasic" role="tab"
+                       aria-controls="profileBasic" aria-selected="false">Bank Details Settings</a>
+                </li>*/}}
+                <li class="nav-item">
+                    <a class="nav-link {{if (eq .Data "gs")}} active {{end}}" id="contact-basic-tab" data-toggle="tab"
+                       href="#contactBasic" role="tab"
+                       aria-controls="contactBasic" aria-selected="false">General Settings</a>
+                </li>
+                {{/*<li class="nav-item">
+                    <a class="nav-link {{if (eq .Data "ets")}} active {{end}}" id="contact-basic-tab" data-toggle="tab"
+                       href="#emailTemp" role="tab"
+                       aria-controls="contactBasic" aria-selected="false">Email Template Settings</a>
+                </li>*/}}
+            </ul>
+
+            <div class="tab-content" id="myTabContent">
+
+                <div class="tab-pane fade {{if (eq .Data "prm")}} show active {{end}}" id="homeBasic" role="tabpanel"
+                     aria-labelledby="home-basic-tab">
+                    <div class="table-responsive">
+                        <table id="zero_configuration_table" class="display table table-striped table-bordered"
+                               style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Value</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {{$Adm := .Adm}}
+                            {{range .AdminSettings}}
+                                {{if or (lt .ID 7) (gt .ID 16)}}
+                                    <tr>
+                                        <td class="center">{{.Slug}}</td>
+                                        <td class="center">
+                                            {{.Value.String}}
+                                        </td>
+                                        <td class="center">
+                                            <a class="text-success mr-2" href="/edit-admin-setting/{{.Slug}}?tab=prm">
+                                                <i class="nav-icon i-Pen-2 font-weight-bold" title="Edit"></i>
+                                            </a>
+                                            {{/*<a class="text-danger mr-2 confirm-anchor" href="/delete-admin-setting/{{.ID}}" data-header="Want to Delete?">
+                                                <i class="nav-icon i-Close-Window font-weight-bold" title="Delete"></i>
+                                            </a>*/}}
+                                        </td>
+                                    </tr>
+                                {{end}}
+                            {{end}}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade {{if (eq .Data "fees")}} show active {{end}}" id="fees" role="tabpanel"
+                     aria-labelledby="home-basic-tab">
+                    <div class="table-responsive">
+                        <table id="zero_configuration_table" class="display table table-striped table-bordered"
+                               style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Value</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {{range .AdminSettings}}
+                                {{if and (gt .ID 6) (lt .ID 17)}}
+                                    <tr>
+                                        <td class="center">{{.Slug}}</td>
+                                        <td class="center">
+                                            {{.Value.String}}
+                                        </td>
+                                        <td class="center">
+                                            <a class="text-success mr-2" href="/edit-admin-setting/{{.Slug}}?tab=fees">
+                                                <i class="nav-icon i-Pen-2 font-weight-bold" title="Edit"></i>
+                                            </a>
+                                            {{/*<a class="text-danger mr-2 confirm-anchor" href="/delete-admin-setting/{{.ID}}" data-header="Want to Delete?">
+                                                <i class="nav-icon i-Close-Window font-weight-bold" title="Delete"></i>
+                                            </a>*/}}
+                                        </td>
+                                    </tr>
+                                {{end}}
+                            {{end}}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tab-pane {{if (eq .Data "pmt")}} show active {{end}} fade" id="payMethod"
+                     role="tabpanel" aria-labelledby="profile-basic-tab">
+                    <div class="table-responsive">
+                        <table id="zero_configuration_table3" class="display table table-striped table-bordered"
+                               style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Method</th>
+                                {{/*<th>Description</th>*/}}
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {{range .PayMethods}}
+                                <tr>
+                                    <td class="center">{{.ID}}</td>
+                                    <td class="center">{{.Method}}</td>
+                                    {{/*<td class="center">{{.Description.String}}</td>*/}}
+                                    <td class="center">
+                                        {{if (eq .Status 1)}}
+
+                                            <span class="badge badge-pill badge-success p-2 m-1">Active</span>
+
+                                        {{else if (eq .Status 0)}}
+
+                                            <span class="badge badge-pill badge-light p-2 m-1">Inactive</span>
+
+                                        {{end}}
+                                    </td>
+                                    <td class="center">
+                                        {{if and (ne .ID 7) (eq .Status 1)}}
+                                            <a href="/make-payMethod-inactive/{{.ID}}">
+                                                <img src="/assets/Public/Admin/images/thumb_down.png"
+                                                     style="height: 20px; width: 20px" title="Make Inactive">
+                                            </a>
+
+                                        {{else if and (ne .ID 7) (eq .Status 0)}}
+                                            <a href="/make-payMethod-active/{{.ID}}">
+                                                <img src="/assets/Public/Admin/images/thumb_up.png"
+                                                     style="height: 15px; width: 15px" title="Make Active">
+                                            </a>
+                                        {{end}}
+
+                                        {{/*&nbsp&nbsp<a class="text-success mr-2" href="/edit-payMethod/{{.ID}}">
+                                            <i class="nav-icon i-Pen-2 font-weight-bold" title="Edit"></i>
+                                        </a>*/}}
+                                        {{/*<a class="text-danger mr-2 confirm-anchor" href="/delete-payMethod/{{.ID}}" class="confirm-anchor" data-header="Want to Delete?">
+                                            <i class="nav-icon i-Close-Window font-weight-bold" title="Delete"></i>
+                                        </a>*/}}
+                                    </td>
+                                </tr>
+                            {{end}}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tab-pane {{if (eq .Data "bank")}} show active {{end}} fade" id="profileBasic"
+                     role="tabpanel" aria-labelledby="profile-basic-tab">
+                    {{/*<div class="card mt-4">
+                        <div class="card-body">*/}}
+                    <div class="accordion" id="accordionRightIcon">
+                        <div class="card ">
+                            <div class="card-header header-elements-inline">
+                                <h6 class="card-title ul-collapse__icon--size ul-collapse__right-icon mb-0">
+                                    <a data-toggle="collapse" class="text-default collapsed"
+                                       href="#accordion-item-icon-right-1"
+                                       aria-expanded="false" style="color:black">Add Bank</a>
+                                </h6>
+                            </div>
+                            <div id="accordion-item-icon-right-1" class="collapse" data-parent="#accordionRightIcon"
+                                 style="">
+                                <div class="card-body">
+                                    <form action="/add-bank" method="post">
+                                        <div class="row">
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="firstName1">Bank Name</label>
+                                                <input type="text" class="form-control" id="firstName1"
+                                                       placeholder="Enter Bank Name" name="name" required>
+                                            </div>
+
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="exampleInputEmail1">Bank Details</label>
+                                                <textarea class="form-control" aria-label="With textarea"
+                                                          name="details" rows="10"></textarea>
+                                                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                                            </div>
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label class="checkbox checkbox-primary">
+                                                    <input type="checkbox" value="1" name="status">
+                                                    <span>Active Status</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <button type="submit" class="btn btn-primary">Add Bank</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header header-elements-inline">
+                                <h6 class="card-title ul-collapse__icon--size ul-collapse__right-icon mb-0">
+                                    <a data-toggle="collapse" class="text-default collapsed"
+                                       href="#accordion-item-icon-right-2" style="color:black">All Bank</a>
+                                </h6>
+                            </div>
+                            <div id="accordion-item-icon-right-2" class="collapse "
+                                 data-parent="#accordionRightIcon">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="zero_configuration_table2"
+                                               class="display table table-striped table-bordered" style="width:100%">
+                                            <thead>
+                                            <tr>
+                                                <th>Bank Name</th>
+                                                <th>Details</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            {{range .Banks}}
+                                                <tr>
+                                                    <td class="center">{{.Name}}</td>
+                                                    <td class="center">{{.Details}}</td>
+                                                    <td class="center">
+                                                        {{if (eq .Status 1)}}
+
+                                                            <span class="badge badge-pill badge-success p-2 m-1">Active</span>
+
+                                                        {{else if (eq .Status 0)}}
+
+                                                            <span class="badge badge-pill badge-light p-2 m-1">Inactive</span>
+
+                                                        {{end}}
+                                                    </td>
+
+                                                    <td class="center">
+                                                        {{if (eq .Status 1)}}
+                                                            <a href="/make-bank-inactive/{{.ID}}">
+                                                                <img src="/assets/Public/Admin/images/thumb_down.png"
+                                                                     style="height: 20px; width: 20px"
+                                                                     title="Make Inactive">
+                                                            </a>
+
+                                                        {{else if (eq .Status 0)}}
+                                                            <a href="/make-bank-active/{{.ID}}">
+                                                                <img src="/assets/Public/Admin/images/thumb_up.png"
+                                                                     style="height: 15px; width: 15px"
+                                                                     title="Make Active">
+                                                            </a>
+                                                        {{end}}
+
+                                                        &nbsp&nbsp<a class="text-success mr-2"
+                                                                     href="/edit-bank/{{.ID}}">
+                                                            <i class="nav-icon i-Pen-2 font-weight-bold"
+                                                               title="Edit"></i>
+                                                        </a>
+                                                        {{/*<a class="text-danger mr-2 confirm-anchor" href="/delete-bank/{{.ID}}"
+                                                           class="confirm-anchor" data-header="Want to Delete?">
+                                                            <i class="nav-icon i-Close-Window font-weight-bold"
+                                                               title="Delete"></i>
+                                                        </a>*/}}
+                                                    </td>
+                                                </tr>
+                                            {{end}}
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    {{/*</div>
+                    </div>*/}}
+                </div>
+
+                <div class="tab-pane {{if (eq .Data "gs")}} show active {{end}} fade" id="contactBasic"
+                     role="tabpanel" aria-labelledby="contact-basic-tab">
+                    <div class="account-details-form">
+                        <form action="/update-user/admin" method="post">
+                            <legend>General change</legend>
+                            <input type="hidden" name="form" value="general">
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="first-name" class="required">
+                                    First Name</label>
+                                <input class="form-control" type="text" id="first-name"
+                                       placeholder="Full Name" name="first_name"
+                                       value="{{.User.FirstName}}"/>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="last-name" class="required">
+                                    Last Name</label>
+                                <input class="form-control" type="text" id="last-name"
+                                       placeholder="Full Name" name="last_name"
+                                       value="{{.User.LastName}}"/>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+
+                                <label for="email" class="required">Email</label>
+                                <input class="form-control" type="email" id="email"
+                                       placeholder="Email" name="email"
+                                       value="{{.User.Email}}"/>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="display-name" class="required">Phone
+                                </label>
+                                <input class="form-control" type="text" id="display-name"
+                                       placeholder="Phone" name="phone"
+                                       value="{{.User.Phone}}"/>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="country" class="required">Country</label>
+                                <select class="form-control" name="country" id="country">
+                                    {{$userCountry := .User.CountryCode}}
+                                    {{range .Countries}}
+                                        <option value="{{.Key}}"
+                                                {{if (eq .Value $userCountry)}} selected {{end}}>
+                                            {{.Value}}
+                                        </option>
+                                    {{end}}
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="current-pwd" class="required">Current
+                                    Password</label>
+                                <input class="form-control" type="password" id="current-pwd"
+                                       placeholder="Current Password" name="current_password" required/>
+                            </div>
+
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </form>
+
+                        <br>
+
+                        <form action="/update-user/admin" method="post">
+                            <fieldset>
+                                <legend>Password change</legend>
+                                <input type="hidden" name="form" value="password">
+                                <div class="row">
+                                    <div class="col-md-6 form-group mb-3">
+                                        <label for="current-pwd" class="required">Current
+                                            Password</label>
+                                        <input class="form-control" type="password" id="current-pwd"
+                                               placeholder="Current Password" name="current_password" required/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 form-group mb-3">
+
+                                        <label for="new-pwd" class="required">New
+                                            Password</label>
+                                        <input class="form-control" type="password" id="new-pwd"
+                                               placeholder="New Password" name="new_password" required/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 form-group mb-3">
+
+                                        <label for="cnf-pwd" class="required">Confirm
+                                            Password</label>
+                                        <input class="form-control" type="password" id="cnf-pwd"
+                                               placeholder="Confirm Password" name="confirm_password" required/>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="tab-pane {{if (eq .Data "ets")}} show active {{end}} fade" id="emailTemp"
+                     role="tabpanel" aria-labelledby="profile-basic-tab">
+                    Email Template
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{{template "adminFooter" .}}

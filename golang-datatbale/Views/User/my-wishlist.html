@@ -1,0 +1,153 @@
+{{template "userHeader" . }}
+
+<div class="gold-cart-area">
+    <div class="container">
+        <div class="row">
+            {{template "userAccountSideNav" . }}
+            <div class="col-lg-8">
+
+                <div class="gold-cart-left gold-account-cart-left">
+                    <div class="card-header">
+                        <div class="gold-wishlist-header">
+                            <h4>my wishlist</h4>
+                            {{if .Wishlist}}
+                                <ul>
+                                    {{/*<li>
+                                        <a href="javascript:;" class="gold-share">
+                                            <i class="fa fa-share-alt"></i>
+                                            share wishlist
+                                        </a>
+                                    </li>*/}}
+                                    <li><a href="/add-all-to-cart" class="gold-all-add-cart">add all to cart</a></li>
+                                </ul>
+                            {{end}}
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="gold-wishlist-area">
+                            {{if .Wishlist}}
+                                {{range .Wishlist}}
+                                    <div class="gold-single-cart">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-3">
+                                                <div class="gold-cart-img">
+                                                    <img src="/assets{{.Product.ImgUrl.String}}" class="img-fluid" alt="">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <div class="gold-cart-info">
+                                                    {{/*<div class="gold-cart-review">
+                                                <ul class="d-flex">
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star-half-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li class="gold-review-count">(234 Reviews)</li>
+                                                </ul>
+                                            </div>*/}}
+                                                    <a style="color:#000000;" href="/product-details/{{.Product.ID}}"><h4 class="gold-cart-title">{{.Product.Title}}</h4></a>
+                                                    <div class="gold-cart-price">
+                                                        {{if .Product.Discount}}
+                                                            <p><span>€ {{.Product.DiscountPrice}}</span><del>€ {{.Product.Price}}</del></p>
+                                                        {{else}}
+                                                            <p><span>€ {{.Product.Price}}</span></p>
+                                                        {{end}}
+                                                    </div>
+                                                    <div class="gold-cart-option">
+                                                        <ul class="d-flex align-items-center">
+                                                            <li><a href="/remove-from-wishlist/{{.ID}}/0">Delete</a></li>
+                                                            <li><a href="/add-cart/{{.Product.ID}}/1/cart">Add to cart</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {{end}}
+
+                            {{else}}
+                                <h6>&nbsp&nbsp&nbsp&nbsp{{.Lang.ConvertString "No product available."}}</h6>
+                            {{end}}
+                        </div>
+                    </div>
+                    <div class="card-footer gold-wishlist-footer">
+                        <ul>
+                            {{/*<li>
+                                <a href="javascript:;" class="gold-share">
+                                    <i class="fa fa-share-alt"></i>
+                                    share wishlist
+                                </a>
+                            </li>*/}}
+                            {{/*<li><a href="javascript:;" class="gold-all-add-cart">add all to cart</a></li>*/}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{template "userFooterWithoutScripts" . }}
+
+
+{{template "userFooterWithScripts" . }}
+
+{{/*write scripts here*/}}
+
+
+
+<script>
+
+    function updateCart(proId) {
+
+        let type = $('#type-'+proId).val();
+        let qty = $('#proQty-'+proId).val();
+        let url = '/add-cart/'+proId+'/'+qty+'/cart?process=update&ajax=true';
+        let method = 'get';
+        let data = {};
+
+        if (type == 2) {
+            method = 'post';
+            url = '/add-cart?process=update&ajax=true';
+            data = {
+                'id': proId,
+                'amount': qty,
+                'data': "cart"
+            };
+        }
+
+        $.ajax({
+            url: url,
+            method: method,
+            data: data
+
+        }).done(function (data) {
+            window.location.reload();
+        }).fail(function (error) {
+            window.location.reload();
+        });
+    }
+
+</script>
+
+<script>
+    $(document).on("click", ".quantity-btn", function (event) {
+        let proId = $(this).data("pro-id");
+        let qty = parseInt($('#proQty-'+proId).val());
+        let min = parseInt($('#proQty-'+proId).attr("min"));
+        let max = parseInt($('#proQty-'+proId).attr("max"));
+        let type = $('#type-'+proId).val();
+
+        if (type == 2) {
+            if (qty < min) {
+                $('#proQty-' + proId).val(min);
+            } else if (qty > max) {
+                $('#proQty-' + proId).val(max);
+            }
+        }
+    });
+</script>
+
+
+{{template "userFooterFinal" . }}

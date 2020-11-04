@@ -1,0 +1,155 @@
+{{template "userHeader" . }}
+
+<div class="gold-cart-area">
+    <div class="container">
+        <div class="row">
+            {{template "userAccountSideNav" . }}
+
+            <div class="col-lg-8">
+                <div class="gold-cart-left gold-account-cart-left gold-wallet-transfer-cart-left">
+                    <div class="card-header">
+                        <div class="gold-wishlist-header">
+                            <h4>gold transfer confirmation</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="gold-wishlist-area">
+                            <div class="table-responsive">
+                                <table id="zero_configuration_table" class="display table table-striped table-bordered" style="width:100%">
+                                    <thead>
+                                    <tr>
+                                        <th>Transfer ID</th>
+                                        <th>Transfer Type</th>
+                                        <th>Receiver</th>
+                                        <th>Requested Amount</th>
+                                        <th>Sender Fees</th>
+                                        <th>Amount To Be Deducted</th>
+                                        <th>Receiver Fees</th>
+                                        <th>Receiver Will Get</th>
+                                        <th>Created At</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {{range .User.GoldTransfers}}
+                                        <tr>
+                                            <td class="center">{{.TransferID}}</td>
+                                            {{if eq .DeliveryType 1}}
+                                                <td class="center">Wallet</td>
+                                            {{else if eq .DeliveryType 2}}
+                                                <td class="center">Shipping</td>
+                                            {{end}}
+                                            <td class="center">{{.ReceiverUser.Email}}</td>
+                                            <td class="center">{{.GoldAmount}}g</td>
+                                            <td class="center">{{.SenderTotalFees}}g</td>
+                                            <td class="center">{{.AmountToDeduct}}g</td>
+                                            <td class="center">{{.ReceiverTotalFees}}g</td>
+                                            <td class="center">{{.ReceiverAmount}}g</td>
+                                            <td class="center"><script>
+                                                    str = {{.CreatedAt}};
+                                                    d = str.substr(0, 10);
+                                                    t = str.substr(11, 8);
+                                                    dt = d + " " + t;
+                                                    document.write(dt);
+                                                </script></td>
+
+                                            {{/*<td class="center">
+                                                <div class="dropdown">
+                                                    <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Action
+                                                    </button>
+                                                    <div class="dropdown-menu window-size" aria-labelledby="dropdownMenuButton">
+                                                        <ul align="left">
+                                                            <li>
+                                                                <a href="/edit-karat/"><i class="fa fa-pencil" aria-hidden="true"></i>Edit</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </td>*/}}
+                                        </tr>
+                                    {{end}}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            {{if eq (index .User.GoldTransfers 0).DeliveryType 2}}
+                            <div class="container">
+                                <br><br>
+                                <h4>Shipping Information</h4><br>
+                                <p><strong>Name:</strong> &nbsp{{(index .User.GoldTransfers 0).ShipAddress.FirstName}} {{(index .User.GoldTransfers 0).ShipAddress.LastName}}</p>
+                                <p><strong>Address:</strong> &nbsp{{(index .User.GoldTransfers 0).ShipAddress.Address}}</p>
+                                <p><strong>Apartment:</strong> &nbsp{{(index .User.GoldTransfers 0).ShipAddress.Apartment}}</p>
+                                <p><strong>City:</strong> &nbsp{{(index .User.GoldTransfers 0).ShipAddress.City}}</p>
+                                <p><strong>Zip Code:</strong> &nbsp{{(index .User.GoldTransfers 0).ShipAddress.ZipCode}}</p>
+                                <p><strong>State:</strong> &nbsp{{(index .User.GoldTransfers 0).ShipAddress.State}}</p>
+                                <p><strong>Country:</strong> &nbsp{{(index .User.GoldTransfers 0).ShipAddress.Country}}</p>
+                                <p><strong>Phone:</strong> &nbsp{{(index .User.GoldTransfers 0).ShipAddress.Phone}}</p>
+
+                                <p><strong>Tracking Code:</strong> &nbsp{{(index .User.GoldTransfers 0).TrackCode}}</p>
+                            </div>
+                            {{end}}
+
+                            <div class="gold-single-cart">
+                                <div class="row align-items-center">
+                                    <div class="col-md-12">
+                                        <div class="gold-cart-info">
+                                            <div class="gold-cart-option mt-3">
+                                                <ul class="d-flex align-items-center">
+                                                    <li class="wallet-transfer-price">
+                                                        <h3><span><b>Your Balance: </b></span> {{.User.Wallet.GoldAmount}} g</h3>
+                                                    </li>
+                                                    <li class="gold-cart-dropdown"></li>
+                                                    <li class="gold-cart-dropdown"></li>
+                                                    <li class="gold-cart-dropdown"></li>
+                                                    <li class="gold-cart-dropdown"></li>
+                                                    <li class="gold-cart-dropdown"></li>
+                                                    <li class="gold-cart-dropdown"></li>
+                                                    <li class="gold-cart-dropdown"></li><br><br>
+                                                    {{if gt (index .User.GoldTransfers 0).AmountToDeduct .User.Wallet.GoldAmount}}
+                                                        <li class="badge badge-danger">
+                                                            <i class="fa fa-arrow-right mr-1"></i>
+                                                            You don't have enough balance.
+                                                        </li>
+                                                    {{else}}
+                                                        <div class="col-md-12">
+                                                            <li id="ship">
+                                                                <a class="gold-wishlist-add-card" href="/update-gold-send?encEmail={{.EncEmail}}&emailVf={{.EmailVf}}&id={{(index .User.GoldTransfers 0).TransferID}}&status=confirm">
+                                                                    <i class="fa fa-arrow-right mr-1"></i>
+                                                                    Confirm
+                                                                </a>
+                                                            </li>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <li id="wallet">
+                                                                <a class="gold-wishlist-add-card" href="/update-gold-send?encEmail={{.EncEmail}}&emailVf={{.EmailVf}}&id={{(index .User.GoldTransfers 0).TransferID}}&status=cancel">
+                                                                    <i class="fa fa-arrow-right mr-1"></i>
+                                                                    Cancel
+                                                                </a>
+                                                            </li>
+                                                        </div>
+                                                    {{end}}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{{template "userFooterWithoutScripts" . }}
+
+
+{{template "userFooterWithScripts" . }}
+
+{{/*write scripts here*/}}
+
+
+
+{{template "userFooterFinal" . }}

@@ -1,0 +1,29 @@
+{{template "adminHeader" .}}
+
+
+<h2> Edit Admin Setting </h2>
+<form action="/update-admin-setting?tab={{.Tab}}" method="post">
+    <div class="row">
+        <input type="hidden" name="id" value="{{.AdminSetting.ID}}">
+        <input type="hidden" name="slug" value="{{.AdminSetting.Slug}}">
+        {{/*{{if eq .AdminSetting.Slug "Transfer_Fees"}}
+            <div class="col-md-6 form-group mb-3">
+                <label for="picker1">Select Type</label>
+                <select class="form-control" name="fees_type" required>
+                    <option {{if eq .Adm.Transfer_Fees_Type.Value.String "1"}} selected {{end}} value="1">Percentage(%)</option>
+                    <option {{if eq .Adm.Transfer_Fees_Type.Value.String "2"}} selected {{end}} value="2">Fixed(mg)</option>
+                </select>
+            </div>
+        {{end}}*/}}
+
+        <div class="col-md-6 form-group mb-3">
+            <label for="firstName1">{{.AdminSetting.Slug}}</label><input type="text" class="form-control" id="firstName1" required placeholder="Enter {{.AdminSetting.Slug}}" value="{{.AdminSetting.Value.String}}" name="value">
+        </div>
+
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+    </div>
+</form>
+
+{{template "adminFooter" .}}

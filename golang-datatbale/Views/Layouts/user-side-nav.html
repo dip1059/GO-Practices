@@ -1,0 +1,20 @@
+{{define "userAccountSideNav"}}
+
+    <div class="col-lg-4">
+    <div class="gold-cart-right">
+        <h4 class="gold-total-cart-title">My Account</h4>
+        <ul class="gold-profile">
+            <ul>
+                <li {{if eq .NavActive "Orders"}}class="active"{{end}}><a href="/account/orders">My Orders</a></li>
+                <li {{if eq .NavActive "Wallet"}}class="active"{{end}}><a href="/account/wallet">My Wallet</a></li>
+                <li {{if eq .NavActive "Address"}}class="active"{{end}}><a href="/account/address">My Address</a></li>
+                <li {{if eq .NavActive "Wishlist"}}class="active"{{end}}><a href="/account/wishlist">My Wishlist</a></li>
+                {{/*<li {{if eq .NavActive "Reviews"}}class="active"{{end}}><a href="/account/reviews">My reviews</a></li>
+                <li {{if eq .NavActive "Login-Security"}}class="active"{{end}}><a href="/account/login-security">Login and Security</a></li>*/}}
+            </ul>
+        </ul>
+        <a href="/logout" class="gold-profile-logout-btn">logout</a>
+    </div>
+</div>
+
+{{end}}

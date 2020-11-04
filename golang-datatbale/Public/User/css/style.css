@@ -1,0 +1,2985 @@
+/*-----------------------------------------------------------
+-------------------------------------------------------------
+
+Theme Name: Ratul
+Theme URI: https://wordpress.org/themes/twentyseventeen/
+Author: Neuron Finance team
+Author URI: https://wordpress.org/
+Description: Neuron Finance brings your site to life with immersive featured images and subtle animations. With a focus on business sites, it features multiple sections on the front page as well as widgets, navigation and social menus, a logo, and more. Personalize its asymmetrical grid with a custom color scheme and showcase your multimedia content with post formats. Our default theme for 2017 works great in many languages, for any abilities, and on any device.
+Version: 1.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: neuronfinance
+Tags: one-column, two-columns, right-sidebar, flexible-header, accessibility-ready, custom-colors, custom-header, custom-menu, custom-logo, editor-style, featured-images, footer-widgets, post-formats, rtl-language-support, sticky-post, theme-options, threaded-comments, translation-ready
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
+
+-------------------------------------------------------------
+*-----------------------------------------------------------*
+    
+CSS INDEX
+-------------------------------------------------------------
+-------------------------------------------------------------
+
+01) Common Style Css (body, link color, section etc)
+
+-------------------------------------------------------------
+-----------------------------------------------------------*/
+
+
+/* -------------------------------------------------------------
+        ::::::: (01). Start Common Style Css :::::::
+-------------------------------------------------------------*/
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900|Playfair+Display:400,700,900&display=swap');
+
+
+*,
+ul,
+ol {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-size: 14px;
+    font-family: 'Playfair Display', serif;
+    margin: 0;
+    padding: 0;
+    background: #202020;
+    position: relative;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+a,
+a:hover,
+a:focus,
+a:active {
+    text-decoration: none !important;
+}
+
+input:focus,
+a:hover,
+a:focus,
+a:active,
+button:focus,
+select:focus {
+    outline: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+}
+
+p {
+    line-height: 30px;
+}
+
+.btn,
+.btn:hover,
+.btn:focus,
+.btn:active {
+    box-shadow: none !important;
+    outline: none !important;
+    border-radius: 0;
+}
+
+
+/* -------------------------------------------------------------
+::::::: (01). End Common Style Css :::::::
+-------------------------------------------------------------*/
+
+/* -------------------------------------------------------------
+::::::: (02). Start Header style :::::::
+-------------------------------------------------------------*/
+
+.gold-nav,
+.gold-nav ul li a,
+.gold-cart-select,
+.gold-header {
+    position: relative;
+}
+
+.gold-header {
+    background: #202020;
+}
+
+
+.gold-nav::after {
+    position: absolute;
+    content: '';
+    border-right: 1px solid #454545;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 30px;
+}
+
+.gold-footer-menu ul li a,
+.gold-nav ul li a {
+    display: block;
+    padding: 38px 0;
+}
+
+.gold-footer-menu ul li:not(:last-child),
+.gold-nav ul li:not(:last-child) {
+    margin-right: 30px;
+}
+
+.gold-user-option li:not(:first-child) {
+    margin-left: 30px;
+}
+
+.gold-footer-menu ul li a,
+.gold-nav ul li a,
+.gold-user-option li a {
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+}
+
+.gold-nav ul li:hover a,
+.gold-footer-menu ul li:hover a,
+.gold-footer-menu ul li.gold-active a,
+.gold-nav ul li.gold-active a {
+    color: #d0ad59;
+    transition: all 0.2s;
+}
+
+.gold-nav ul li a::after {
+    position: absolute;
+    content: '';
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    height: 4px;
+    background: linear-gradient(to right, #bf943e, #d9bc71);
+    border-radius: 5px;
+    transform-origin: center;
+    transform: scaleX(0);
+    transition: all 0.2s;
+}
+
+.gold-nav ul li:hover a::after,
+.gold-nav ul li.gold-active a::after {
+    transform: scaleX(1);
+}
+
+
+.gold-cart-select select {
+    border: none;
+    background: linear-gradient(to right, #be933e, #d8ba6f);
+    color: #fff;
+    border-radius: 20px;
+    font-size: 16px;
+    width: 100%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.gold-cart-select select option {
+    background: linear-gradient(to right, #be933e, #d8ba6f);
+    color: #000;
+}
+
+.gold-cart-select {
+    display: inline-block;
+}
+
+.gold-cart-info span{
+    padding: 0 5px 0 0;
+    font-family: 'Montserrat', sans-serif;
+}
+.gold-cart-info .quantity-input .quantity{
+    color: #000;
+}
+.gold-cart-info .gold-cart-option .quantity-btn {
+    color: #020202;
+}
+.gold-cart-info .gold-cart-option .quantity-btn.add {
+    right: 38px;
+}
+
+/*.gold-cart-select::after {
+    position: absolute;
+    content: '\f107';
+    font-family: fontawesome;
+    color: #fff;
+    top: 55%;
+    right: 12px;
+    transform: translateY(-50%);
+    font-size: 18px;
+}*/
+
+.gold-search {
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+    line-height: 36px;
+    text-align: center;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #454545;
+    cursor: pointer;
+}
+
+ul#navigation {
+    padding-right: 40px;
+}
+
+
+/* mobile menu */
+.slicknav_menu {
+    display: none
+}
+
+/* -------------------------------------------------------------
+::::::: (02). End Header style :::::::
+-------------------------------------------------------------*/
+
+
+/* -------------------------------------------------------------
+::::::: (03). Start Banner style :::::::
+-------------------------------------------------------------*/
+
+.gold-banner {
+    background: url(../images/banner-bg.jpg) no-repeat center center / cover;
+    padding: 100px 0;
+    color: #fff;
+}
+
+.gold-banner-subtitle {
+    background: linear-gradient(to right, #ae7b25 0%, #d3c089 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 20px;
+}
+
+.gold-banner-title {
+    font-size: 60px;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    padding: 40px 0;
+}
+
+.gold-banner-text {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.gold-banner-price-range {
+    padding: 54px 0;
+}
+
+.gold-banner-price-range li:not(:last-child) {
+    margin-right: 30px;
+}
+
+.gold-banner-price-range li label {
+    margin-bottom: 0;
+}
+
+.gold-price h4 {
+    font-size: 24px;
+    color: #d0ad59;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.gold-price h4 span {
+    font-size: 14px;
+    color: #fff;
+}
+
+.gold-cart-button {
+    width: 100%;
+    background: transparent;
+    font-weight: 500;
+    color: #fff;
+    /*display: block;*/
+    max-width: 170px;
+    padding: 10px 15px;
+}
+
+.gold-cart-button,
+.gold-cart-button:hover {
+    border: 2px solid #be933e;
+    border-radius: 50px;
+}
+
+.quantity-input {
+    position: relative;
+    margin-right: 30px;
+}
+
+.quantity-input .quantity {
+    border: 1px solid #626262;
+    border-radius: 50px;
+    max-width: 170px;
+    width: 100%;
+    background: transparent;
+    color: #fff;
+    padding: 5px 30px;
+    font-size: 20px;
+    height: 50px;
+    text-align: center;
+}
+
+.quantity-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.quantity-btn:hover {
+    color: #be933e;
+}
+
+.quantity-btn.sub {
+    left: 25px;
+}
+
+.quantity-btn.add {
+    right: 25px;
+}
+
+
+/* radio button style */
+[type="radio"]:checked,
+[type="radio"]:not(:checked) {
+    position: absolute;
+    left: -9999px;
+}
+
+[type="radio"]:checked+label,
+[type="radio"]:not(:checked)+label {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    line-height: 20px;
+    display: inline-block;
+    color: #fff;
+    font-size: 20px;
+}
+
+[type="radio"]:checked+label:before,
+[type="radio"]:not(:checked)+label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 22px;
+    height: 22px;
+    border: 1px solid #626262;
+    border-radius: 100%;
+}
+
+[type="radio"]:checked+label:after,
+[type="radio"]:not(:checked)+label:after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background: linear-gradient(to right, #be933e, #d8ba6f);
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    border-radius: 100%;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+[type="radio"]:not(:checked)+label:after {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+}
+
+[type="radio"]:checked+label:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
+
+/* -------------------------------------------------------------
+::::::: (03). End Banner style :::::::
+-------------------------------------------------------------*/
+
+
+
+/* -------------------------------------------------------------
+::::::: (04). Start Product style :::::::
+-------------------------------------------------------------*/
+
+.gold-product-body-light{
+    background: #fff !important;
+}
+.gold-product-body-light .gold-preduct-details{
+    padding-top: 60px;
+}
+
+.gold-product {
+    padding: 100px 0;
+}
+
+.gold-today {
+    font-size: 120px;
+    font-weight: 700;
+    color: #343434;
+    font-family: 'Playfair Display', serif;
+    line-height: 115px;
+}
+
+.gold-analytic-area {
+    margin-top: -18px;
+    padding-bottom: 100px;
+}
+
+.gold-analytic {
+    display: flex;
+    font-family: 'Montserrat', sans-serif;
+    justify-content: space-between;
+}
+
+.gold-analytic .title {
+    color: #fff;
+}
+
+.gold-analytic .value {
+    color: #d0ad59;
+    font-size: 24px;
+}
+
+.gold-analytic-subtitle {
+    font-size: 12px;
+    color: #bebebe;
+    text-transform: uppercase;
+}
+
+
+/* gold product area */
+.gold-product-title {
+    font-size: 24px;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    color: #fff;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.gold-product-title span {
+    color: #d0ad59;
+}
+
+.gold-product-title::after {
+    position: absolute;
+    content: '';
+    width: 80%;
+    bottom: 0;
+    right: 0;
+    height: 1px;
+    background: #343434;
+}
+
+.single-gold {
+    color: #fff;
+    padding: 15px;
+    margin-top: 30px;
+    float: left;
+    width: 25%;
+    min-height: 475px;
+    border-right: 1px solid #343434;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.single-gold .product-img img {
+    height: 230px;
+    width: 100%;
+    object-fit: cover;
+}
+
+
+.single-gold:nth-child(4n) {
+    border-right: none;
+}
+
+.single-gold .product-top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.single-gold .product-top .favorite {
+    margin-left: auto;
+}
+
+.single-gold .dis-tag {
+    background: #d41b1b;
+    color: #fff;
+    width: 70px;
+    height: 34px;
+    line-height: 34px;
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.single-gold .favorite {
+    font-size: 20px;
+}
+
+.product-bottom {
+    margin-top: 50px;
+}
+
+.product-bottom .top {
+    margin-bottom: 28px;
+    font-size: 18px;
+}
+
+.product-bottom .top .gr {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+.product-bottom .top .k {
+    font-family: 'Playfair Display', serif;
+    color: #d0ad59;
+    position: relative;
+    padding-left: 20px;
+}
+
+.product-bottom .top .k::after {
+    position: absolute;
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50px;
+    background: linear-gradient(to right, #be933e, #d8ba6f);
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+
+.product-bottom .bottom .price {
+    font-size: 18px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+.product-bottom .bottom .price span {
+    font-size: 14px;
+    color: #939393;
+}
+
+.product-bottom .bottom .add-cart-btn {
+    font-size: 14px;
+    color: #d0ad59;
+}
+
+.product-bottom .bottom .add-cart-btn img {
+    margin-right: 10px;
+}
+
+.view-all-product {
+    background: linear-gradient(to right, #be933e, #d8ba6f);
+    width: 270px;
+    display: table;
+    text-align: center;
+    border-radius: 50px;
+    color: #fff;
+    text-transform: uppercase;
+    margin: auto;
+}
+
+.view-all-product span {
+    background: #202020;
+    display: block;
+    margin: 2px;
+    border-radius: 50px;
+    height: 50px;
+    line-height: 50px;
+}
+
+.view-all-product:hover {
+    color: #fff;
+}
+
+.view-all-product:hover span {
+    background: linear-gradient(to right, #be933e, #d8ba6f);
+}
+
+.more-gold {
+    margin-top: 50px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+.swiper-slide-thumb {
+    height: 105px !important;
+}
+
+.product-thumbs {
+    height: 450px !important;
+}
+
+.swiper-container {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.swiper-button-prev,
+.swiper-container-rtl .swiper-button-next,
+.swiper-button-next,
+.swiper-container-rtl .swiper-button-prev {
+    /*background: url('');*/
+    font-size: 40px;
+}
+
+.swiper-button-next,
+.swiper-button-prev{
+    position: absolute;
+    height: 45px;
+    width: 45px;
+    line-height: 45px;
+    text-align: center;
+    font-size: 20px;
+    background: #ededed;
+    color: #e9b94b;
+}
+
+.swiper-button-disabled{
+    background: #fff;
+    color: #000;
+    opacity: 1 !important;  
+}
+.swiper-button-next {
+    left: 45px;
+}
+.swiper-button-next i{
+    transform: rotate(-90deg);
+}
+.swiper-button-prev{
+    left: 0;
+}
+.swiper-button-prev i{
+    transform: rotate(-90deg);    
+}
+.gold-slider-arrow{
+    position: absolute;
+    top: 95%;
+}
+
+.swiper-gold-slide{
+    position: relative;
+}
+.gold-detail-tag{
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: #d41b1b;
+    color: #fff;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    width: 70px;
+    text-align: center;
+    height: 34px;
+    line-height: 34px;
+}
+.gold-detail-breadcrumb{
+    background: transparent;
+    padding: 0;
+}
+.gold-detail-breadcrumb a,
+.gold-favorite-btn{
+    color: #939393;    
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+}
+.gold-detail-title{
+    font-size: 46px;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+}
+.product-detail-price h4{
+    font-size: 24px;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    color: #e9b94b;
+    margin: 35px 0;
+}
+.product-detail-price h4 span{
+    color: #939393;
+    font-size: 16px;
+    margin-left: 18px;
+}
+.gold-detail-info-right p{
+    font-family: 'Montserrat', sans-serif;
+}
+.gold-detail-info-right .quantity-input .quantity-btn,
+.gold-detail-info-right .quantity-input input{
+    color: #000;
+}
+.gold-detail-info-right .quantity-input{
+    margin: 30px 0;
+}
+.gold-detail-info-right .quantity-input input{
+    border: 1px solid #dbdbdb;
+    padding-top: 0px;
+    padding-bottom: 0;
+    height: 38px;
+    line-height: 38px;
+    font-family: 'Montserrat', sans-serif;
+}
+.gold-detail-info-right .quantity-input .quantity-btn.sub{
+    border-right: 1px solid #dbdbdb; 
+    padding-right: 15px;
+}
+.gold-detail-info-right .quantity-input .quantity-btn.add{
+    border-left: 1px solid #dbdbdb; 
+    padding-left: 15px;
+}
+.gold-detail-info-right .gold-cart-button{
+    max-width: 230px;
+    background: #000;
+    color: #fff;
+    border-color: #000;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+.gold-detail-info-right .gold-cart-button:focus{
+    border-radius: 50px;
+}
+.gold-detail-info-right .gold-cart-button img{
+    margin-right: 15px;
+}
+.gold-detail-info-right .review-star{
+    margin: 30px 0;
+}
+
+.swiper-slide{
+    background: transparent !important;
+}
+
+/* -------------------------------------------------------------
+::::::: (04). End Product style :::::::
+-------------------------------------------------------------*/
+
+
+
+/* -------------------------------------------------------------
+::::::: (05). Start About style :::::::
+-------------------------------------------------------------*/
+
+.gold-about {
+    position: relative;
+}
+
+.gold-about::after {
+    position: absolute;
+    content: '';
+    background: url(../images/about-banner.jpg) no-repeat center center / cover;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+}
+
+.gold-info {
+    color: #fff;
+    padding: 60px 0 72px;
+}
+
+.gold-info h2 {
+    font-size: 60px;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 50px;
+    line-height: 75px;
+}
+
+.gold-info h2 span {
+    color: #d0ad59;
+}
+
+.gold-info P:not(:last-child) {
+    margin-bottom: 30px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* -------------------------------------------------------------
+::::::: (05). End About style :::::::
+-------------------------------------------------------------*/
+
+
+/* -------------------------------------------------------------
+::::::: (06). Start add banner style :::::::
+-------------------------------------------------------------*/
+
+.gold-add {
+    background: url(../images/add-banner.jpg) no-repeat center center / cover;
+    padding: 100px 0;
+    color: #fff;
+}
+
+.gold-add-2 {
+    background: url(../images/add-banner-2.jpg) no-repeat center center / cover;
+}
+
+.gold-add h3 {
+    font-size: 42px;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    margin: 40px 0;
+}
+
+.gold-add p,
+.add-banner-btn {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.add-banner-btn {
+    width: 170px;
+    background: linear-gradient(to right, #be933e, #d8ba6f);
+    border-radius: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    display: block;
+    margin-top: 40px;
+}
+
+.add-banner-btn,
+.add-banner-btn:hover {
+    color: #fff;
+}
+
+
+/* -------------------------------------------------------------
+::::::: (06). End add banner style :::::::
+-------------------------------------------------------------*/
+
+
+/* -------------------------------------------------------------
+::::::: (07). Start newsletter style :::::::
+-------------------------------------------------------------*/
+
+.gold-newletter {
+    text-align: center;
+    padding: 100px 0;
+}
+
+.gold-newletter .sub-title {
+    font-size: 16px;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 10px;
+}
+
+.gold-newletter .sub-title,
+.gold-newletter .tagline {
+    color: #fff;
+}
+
+.gold-newletter .tagline,
+.subscribe-form .form-control,
+.subscribe-form .newsletter-btn,
+.gold-newletter h3 {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.gold-newletter h3 {
+    font-size: 42px;
+    font-weight: 700;
+    color: #d0ad59;
+    text-transform: uppercase;
+}
+
+.subscribe-form {
+    position: relative;
+    margin: 30px 0;
+}
+
+.subscribe-form .form-control {
+    width: 100%;
+    height: 40px;
+    padding-left: 30px;
+    padding-right: 137px;
+    border: none;
+}
+
+.subscribe-form .form-control:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.subscribe-form .form-control::-webkit-input-placeholder {
+    color: #000;
+}
+
+.subscribe-form .form-control::-moz-placeholder {
+    color: #000;
+}
+
+.subscribe-form .form-control:-ms-input-placeholder {
+    color: #000;
+}
+
+.subscribe-form .form-control:-moz-placeholder {
+    color: #000;
+}
+
+.subscribe-form .form-control,
+.subscribe-form .newsletter-btn {
+    border-radius: 55px;
+}
+
+.subscribe-form .newsletter-btn {
+    position: absolute;
+    height: 100%;
+    width: 135px;
+    text-align: center;
+    color: #fff;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+}
+
+.subscribe-form .newsletter-btn,
+.subscribe-form .newsletter-btn:hover,
+.subscribe-form .newsletter-btn:active,
+.subscribe-form .newsletter-btn:focus {
+    background: linear-gradient(to right, #ae7c25, #d8ba6f) !important;
+}
+
+.gold-newletter-light {
+    background: #fff;
+    color: #000;
+}
+
+.gold-newletter.gold-newletter-light .sub-title,
+.gold-newletter.gold-newletter-light .tagline {
+    color: #000;
+}
+
+.gold-newletter.gold-newletter-light .subscribe-form .form-control {
+    background: #ededed;
+}
+
+.gold-newletter.gold-newletter-light .subscribe-form .newsletter-btn {
+    font-size: 14px;
+}
+
+.gold-newletter.gold-newletter-light .subscribe-form .newsletter-btn img {
+    margin-right: 6px;
+}
+
+.gold-newletter.gold-newletter-light .subscribe-form .newsletter-btn,
+.gold-newletter.gold-newletter-light .subscribe-form .newsletter-btn:hover,
+.gold-newletter.gold-newletter-light .subscribe-form .newsletter-btn:active,
+.gold-newletter.gold-newletter-light .subscribe-form .newsletter-btn:focus {
+    background: #000 !important;
+    font-weight: 700 !important;
+}
+
+/* -------------------------------------------------------------
+::::::: (07). End newsletter style :::::::
+-------------------------------------------------------------*/
+
+
+/* -------------------------------------------------------------
+::::::: (08). Start gold brand style :::::::
+-------------------------------------------------------------*/
+
+.gold-brand {
+    padding-bottom: 100px;
+}
+
+.brand-area {
+    margin-top: 100px;
+}
+
+.gold-brand-title {
+    font-size: 140px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: #343434;
+    line-height: 1;
+    position: relative;
+}
+
+.gold-brand-title::after {
+    position: absolute;
+    content: '';
+    width: 640px;
+    height: 25px;
+    border-top: 1px solid #454545;
+    background: #202020;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+
+
+.gold-product-light {
+    background: #fff;
+}
+
+
+.gold-brand-light {
+    padding-top: 100px;
+}
+
+.gold-brand-light .gold-brand-title {
+    font-size: 24px;
+    letter-spacing: 8px;
+    color: #939393;
+}
+
+.gold-brand-light .gold-brand-title::after {
+    display: none;
+}
+
+.gold-brand-light .brand-area {
+    margin-top: 50px;
+}
+
+.gold-product-light .gold-product-title {
+    color: #080808;
+}
+
+.gold-product-light .gold-product-title::after {
+    background: #dbdbdb;
+}
+
+.gold-product-light .single-gold {
+    border-color: #dbdbdb;
+    transition: all 0.3s;
+}
+
+.gold-product-light .single-gold:hover {
+    box-shadow: 0 0 20px -4px rgba(0, 0, 0, 0.2);
+}
+
+.gold-product-light .single-gold .product-bottom p {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.gold-product-light .single-gold .product-bottom p,
+.gold-product-light .single-gold .product-bottom .bottom,
+.gold-product-light .single-gold .product-bottom .bottom .add-cart-btn {
+    color: #000;
+}
+
+.gold-product-light .single-gold .product-bottom .bottom .add-cart-btn {
+    font-weight: 600;
+}
+
+.gold-product-light .single-gold .gold-product-carousel .owl-dots {
+    margin-top: 30px;
+}
+
+.gold-product-carousel.owl-theme .owl-dots .owl-dot.active span,
+.gold-product-carousel.owl-theme .owl-dots .owl-dot:hover span {
+    background: #080808;
+}
+
+.gold-product-light .product-bottom {
+    margin-top: 20px;
+}
+
+.more-gold-light {
+    margin-bottom: 50px;
+}
+
+.view-all-product.view-all-product-light span {
+    background: #fff;
+    color: #000;
+}
+
+.view-all-product.view-all-product-light {
+    background: linear-gradient(to right, #e2a941, #edc563);
+    font-weight: 600;
+}
+
+.gold-product-light .single-gold .add-cart-btn span {
+    transition: all 0.3s;
+    padding-bottom: 10px;
+}
+
+.gold-product-light .single-gold:hover .add-cart-btn span {
+    border-bottom: 1px solid #000 !important;
+}
+
+/* -------------------------------------------------------------
+::::::: (08). End gold brand style :::::::
+-------------------------------------------------------------*/
+
+
+
+/* -------------------------------------------------------------
+::::::: (09). Start product page style :::::::
+-------------------------------------------------------------*/
+
+.gold-extra-info {
+    background: #fff;
+    padding-top: 100px;
+}
+
+.gold-extra-info .nav-pills {
+    border-bottom: 1px solid #dbdbdb;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.gold-extra-info .nav-pills .nav-link {
+    color: #000;
+    padding: 0;
+    padding-bottom: 20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+}
+
+.gold-extra-info .nav-pills .nav-link.active {
+    background: transparent;
+    position: relative;
+}
+
+.gold-extra-info .nav-pills .nav-link.active::after {
+    position: absolute;
+    content: '';
+    /*background: ;*/
+    background: linear-gradient(to right, #dfa030, #efc96a);
+    width: 100%;
+    height: 4px;
+    border-radius: 10px;
+    left: 0;
+    top: 97%;
+}
+
+.extra-gold-info {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.additional-information {
+    padding: 30px 0;
+}
+
+.additional-information h3,
+.extra-gold-info h3 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 35px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.extra-gold-info h3 span {
+    color: #e9b94b;
+}
+
+.additional-information p,
+.additional-information ul li,
+.extra-gold-info ul li,
+.extra-gold-info p {
+    color: #939393;
+}
+
+.extra-gold-info ul {
+    margin-top: 30px;
+}
+
+.additional-information ul li,
+.extra-gold-info ul li {
+    position: relative;
+    padding-left: 20px;
+}
+
+.additional-information ul li:not(:last-child),
+.extra-gold-info ul li:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.additional-information ul li::after,
+.extra-gold-info ul li::after {
+    position: absolute;
+    content: '';
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #e9b94b;
+    border-radius: 50px;
+    height: 5px;
+    width: 5px;
+}
+
+.extra-gold-info {
+    padding: 30px;
+}
+
+.additional-information ul {
+    margin: 30px 0;
+}
+
+
+.review-star span {
+    margin-right: 6px;
+    font-size: 20px;
+    color: #e9b94b;
+}
+
+.total-review .review-star span {
+    font-size: 30px;
+}
+
+.gold-total-reviews {
+    padding: 30px;
+}
+
+.review-progress {
+    width: 150px;
+    margin: 0 10px;
+}
+
+.review-progress .progress {
+    height: 12px;
+    background-color: #e9ecef;
+    border-radius: 0;
+}
+
+.review-progress .progress .progress-bar {
+    background-color: #e9b94b;
+
+}
+
+.five-star {
+    width: 100%;
+}
+
+.four-star {
+    width: 80%;
+}
+
+.three-star {
+    width: 60%;
+}
+
+.two-star {
+    width: 40%;
+}
+
+.one-star {
+    width: 20%;
+}
+
+.star-count {
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    color: #939393;
+}
+
+/* thumbnial slider */
+.swiper-container {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+/* -------------------------------------------------------------
+::::::: (09). End product page style :::::::
+-------------------------------------------------------------*/
+
+
+/* -------------------------------------------------------------
+::::::: (10). Start account page style :::::::
+-------------------------------------------------------------*/
+
+
+.gold-profile {
+    border-top: 1px solid #e4e4e4;
+    border-bottom: 1px solid #e4e4e4;
+    margin-bottom: 30px;
+    padding: 20px 0;
+}
+
+.gold-profile li a {
+    color: #000;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.gold-profile li:not(:last-child) {
+    margin-bottom: 15px;
+}
+
+.gold-profile li:hover a,
+.gold-profile li.active a {
+    color: #dfa030
+}
+
+.gold-profile-logout-btn {
+    color: #000;
+    margin-top: 30px;
+    text-transform: uppercase;
+}
+
+.gold-profile-logout-btn:hover {
+    color: #000;
+}
+
+.gold-buy-btn {
+    color: #dfa030 !important;
+    font-weight: 700;
+}
+
+.gold-cart-qty {
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.gold-account-cart-left {
+    padding: 0 !important;
+}
+
+.gold-account-cart-left .card-header {
+    background: #fff;
+}
+
+.gold-account-cart-left .card-header ul li {
+    color: #000;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.gold-account-cart-left .card-header ul li span {
+    color: #939393;
+    margin-right: 5px;
+}
+
+.gold-truck-order-btn {
+    background: #dfa030;
+    width: 130px;
+    font-size: 13px;
+}
+.gold-truck-order-btn img{
+    width: 16px;
+    margin-right: 0 !important;
+}
+.gold-truck-order-btn,
+.gold-truck-order-btn:hover {
+    border-radius: 50px !important;
+    color: #fff !important;
+}
+
+.gold-truck-order-confirmation {
+    font-weight: 600;
+}
+
+.gold-truck-order-confirmation,
+.gold-truck-order-confirmation:hover {
+    color: #000;
+}
+
+
+.gold-account {
+    background: #fff;
+    border-radius: 15px;
+    margin: 15px 0;
+    padding: 30px 15px;
+}
+
+.img-area {
+    position: relative;
+    height: 150px;
+    width: 150px;
+    border-radius: 50px;
+    overflow: hidden;
+}
+.img-area > img{
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    object-fit: cover;
+}
+.upload {
+    position: absolute;
+    top: 73%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 25px;
+}
+
+#exampleFormControlFile1 {
+    cursor: pointer;
+    z-index: 99;
+}
+
+.sub-option-area {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #dbdbdb;
+    padding-top: 50px;
+    margin-top: 30px;
+}
+
+.sub-option:not(:first-child) {
+    border-left: 1px solid #dbdbdb;
+    padding-left: 30px;
+}
+
+.sub-option {
+    text-align: center;
+    display: block;
+    padding: 0 15px;
+}
+
+.sub-option h4 {
+    color: #dfa030;
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 10px;
+}
+
+.profile-user-info .site-tag {
+    color: #dfa030;
+    text-transform: uppercase;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.profile-user-info h2 {
+    font-family: 'Montserrat', sans-serif;
+    color: #000;
+    font-size: 20px;
+}
+
+.profile-user-info h5 {
+    font-family: 'Montserrat', sans-serif;
+    margin: 15px 0;
+    font-size: 14px;
+}
+
+.profile-user-info p {
+    font-size: 10px;
+    color: #939393;
+}
+
+.edit-btn a {
+    color: #939393;
+    font-size: 12px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.edit-btn a img {
+    margin-left: 10px;
+}
+
+.dropdown-menu.window-size{
+    min-width: 98px !important;
+}
+.dropdown-menu.window-size ul li a{
+    font-size: 14px;
+}
+
+/* -------------------------------------------------------------
+::::::: (10). End account page style :::::::
+-------------------------------------------------------------*/
+
+
+
+/* -------------------------------------------------------------
+::::::: (09). Start search style :::::::
+-------------------------------------------------------------*/
+
+.gold-search-form {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    top: 0;
+    left: 0;
+    display: table;
+}
+
+.gold-search-form-inner {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.gold-search-form-area {
+    position: relative;
+}
+
+.gold-search-form-area .form-control {
+    border-radius: 50px;
+    height: 40px;
+    border: none;
+    padding-left: 15px;
+    padding-right: 82px;
+}
+
+.gold-search-form-area .form-control:focus {
+    outline: none;
+}
+
+.gold-search-form-area .gold-search-btn {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    border-radius: 50px;
+    width: 80px;
+    height: 100%;
+}
+
+.gold-search-form-area .gold-search-btn:hover,
+.gold-search-form-area .gold-search-btn:focus,
+.gold-search-form-area .gold-search-btn:active,
+.gold-search-form-area .gold-search-btn {
+    background: linear-gradient(to right, #ae7c25, #d8ba6f) !important;
+}
+
+.search-close {
+    color: #fff;
+    font-size: 20px;
+    position: absolute;
+    bottom: 130px;
+    right: 50%;
+    cursor: pointer;
+    border: 1px solid #303030;
+    height: 40px;
+    width: 40px;
+    line-height: 36px;
+    text-align: center;
+    border-radius: 50px;
+}
+
+.gold-search-hide {
+    visibility: hidden;
+    opacity: 0;
+}
+
+/* -------------------------------------------------------------
+::::::: (09). End search style :::::::
+-------------------------------------------------------------*/
+
+
+
+
+/* -------------------------------------------------------------
+::::::: (10). Start Cart Page style :::::::
+-------------------------------------------------------------*/
+
+.gold-body-light {
+    background: #f2f2f2;
+}
+
+
+.gold-cart-right,
+.save-product,
+.gold-cart-left {
+    background: #fff !important;
+}
+
+
+/*.gold-header-light,
+.gold-footer-light*/
+
+/*.gold-footer-light{
+    border-top: none !important;
+}*/
+
+/*.gold-header-light,
+.gold-footer-light,
+.gold-header-light a,
+.gold-footer-light a{
+    color: #000 !important;    
+}
+.gold-header-light ul li.gold-active a,
+.gold-header-light .gold-nav ul li:hover a,
+.gold-footer-light .gold-footer-menu ul li:hover a,
+.gold-footer-light ul li.gold-active a{
+    color: #e9b94b !important;
+}*/
+
+.gold-cart-title {
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+}
+
+.gold-cart-price p span {
+    color: #e9b94b;
+    font-size: 16px;
+    margin-right: 15px;
+    font-weight: 500;
+}
+
+.gold-cart-price p {
+    font-family: 'Montserrat', sans-serif;
+    color: #939393;
+    font-size: 12px;
+}
+
+/* cart review */
+
+.gold-cart-review ul li {
+    font-size: 18px;
+    color: #e9b94b;
+    cursor: pointer;
+}
+
+.gold-cart-review ul li:not(:last-child) {
+    margin-right: 5px;
+}
+
+.gold-cart-review li.gold-review-count {
+    color: #939393;
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+.gold-cart-dropdown .btn {
+    background: transparent;
+    color: #000;
+    border: none;
+    border-bottom: 1px solid #000;
+    padding: 0;
+    display: block;
+    padding-bottom: 8px;
+}
+
+.gold-cart-dropdown .btn:active,
+.gold-cart-dropdown .btn:focus {
+    background-color: transparent !important;
+    color: #000 !important;
+}
+
+.gold-cart-dropdown .btn {
+    font-size: 12px;
+}
+
+.gold-cart-dropdown .btn span {
+    margin-right: 12px;
+}
+
+.gold-cart-dropdown .btn,
+.gold-cart-dropdown .dropdown-menu a,
+.gold-cart-dropdown .btn span {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.gold-cart-dropdown .dropdown-menu {
+    min-width: 4rem;
+    border-radius: 0;
+    padding: 0;
+}
+
+.gold-cart-dropdown .dropdown-menu a {
+    padding: 1px 0;
+    text-align: center;
+    font-size: 12px;
+}
+
+.gold-cart-dropdown .dropdown-toggle::after {
+    content: "\f107";
+    font-family: fontawesome;
+    vertical-align: inherit;
+    border: none;
+    display: inline-table;
+    font-size: 18px;
+    color: #939393;
+}
+
+.gold-cart-option ul li:not(:last-child) {
+    margin-right: 30px;
+    border-right: 1px solid #ededed;
+    padding-right: 30px;
+}
+
+.gold-single-cart {
+    padding: 15px 30px;
+}
+
+.gold-single-cart:not(:last-child) {
+    border-bottom: 1px solid #ededed;
+}
+
+.gold-cart-review {
+    margin-bottom: 15px;
+}
+
+.gold-cart-price {
+    margin: 15px 0;
+}
+
+.gold-cart-option ul li a {
+    color: #000;
+    padding: 6px 0;
+    display: block;
+}
+
+.gold-cart-right,
+.save-product,
+.gold-cart-left {
+    border-radius: 10px;
+    margin: 15px 0;
+}
+
+.cart-total-price {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.cart-total-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-right: 30px;
+}
+
+.gold-cart-right,
+.save-product-title,
+.cart-total-title,
+.cart-total-price {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.save-product-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 40px;
+    text-transform: uppercase;
+}
+
+.save-product {
+    margin-bottom: 40px;
+}
+
+.save-product,
+.gold-cart-left {
+    padding: 30px 0;
+}
+
+.gold-cart-right {
+    padding: 30px;
+}
+
+.gold-total-cart-title {
+    font-weight: 700;
+    font-size: 18px;
+    padding-bottom: 20px;
+}
+
+.gold-cart-price-count-total,
+.gold-cart-price-amount,
+.gold-cart-price-count-total .gold-cart-price-title {
+    color: #000;
+}
+
+.gold-cart-price-count-total {
+    border-top: 1px solid #e4e4e4;
+    border-bottom: 1px solid #e4e4e4;
+    padding: 20px 0;
+}
+
+.gold-cart-price-count-total li:not(:last-child) {
+    margin-bottom: 15px;
+}
+
+.gold-cart-total-price .gold-cart-total-price-title,
+.gold-cart-price-count-total .gold-cart-price-title {
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.gold-cart-total-price .gold-cart-total-price-amount,
+.gold-cart-price-count-total .gold-cart-price-amount {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.gold-cart-total-price {
+    margin-top: 20px;
+}
+
+.gold-cart-total-price .gold-cart-total-price-amount {
+    font-size: 20px;
+}
+
+.gold-cart-payment-btn-area {
+    text-align: center;
+}
+
+.gold-payment-cart-btn {
+    display: block;
+    text-align: center;
+    background: #dfa030;
+    padding: 0;
+    height: 48px;
+    line-height: 48px;
+    margin-top: 30px;
+}
+
+.gold-payment-cart-btn,
+.gold-payment-cart-btn:active,
+.gold-payment-cart-btn:focus,
+.gold-payment-cart-btn:hover {
+    border-radius: 50px !important;
+    color: #fff !important;
+}
+
+
+/* -------------------------------------------------------------
+::::::: (10). End Cart Page style :::::::
+-------------------------------------------------------------*/
+
+
+
+
+/* -------------------------------------------------------------
+::::::: (11). Start user style :::::::
+-------------------------------------------------------------*/
+
+
+.gold-user-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: table;
+    width: 100%;
+    height: 100vh;
+}
+
+.gold-user-area-inner {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.gold-user-area-content {
+    max-width: 970px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 50px;
+}
+
+.gold-login-form-border {
+    border-right: 1px solid #30303030;
+    padding-right: 50px;
+}
+
+.gold-login-form-border-left {
+    padding-left: 15px;
+}
+
+.gold-user-area-title {
+    margin-bottom: 50px;
+}
+
+.gold-user-area-content label {
+    color: #dfa030;
+    font-size: 12px;
+    margin-bottom: 18px;
+    text-transform: capitalize;
+}
+
+.gold-user-area-content p,
+.gold-solcial-login-btn,
+.gold-user-forgetpass,
+.gold-user-submit-btn,
+.gold-user-area-content label,
+.gold-user-area-content .form-control {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.gold-user-area-content .form-control {
+    border-radius: 0;
+    outline: none;
+    color: #000;
+    font-size: 14px;
+    border: none;
+    border-bottom: 1px solid #454545;
+    padding: 0;
+    padding-bottom: 10px;
+}
+
+.gold-user-area-content .form-control:focus {
+    box-shadow: none;
+}
+
+.gold-user-area-content .form-group:not(:last-child) {
+    margin-bottom: 35px;
+}
+
+.gold-user-forgetpass {
+    color: #939393;
+    font-size: 13px;
+    border-bottom: 1px solid #dbdbdb;
+    padding-bottom: 6px;
+}
+
+.gold-user-forgetpass:hover {
+    color: #939393;
+}
+
+.gold-user-submit-btn {
+    width: 100%;
+    padding: 10px 0;
+    background: #000;
+    color: #fff;
+}
+
+.gold-user-submit-btn,
+.gold-user-submit-btn:active,
+.gold-user-submit-btn:focus,
+.gold-user-submit-btn:hover {
+    border-radius: 50px !important;
+}
+
+.gold-solcial-login-btn {
+    border-radius: 50px;
+    display: block;
+    text-align: center;
+    padding: 10px 15px;
+    font-weight: 600;
+}
+
+.gold-solcial-login-btn:not(:last-child) {
+    margin-bottom: 35px;
+}
+
+.gold-solcial-login-btn img {
+    margin-right: 20px;
+}
+
+.gold-solcial-login-btn-facebook {
+    background: #3a559f;
+}
+
+.gold-solcial-login-btn-facebook,
+.gold-solcial-login-btn-facebook:hover {
+    color: #fff;
+}
+
+.gold-solcial-login-btn-google {
+    border: 1px solid #000;
+}
+
+.gold-solcial-login-btn-google,
+.gold-solcial-login-btn-google:hover {
+    color: #000;
+}
+
+.gold-user-area-content p {
+    color: #939393;
+}
+
+.gold-user-area-title h3 {
+    margin-bottom: 15px;
+    color: #000;
+    font-weight: 700;
+}
+
+.gold-select-group select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* -------------------------------------------------------------
+::::::: (11). End user style :::::::
+-------------------------------------------------------------*/
+
+
+
+/* -------------------------------------------------------------
+::::::: (12). Start Address :::::::
+-------------------------------------------------------------*/
+.gold-address-card {
+    min-height: 600px;
+}
+.gold-wishlist-header h4,
+.gold-address-header h4{
+    font-size: 20px;
+}
+.gold-wishlist-header h4,
+.gold-address-header h4,
+.gold-address-header .gold-new-address{
+    text-transform: capitalize;
+    font-weight: 700;
+}
+
+.gold-all-add-cart,
+.gold-address-header .gold-new-address{
+    background: #F3A11A;
+    color: #fff;
+    border-radius: 20px;
+    min-width: 175px;
+    height: 35px;
+    display: block;
+    text-align: center;
+    line-height: 35px;
+}
+.gold-address-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.gold-address-header,
+.gold-single-address{
+    font-family: 'Montserrat', sans-serif;
+}
+
+.gold-address-area,
+.gold-address-options{
+    display: flex;
+}
+.gold-address-options{
+    margin-top: 30px;
+}
+.gold-address-options li:not(:last-child){
+    margin-right: 20px;
+}
+.gold-address-options li span{
+    background: #1A1A1A;
+    border-radius: 5px;
+    padding: 5px 12px;
+}
+.gold-address-options li span,
+.gold-address-options li a{
+    text-transform: capitalize;
+    color: #F3A11A;
+    font-size: 14px;
+}
+.gold-address-options li a{
+    border-bottom: 1px solid #F3A11A;
+}
+
+.gold-address-area{
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.gold-address-area .gold-single-address {
+    padding: 30px;
+    border-radius: 5px;
+    margin: 15px 0;
+}
+/*.gold-address-area .gold-single-address:first-child{
+    border: 1px solid #be933e;
+}*/
+
+.gold-address-area .gold-single-address h4{
+    margin-bottom: 10px;
+    font-size: 18px;
+    text-transform: capitalize;
+}
+
+.gold-address-area .gold-single-address span.phone{
+    color: #F3A11A;
+    font-size: 13px;
+    margin: 10px 0;
+    display: block;
+}
+
+.gold-address-area .gold-single-address p{
+    font-size: 13px;
+    color: #4e4e4e;
+}
+/* -------------------------------------------------------------
+::::::: (12). End Address :::::::
+-------------------------------------------------------------*/
+
+
+/* -------------------------------------------------------------
+::::::: (13). Start Wishlist :::::::
+-------------------------------------------------------------*/
+
+.gold-wishlist-header ul,
+.gold-wishlist-header{
+    display: flex;
+    align-items: center;
+}
+.gold-wishlist-header ul li a,
+.gold-wishlist-header h4{
+    text-transform: capitalize;
+}
+.gold-wishlist-header{
+    justify-content: space-between;
+    font-family: 'Montserrat', sans-serif;
+}
+.gold-wishlist-header ul li:not(:last-child){
+    margin-right: 20px;
+}
+
+.gold-wishlist-area .gold-cart-option li a{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    color: #717171;
+}
+
+.gold-wishlist-area .gold-cart-option li a.gold-wishlist-add-card{
+    color: #F3A11A;
+    font-weight: 700;
+}
+
+.gold-share {
+    color: #202020;
+}
+
+.gold-share i{
+    color: #F3A11A;
+    font-size: 22px;
+    margin-right: 10px;
+}
+.gold-wishlist-footer{
+    background: #fff;
+    border-top: 1px solid #f0f0f0;
+    padding: 20px;
+}
+.gold-wishlist-footer ul{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.gold-wishlist-footer ul li:not(:last-child){
+    margin-right: 25px;
+}
+.gold-wishlist-footer ul li a{
+    text-transform: capitalize;
+    font-family: 'Montserrat', sans-serif;
+}
+.gold-wishlist-footer .gold-all-add-cart{
+    font-weight: 700;
+}
+
+/* -------------------------------------------------------------
+::::::: (13). End Wishlist :::::::
+-------------------------------------------------------------*/
+
+/* -------------------------------------------------------------
+::::::: (14). Start Checkout :::::::
+-------------------------------------------------------------*/
+.gold-checkout-area{
+    margin-top: 30px;
+}
+.gold-checkout-area .accordion .card.gold-chackout-card {
+    border: none !important;
+    padding: 30px !important;
+    margin-bottom: 30px;
+    border-radius: 10px;
+}
+.gold-checkout-area{
+    padding: 0;
+}
+.gold-chackout-card .card-header{
+    padding: 0;
+    border-bottom: none;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.gold-chackout-card .nav-pills .nav-link{
+    margin-right: 30px;
+    border: 2px solid #808080;
+    color: #161616;
+    background-color: transparent;
+    padding: 0;
+    height: 80px;
+    line-height: 80px;
+    min-width: 150px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+.gold-chackout-card .nav-pills .nav-item:last-child .nav-link{
+    margin-right: 0;
+}
+.gold-chackout-card .nav-pills .nav-link.active {
+    border: none;
+    background: linear-gradient(to right, #be933e, #d8ba6f);
+    position: relative;
+    z-index: 1;
+}
+.gold-chackout-card .nav-pills .nav-link.active::after {
+    position: absolute;
+    content: '';
+    background: #fff;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    height: 95%;
+    width: 97%;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.gold-chackout-card .card-header .btn,
+.gold-chackout-card .card-header{
+    background: transparent;
+}
+
+.gold-chackout-card .card-header .btn{
+    display: block;
+    width: 100%;
+    text-align: left;
+    position: relative;
+    padding: 0;
+}
+.gold-chackout-card .card-header .btn::after{
+    position: absolute;
+    content: '\f107';
+    font-family: fontawesome;
+    font-size: 30px;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.gold-chackout-card .form-control{
+    border-radius: 0 !important;
+    border: none !important;
+    border-bottom: 1px solid #cfcfcf !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    color: #080808;
+    padding-bottom: 8px !important;
+}
+.gold-chackout-card .form-control.mobile-number{
+    padding-left: 10px !important;
+}
+.gold-chackout-card .input-group .input-group-text{
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #cfcfcf !important;
+    border-radius: 0;
+    padding: 0;
+
+}
+
+/*noinspection CssInvalidPropertyValue*/
+.gold-chackout-card select.form-control,
+.gold-chackout-card select.form-control:not([size]):not([multiple]) {
+    height: initial;
+    color: #000000;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    -ms-progress-appearance: none;
+}
+.gold-chackout-card .form-control::-webkit-input-placeholder {
+  color: #74787d;
+  font-size: 12px;
+  font-family: 'Montserrat', sans-serif;
+}
+.gold-chackout-card .form-control::-moz-placeholder { 
+  color: #74787d;
+  font-size: 12px;
+  font-family: 'Montserrat', sans-serif;
+}
+.gold-chackout-card .form-control:-ms-input-placeholder { 
+  color: #74787d;
+  font-size: 12px;
+  font-family: 'Montserrat', sans-serif;
+}
+.gold-chackout-card .form-control:-moz-placeholder { 
+  color: #74787d;
+  font-size: 12px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.gold-chackout-card label{
+    font-size: 12px;
+    color: #F3A11A;
+    text-transform: capitalize;
+    margin-bottom: 5px;
+    font-family: 'Montserrat', sans-serif;
+}
+.gold-chackout-card label.form-check-label{
+    margin-bottom: 0;
+}
+/* .gold-chackout-card [type="radio"]:checked+label:before, .gold-chackout-card [type="radio"]:not(:checked)+label:before {
+    top: -2px;
+} */
+.gold-chackout-card .form-check{
+    padding-left: 0 !important;
+    margin-top: 15px;
+}
+.gold-chackout-card .form-check label{
+    color: #080808;
+    font-size: 14px;
+}
+.chaeckout-address-submit-btn{
+    display: flex;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    align-items: center;
+}
+
+.chaeckout-address-submit-btn li:not(:last-child){
+    margin-right: 50px;
+}
+.input-group-prepend .input-group-text{
+    padding-right: 10px !important;
+}
+.country-flag img{
+    width: 25px;
+}
+.gold-checkout-save-address-btn{
+    border: 1px solid #F3A11A;
+    color: #080808;
+    min-width: 180px;
+    background: transparent;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 12px 30px;
+}
+
+.gold-checkout-save-address-btn,
+.gold-checkout-save-address-btn:hover,
+.gold-checkout-save-address-btn:focus,
+.gold-checkout-save-address-btn:active{
+    border-radius: 50px !important;
+}
+.gold-checkout-address-cancel-btn{
+    background: transparent;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.gold-chackout-card .tab-content [type="radio"]:checked+label:before, .gold-chackout-card .tab-content [type="radio"]:not(:checked)+label:before {
+    top: 0;
+}
+
+.gold-chackout-card .tab-content .tab-pane{
+    padding: 15px 30px 30px;
+}
+.gold-checkout-payment-card-collapse{
+    margin-top: 30px;
+}
+.gold-checkout-confirm-btn-area{
+    margin-top: 30px;
+}
+
+.gold-checkout-confirm-btn-area .add-new-card a{
+    color: #080808;
+    font-family: 'Montserrat', sans-serif;
+}
+.gold-checkout-confirm-btn-area .add-new-card {
+    margin-bottom: 15px;
+}
+
+.gold-checkout-confirm-btn-area .add-new-card .plus{
+    font-size: 30px;
+    color: #F3A11A;
+}
+.gold-checkout-confirm-btn-area .gold-payment-card-confirm-btn{
+    border: 1px solid #F3A11A;
+    background: transparent;
+    font-weight: 700;
+    border-radius: 20px;
+    min-width: 170px;
+    padding: 10px 30px;
+    color: #080808;
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 15px;
+    display: inline-block;
+}
+
+.gold-checkout-review{
+    background: transparent;
+    font-family: 'Montserrat', sans-serif;
+    border: none;
+}
+
+.card-header.gold-checkout-review span,
+.gold-checkout-area .card-header span{
+    color: #F3A11A;
+    text-transform: capitalize;
+    font-size: 13px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+
+.card-header.gold-checkout-review h4,
+.gold-checkout-area .card-header h4{
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.gold-checkout-review-list{
+    margin-bottom: 15px;
+    padding: 0;
+}
+
+.checkout-review-cart-total .cart-total-title{
+    font-weight: 700;
+    color: #525252;
+}
+
+.checkout-review-cart-total .cart-total-price {
+    font-size: 16px;
+}
+
+.checkout-review-cart-total .cart-grand-total-price{
+    font-size: 20px;
+    color: #F3A11A;
+    font-weight: 700;
+}
+.checkout-review-cart-total ul:not(:last-child){
+    margin-bottom: 15px;
+}
+.checkout-review-cart-total{
+    margin-bottom: 30px;
+}
+
+.checkout-promo-code {
+    margin-top: 30px;
+}
+
+/*noinspection CssInvalidPropertyValue*/
+.checkout-promo-code label{
+    font-size: 13px;
+    color: #F3A11A;
+    font-weight: 600px;
+}
+.checkout-promo-code .form-control{
+    box-shadow: none;
+}
+
+.checkout-promo-code .form-control:focus{
+    border-color: #cfcfcf !important;
+}
+
+/* -------------------------------------------------------------
+::::::: (14). End Checkout :::::::
+-------------------------------------------------------------*/
+
+
+
+/* -------------------------------------------------------------
+::::::: (15). Start About page :::::::
+-------------------------------------------------------------*/
+
+.gold-about-section{
+    background: url(../images/about-banner-bg.jpg) no-repeat center center / cover;
+    padding: 101px 0;
+    position: relative;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    overflow: hidden;
+}
+.about-banner-img{
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+}
+
+.gold-about-section h2{
+    font-size: 60px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    margin-bottom: 60px;
+}
+
+.gold-about-section h2 .subtitle{
+    display: block;
+    font-size: 14px;
+    background: linear-gradient(to right, #ae7b25 0%, #d3c089 100%);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    margin-top: 10px;
+}
+.text-gray{
+    margin-top: 30px;
+    color: #939393;
+}
+
+.gold-about-one{
+    position: relative;
+    overflow: hidden;
+    padding: 100px 0;
+}
+.gold-about-one-img{
+    position: absolute;
+    left: -17px;
+    top: 0;
+    height: 100%;
+}
+.gold-about-one-img img{
+    height: 100%;
+    width: 100%;
+}
+
+.gold-about-one h3{
+    font-size: 42px;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    color: #fff;
+    margin-bottom: 60px;
+}
+
+.gold-about-one p{
+    color: #939393;
+}
+
+.gold-about-one p:not(:last-child){
+    margin-bottom: 30px;
+}
+
+.gold-about-two{
+    color: #fff;
+    padding: 100px 0;
+}
+.gold-about-two h3{
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 50px;
+    padding-bottom: 50px;
+    position: relative;
+}
+.gold-about-two h3 span{
+    color: #d0ad59;
+    display: block;
+}
+.gold-about-two h3::before{
+    position: absolute;
+    content: '';
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(to right, #e4cf91 0%, #ab7721 100%);
+    top: 100%;
+    left: 0;
+}
+.gold-about-two p{
+    color: #939393;
+    font-family: 'Montserrat', sans-serif;
+}
+.gold-about-two p:not(:last-child){
+    margin-bottom: 30px;
+}
+
+.gold-about-banner-two{
+    background: url(../images/about-banner-bg-two.jpg) no-repeat center center / cover;
+    padding: 100px 0;
+}
+
+.gold-about-banner-two h2{
+    font-size: 42px;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    color: #fff;
+}
+.gold-about-banner-two .subtitle{
+    color: #d0ad59;
+    font-size: 14px;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    font-family: 'Montserrat', sans-serif;
+    display: block;
+}
+.gold-about-banner-two p{
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+}
+.gold-about-banner-two p:not(:last-child){
+    margin-bottom: 30px;
+}
+
+/* -------------------------------------------------------------
+::::::: (15). End About page :::::::
+-------------------------------------------------------------*/
+
+
+
+/* -------------------------------------------------------------
+::::::: (16). Start Contact page :::::::
+-------------------------------------------------------------*/
+.gold-contact{
+    background: url(../images/contact-bg.jpg) no-repeat center center / cover;
+    padding: 100px 0;
+}
+.gold-contact h1{
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 60px;
+}
+.gold-contact h1 span{
+    display: block;
+    background: linear-gradient(to right, #ae7b25 0%, #d3c089 100%);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    margin-top: 10px;
+}
+.gold-contact p{
+    margin: 30px 0;
+    color: #fff;
+    font-size: 16px;
+    font-family: 'Playfair Display', serif;
+}
+
+.gold-contact-address li{
+    color: #d0ad59;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.gold-contact-address li:not(:last-child){
+    margin-bottom: 15px;
+}
+.gold-contact-address li.address,
+.gold-contact-address li.email,
+.gold-contact-address li.phone{
+    position: relative;
+    padding-left: 50px;
+}
+.gold-contact-address li.phone span{
+    display: block;
+}
+.gold-contact-address li.phone span:not(:last-child){
+    margin-bottom: 10px;
+}
+.gold-contact-address li.address::after,
+.gold-contact-address li.email::after,
+.gold-contact-address li.phone::after{
+    position: absolute;
+    height: 30px;
+    left: 0;
+    top: 0;
+}
+.gold-contact-address li.address::after{
+    content: url(../images/icons/gps.png);
+}
+.gold-contact-address li.email::after{
+    content: url(../images/icons/mail.png);
+}
+.gold-contact-address li.phone::after{
+    content: url(../images/icons/phone.png);
+}
+
+.gold-contact-form label{
+    color: #d0ad59;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+}
+.gold-contact-form .form-control{
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+    border-bottom: 1px solid #454545;
+    background: transparent;
+}
+
+.gold-contact-form .form-check{
+    padding-left: 0;
+}
+.gold-contact-form .form-check .form-check-label{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
+.gold-contact-form .country-flag{
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #454545;
+}
+.gold-contact-form .form-control::-webkit-input-placeholder {
+    font-family: 'Montserrat', sans-serif;
+    color: #6f6f6f;
+}
+.gold-contact-form .form-control::-moz-placeholder {
+    font-family: 'Montserrat', sans-serif;
+    color: #6f6f6f;
+}
+.gold-contact-form .form-control:-ms-input-placeholder {
+    font-family: 'Montserrat', sans-serif;
+    color: #6f6f6f;
+}
+.gold-contact-form .form-control:-moz-placeholder {
+    font-family: 'Montserrat', sans-serif;
+    color: #6f6f6f;
+}
+.gold-contact-btn-area{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.gold-contact-btn-area li:not(:last-child){
+    margin-right: 50px;
+}
+.gold-contact-btn-area li a{
+    color: #fff;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
+.gold-message-send-btn {
+    border: 2px solid #d0ad59;
+    padding: 10px 25px;
+    display: block;
+}
+.gold-message-send-btn,
+.gold-message-send-btn:hover{
+    border-radius: 50px;
+}
+.gold-contact-social{
+    margin-top: 40px;
+    padding-left: 50px;
+}
+.gold-contact-social ul{
+    display: flex;
+}
+.gold-contact-social ul li:not(:last-child){
+    margin-right: 30px;
+}
+.gold-contact-social ul li a{
+    color: #939393;
+    font-size: 20px;
+}
+.gold-contact-social ul li:hover a{
+    color: #dfc788;
+}
+
+/* -------------------------------------------------------------
+::::::: (16). End Contact page :::::::
+-------------------------------------------------------------*/
+
+
+/* -------------------------------------------------------------
+::::::: (17). Start Gold Wallet Transfer :::::::
+-------------------------------------------------------------*/
+.gold-wallet-transfer-cart-left .card-header{
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+.gold-single-cart .gold-cart-info ul{
+  margin-bottom: 10px;
+}
+.gold-single-cart .gold-cart-info ul li{
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+}
+.fa-truck{
+  transform: rotate3d(180, 0, 0, 180deg) rotateZ(180deg);
+}
+.gold-wallet-transfer-cart-left .gold-cart-option ul li:not(:last-child) {
+    margin-right: 15px;
+    border-right: 1px solid #ededed;
+    padding-right: 15px;
+}
+.wallet-transfer-price{
+  border-right: none !important;
+  margin-right: 15px;
+}
+.wallet-transfer-price h3{
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+}
+.wallet-transfer-price h3 span{
+  font-size: 12px;
+  color: #939393;
+}
+.gold-wallet-transfer-cart-left .gold-cart-option ul{
+  flex-wrap: wrap;
+}
+
+.gold-shipping-processing img{
+    width: 17px;
+    height: 15px;
+}
+/* -------------------------------------------------------------
+::::::: (17). End Gold Wallet Transfer :::::::
+-------------------------------------------------------------*/
+
+
+/* -------------------------------------------------------------
+::::::: (0). Start Footer style :::::::
+-------------------------------------------------------------*/
+
+.gold-footer {
+    background: #000;
+    border-top: 1px solid #454545;
+}
+
+.gold-footer,
+.gold-footer a {
+    color: #fff;
+}
+
+.gold-footer-menu a,
+.gold-footer-social a {
+    padding: 38px 0;
+    display: block;
+}
+
+.gold-footer-social a {
+    color: #939393;
+    font-size: 20px;
+}
+
+.gold-footer-social li:not(:last-child) {
+    margin-right: 28px;
+}
+
+.gold-footer-social li:hover a {
+    color: #be933e;
+}
+
+.gold-footer-address li {
+    position: relative;
+    padding-left: 40px;
+    margin-top: 15px;
+}
+
+.gold-footer-address li.gold-footer-address-icon-gps::after,
+.gold-footer-address li.gold-footer-address-icon-phone::after,
+.gold-footer-address li.gold-footer-address-icon-mail::after {
+    position: absolute;
+    content: '';
+    height: 30px;
+    width: 30px;
+    left: 0;
+    top: 5px;
+}
+
+
+.gold-footer-address li.gold-footer-address-icon-gps::after {
+    background: url(../images/icons/gps.png) no-repeat;
+}
+
+.gold-footer-address li.gold-footer-address-icon-phone::after {
+    background: url(../images/icons/phone.png) no-repeat;
+}
+
+.gold-footer-address li.gold-footer-address-icon-mail::after {
+    background: url(../images/icons/mail.png) no-repeat;
+}
+
+.gold-footer-logo {
+    margin-bottom: 15px;
+}
+
+.gold-top-footer,
+.gold-widgets {
+    border-bottom: 1px solid #454545;
+}
+
+.gold-widgets {
+    padding: 50px 0;
+}
+
+.gold-widget-title {
+    color: #d0ad59;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.gold-widget-list li:not(:last-child) {
+    margin-bottom: 20px;
+}
+
+.gold-widget-list li {
+    font-size: 13px;
+    position: relative;
+    padding-left: 20px;
+}
+
+.gold-widget-list li::after {
+    position: absolute;
+    content: '';
+    background: #c7a04c;
+    height: 4px;
+    width: 4px;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.gold-btm-footer {
+    padding: 30px 0;
+}
+
+/* -------------------------------------------------------------
+::::::: (0). End Footer style :::::::
+-------------------------------------------------------------*/
+
+.gold-chackout-card .card-header.hide-arrow-but .btn::after{
+    display: none;
+}

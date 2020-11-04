@@ -1,0 +1,427 @@
+{{template "userHeader" . }}
+
+    {{$selectedCustomProduct := 0}}
+    {{if .CustomProducts}}
+        {{$selectedCustomProduct = (index .CustomProducts 0)}}
+    {{end}}
+<!-- =============================================
+            (02) Start Banner  section 
+============================================== -->
+
+<div class="gold-banner">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7 order-lg-0 order-1">
+                {{(index .HomeContents 0).TextContent}}
+                <!-- price range -->
+                <div class="gold-banner-price-range">
+                    <form>
+                        <ul class="d-flex justify-content-lg-start justify-content-center">
+                            {{range .CustomProducts}}
+                                {{if eq .Type 2}}
+                                    <li>
+                                        <input type="radio" id="product-{{.ID}}" name="karat" value="{{.ID}}"
+                                        {{if eq .ID $selectedCustomProduct.ID}} checked {{end}}>
+                                        <label for="product-{{.ID}}">{{.Karat.Amount}}K</label>
+                                    </li>
+                                {{end}}
+                            {{end}}
+                        </ul>
+                    </form>
+                </div>
+
+                {{if .CustomProducts}}
+                    <!-- cart option -->
+                    <form action="/add-cart" method="post">
+                        <div class="banner-gold-cart-area d-sm-flex d-block justify-content-between">
+                            <!-- cart option -->
+                            <div class="cart-option d-flex align-items-center">
+                                <input type="hidden" name="id" value="{{$selectedCustomProduct.ID}}">
+                                <div class="quantity-input">
+                                    <button class="quantity-btn sub" type="button" id="sub">-</button>
+                                    <input class="quantity" type="text" id="grm-amount" value="{{$selectedCustomProduct.GrmAmount}}"
+                                           min="{{$selectedCustomProduct.Min}}" max="{{$selectedCustomProduct.Max}}" name="amount" required>
+                                    <button class="quantity-btn add" type="button" id="add">+</button>
+                                </div>
+                                <span style="margin-left: -30px;margin-right: 40px;font-family: 'Montserrat', sans-serif;padding-left: 10px;font-size: 20px;font-weight: 600;">g</span>
+                                <!-- price -->
+                                <div class="gold-price" id="custom-price">
+                                    {{if $selectedCustomProduct.Discount}}
+                                        <h4>€ {{$selectedCustomProduct.DiscountPrice}}
+                                            {{/*<sup>67</sup>*/}} <span>
+                                                <del>€ {{$selectedCustomProduct.Price}}</del>
+                                            </span>
+                                        </h4>
+                                    {{else}}
+                                        <h4>€ {{$selectedCustomProduct.DiscountPrice}} </h4>
+                                    {{end}}
+                                </div>
+                            </div>
+                            <!-- cart button -->
+                            <button type="submit" class="btn gold-cart-button">
+                                Add to Cart
+                                <img src="/assets/Public/User/images/icons/cart.png" class="img-fluid" alt="">
+                            </button>
+                        </div>
+                        <div class="row" id="min-max-custom" style="margin-left: 37px">
+                            <div class="col-md-2 min-grm"><p><b>Min:</b> {{$selectedCustomProduct.Min}}</p></div>
+                            {{/*<div class="col-md-4 max-grm"><p><b>Max:</b> <script>document.write(({{$selectedCustomProduct.Max}}).toString());</script></p></div>*/}}
+                        </div>
+                    </form>
+                {{end}}
+
+            </div>
+            <div class="col-lg-4 offset-lg-1 order-lg-0 order-0">
+                <div class="banner-gold-img">
+                    <img src="/assets{{(index .HomeContents 0).Image}}" class="img-fluid" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =============================================
+            (02) End Banner  section 
+============================================== -->
+
+
+<!-- =============================================
+            (03) Start Product section 
+============================================== -->
+
+
+<div class="gold-product">
+    <div class="container">
+        <span class="gold-today">Gold today</span>
+
+        {{/*<div class="gold-analytic-area">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="gold-analytic">
+                        <p class="title">Lorem ipsum</p>
+                        <h5 class="value">1456. <sup>98</sup></h5>
+                        <span class="icon">
+                                <img src="/assets/Public/User/images/icons/up.png" class="img-fluid" alt="">
+                            </span>
+                    </div>
+                    <p class="gold-analytic-subtitle">Consecteur elit sed do eiusmod</p>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="gold-analytic">
+                        <p class="title">Lorem ipsum</p>
+                        <h5 class="value">1456. <sup>98</sup></h5>
+                        <span class="icon">
+                                <img src="/assets/Public/User/images/icons/down.png" class="img-fluid" alt="">
+                            </span>
+                    </div>
+                    <p class="gold-analytic-subtitle">Consecteur elit sed do eiusmod</p>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-md-4">
+                    <div class="gold-analytic">
+                        <p class="title">Lorem ipsum</p>
+                        <h5 class="value">1456. <sup>98</sup></h5>
+                        <span class="icon">
+                                <img src="/assets/Public/User/images/icons/up.png" class="img-fluid" alt="">
+                            </span>
+                    </div>
+                    <p class="gold-analytic-subtitle">Consecteur elit sed do eiusmod</p>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-md-4">
+                    <div class="gold-analytic">
+                        <p class="title">Lorem ipsum</p>
+                        <h5 class="value">1456. <sup>98</sup></h5>
+                        <span class="icon">
+                                <img src="/assets/Public/User/images/icons/up.png" class="img-fluid" alt="">
+                            </span>
+                    </div>
+                    <p class="gold-analytic-subtitle">Consecteur elit sed do eiusmod</p>
+                </div>
+            </div>
+        </div>*/}}
+    </div>
+
+    <div class="gold-product-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h5 class="gold-product-title"><span>Fixed</span> Products</h5>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 clearfix">
+
+                    {{range .FixedProducts}}
+                        <div class="single-gold">
+                        <div class="product-top">
+                            {{if .Discount}}
+                                <span class="dis-tag">- {{.Discount}} %</span>
+                            {{end}}
+                            <span class="favorite">
+                                {{if .IsInWishlist}}
+                                    <a href="/remove-from-wishlist/0/{{.ID}}">
+                                        <img src="/assets/Public/User/images/icons/heart-fill.png" class="img-fluid" alt="">
+                                    </a>
+                                {{else}}
+                                    <a href="/add-wish/{{.ID}}">
+                                        <img src="/assets/Public/User/images/icons/heart-line.png" class="img-fluid" alt="">
+                                    </a>
+                                {{end}}
+                            </span>
+                        </div>
+                        <div class="product-img">
+                            <a href="/product-details/{{.ID}}"><img src="/assets{{.ImgUrl.String}}" class="img-fluid" alt=""></a>
+                        </div>
+                        <div class="product-bottom">
+                            <ul class="top d-flex justify-content-between">
+                                <li class="gr">{{.GrmAmount}} g</li>
+                                <li class="k"><script>document.write(({{.Karat.Amount}}).toString());</script>K</li>
+                            </ul>
+                            <ul class="bottom d-flex justify-content-between">
+                                {{if .Discount}}
+                                    <li class="price">€ <script>document.write(({{.DiscountPrice}}).toString());</script> <br><span><del>€ <script>document.write(({{.Price}}).toString());</script></del></span></li>
+                                {{else}}
+                                    <li class="price">€ <script>document.write(({{.Price}}).toString());</script></li>
+                                {{end}}
+                                <li>
+                                    <a href="/add-cart/{{.ID}}/1/home" class="add-cart-btn"><img src="/assets/Public/User/images/icons/cart.png" alt=""> Add to Cart</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    {{end}}
+
+                </div>
+            </div>
+            {{/*<div class="row">
+                <div class="col-12">
+                    <div class="more-gold">
+                        <a href="javascript" class="view-all-product"><span>ALL PRODUCTS</span></a>
+                    </div>
+                </div>
+            </div>*/}}
+        </div>
+    </div>
+</div>
+
+
+<!-- =============================================
+            (03) End Product section 
+============================================== -->
+
+
+<!-- =============================================
+            (04) Start about gold  section 
+============================================== -->
+
+
+<div class="gold-about">
+    <div class="gold-about-bg" style="background: url('/assets{{(index .HomeContents 1).Image}}') no-repeat center center / cover;position: absolute;top: 0;left: 0;width: 50%;height: 100%;"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-5 offset-xl-7 col-lg-5 offset-lg-6">
+                <div class="gold-info">
+                    {{(index .HomeContents 1).TextContent}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- =============================================
+            (04) End about gold  section 
+============================================== -->
+
+
+<!-- =============================================
+            (05) Start add  section 
+============================================== -->
+
+<div class="gold-add" style="background: url('/assets{{(index .HomeContents 2).Image}}')">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-5 col-lg-6">
+                {{(index .HomeContents 2).TextContent}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =============================================
+            (05) End add  section 
+============================================== -->
+
+
+<!-- =============================================
+            (06) Start newsletter  section 
+============================================== -->
+
+<div class="gold-newletter">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <p class="sub-title">JOIN OUR</p>
+                <h3>newsletter</h3>
+                <div class="subscribe-form">
+                    <form action="/subs-newsletter" method="post">
+                        <div class="form-group">
+                            <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+                        </div>
+                        <button class="btn btn-default newsletter-btn" type="submit">
+                            <img src="/assets/Public/User/images/icons/newsletter.png" alt="">
+                            {{.Lang.ConvertString "Subscribe"}}
+                        </button>
+                    </form>
+                </div>
+                <p class="tagline">Will be used in accordance with our Privacy Policy</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =============================================
+            (06) End newsletter  section 
+============================================== -->
+
+
+<!-- =============================================
+            (06) Start brand  section 
+============================================== -->
+
+<div class="gold-brand">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 text-center">
+                <p class="gold-brand-title">BRANDS</p>
+            </div>
+        </div>
+
+        <div class="brand-area">
+            <div class="row align-items-center">
+                <div class="col-lg-2 col-md-4 col-sm-2 col-12 text-center">
+                    <img src="/assets/Public/User/images/client/client-1.png" class="img-fluid" alt="">
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-2 col-12 text-center">
+                    <img src="/assets/Public/User/images/client/client-2.png" class="img-fluid" alt="">
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-2 col-12 text-center">
+                    <img src="/assets/Public/User/images/client/client-3.png" class="img-fluid" alt="">
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-2 col-12 text-center">
+                    <img src="/assets/Public/User/images/client/client-4.png" class="img-fluid" alt="">
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-2 col-12 text-center">
+                    <img src="/assets/Public/User/images/client/client-5.png" class="img-fluid" alt="">
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-2 col-12 text-center">
+                    <img src="/assets/Public/User/images/client/client-6.png" class="img-fluid" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =============================================
+            (06) End brand  section 
+============================================== -->
+
+{{template "userFooterWithoutScripts" . }}
+
+
+{{template "userFooterWithScripts" . }}
+    
+    {{/*write scripts here*/}}
+
+    <script>
+        let product = {{$selectedCustomProduct}};
+    </script>
+
+    <script>
+        $(document).on('change','[name="karat"]', function () {
+
+            let id = $('[name="karat"]:checked').val();
+            $.ajax({
+                url: '/get-custom-product-ajax',
+                method: 'post',
+                data: {
+                    'id': id,
+                },
+            }).done(function (data) {
+                console.log("done");
+                if (data == null || data == undefined || data === "") {
+                    alert({{.Lang.ConvertString "Some Error Occurred, Please Reload and Try Again."}});
+                }
+                if (data.success === true) {
+                    product = data.product;
+
+                    $('[name="id"]').val(id);
+
+                    let amountElement = $('[name="amount"]');
+                    amountElement.val(product.GrmAmount);
+                    amountElement.attr("min", product.Min);
+                    amountElement.attr("max", product.Max);
+
+                    let discount = data.product.Discount;
+                    let discountPrice = (data.product.DiscountPrice).toString();
+                    let price = (data.product.Price).toString();
+
+                    if(discount > 0) {
+                        $("#custom-price").html(`<h4>€ `+discountPrice+`
+                                         <span>
+                                            <del>€ `+price+`</del>
+                                        </span>
+                                    </h4>`);
+                    } else {
+                        $("#custom-price").html(`<h4>€ `+discountPrice+` </h4>`);
+                    }
+
+                    $(".min-grm").html(`<p><b>Min:</b> `+product.Min+`</p>`);
+                    $(".max-grm").html(`<p><b>Max:</b> `+(product.Max).toString()+`</p>`);
+
+                } else {
+                    alert(data.message);
+                }
+            }).fail(function (error) {
+                console.log("fail");
+                console.log(error);
+                alert(`{{.Lang.ConvertString "Some Error Occurred, Please Reload and Try Again."}}`);
+            });
+        });
+    </script>
+
+    <script>
+        $(document).on("click input", "#add, #sub, #grm-amount", function () {
+           let amount = $('[name="amount"]').val();
+           let grmAmount = parseFloat(amount);
+           if (isNaN(grmAmount)) {
+               grmAmount = 0;
+           }
+           if (grmAmount.countDecimals() > 1) {
+                grmAmount = grmAmount.toFixed(1);
+                $('[name="amount"]').val(grmAmount);
+           }
+
+           let unitPrice = product.Price / product.GrmAmount;
+           let unitDiscountPrice = product.DiscountPrice / product.GrmAmount;
+           let price = (Math.round(grmAmount * unitPrice * 100) / 100).toString();
+           let discountPrice = (Math.round(grmAmount * unitDiscountPrice * 100) / 100).toString();
+
+            if(product.Discount > 0) {
+                $("#custom-price").html(`<h4>€ `+discountPrice+`
+                                         <span>
+                                            <del>€ `+price+`</del>
+                                        </span>
+                                    </h4>`);
+            } else {
+                $("#custom-price").html(`<h4>€ `+discountPrice+` </h4>`);
+            }
+        });
+
+        /*$(document).on("input", "#grm-amount", function () {
+
+        });*/
+    </script>
+    
+    
+{{template "userFooterFinal" . }}

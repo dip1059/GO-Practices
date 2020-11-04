@@ -1,0 +1,319 @@
+{{template "userHeader" . }}
+
+<div class="gold-cart-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="gold-cart-left">
+                    {{/*<div class="gold-single-cart">
+                        <div class="row align-items-center">
+                            <div class="col-md-3">
+                                <div class="gold-cart-img">
+                                    <img src="/assets/Public/User/images/Gold_Bar.png" class="img-fluid" alt="">
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="gold-cart-info">
+                                    <div class="gold-cart-review">
+                                        <ul class="d-flex">
+                                            <li><i class="fa fa-star"></i></li>
+                                            <li><i class="fa fa-star"></i></li>
+                                            <li><i class="fa fa-star"></i></li>
+                                            <li><i class="fa fa-star-half-o"></i></li>
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            <li class="gold-review-count">(234 Reviews)</li>
+                                        </ul>
+                                    </div>
+                                    <h4 class="gold-cart-title">Lorem Ipsum Dolor Sit Amet</h4>
+                                    <div class="gold-cart-price">
+                                        <p><span>€ 13459.45</span><del>€ 13459.45</del></p>
+                                    </div>
+                                    <div class="gold-cart-option">
+                                        <ul class="d-flex align-items-center">
+                                            <li class="gold-cart-dropdown">
+                                                <div class="dropdown">
+                                                    <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <span>Qty:</span> 1
+                                                    </a>
+
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                        <a class="dropdown-item" href="javascript:;">2</a>
+                                                        <a class="dropdown-item" href="javascript:;">3</a>
+                                                        <a class="dropdown-item" href="javascript:;">4</a>
+                                                        <a class="dropdown-item" href="javascript:;">5</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li><a href="javascript:;">Delete</a></li>
+                                            <li><a href="javascript:;">Save for later</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*/}}
+                    {{if .Carts}}
+                        {{range .FinalCart.Carts}}
+                            <div class="gold-single-cart">
+                                <div class="row align-items-center">
+                                    <div class="col-md-3">
+                                        <div class="gold-cart-img">
+                                            <img src="/assets{{.Product.ImgUrl.String}}" class="img-fluid" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="gold-cart-info">
+                                            {{/*<div class="gold-cart-review">
+                                                <ul class="d-flex">
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star-half-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li class="gold-review-count">(234 Reviews)</li>
+                                                </ul>
+                                            </div>*/}}
+                                            <h4 class="gold-cart-title">
+                                                {{if eq .Product.Type 1}}
+                                                    <a style="color:#000000;" href="/product-details/{{.Product.ID}}">{{.Product.Title}}</a>
+                                                {{else}}
+                                                    <a style="color:#000000;" href="javascript:;">{{.Product.Title}}</a>
+                                                {{end}}
+                                            </h4>
+                                            <div class="gold-cart-price">
+                                                {{if .Product.Discount}}
+                                                    <p>
+                                                        <span>€ <script>document.write(({{.TotalWithDiscount}}).toString());</script></span>
+                                                        <del>€ <script>document.write(({{.Total}}).toString());</script></del>
+                                                    </p>
+                                                {{else}}
+                                                    <p><span>€ <script>document.write(({{.Total}}).toString());</script></span></p>
+                                                {{end}}
+                                            </div>
+                                            <div class="gold-cart-option">
+                                                <ul class="d-flex align-items-center">
+                                                    <span>Qty:</span>
+                                                    <div class="quantity-input">
+                                                        <button class="quantity-btn sub" data-pro-id="{{.Product.ID}}" type="button" id="sub">-</button>
+                                                        <input id="proQty-{{.Product.ID}}" class="quantity" type="text" value="{{.Quantity}}"
+                                                               min="{{.Product.Min}}" max="{{.Product.Max}}" name="amount" required>
+                                                        <button class="quantity-btn add" data-pro-id="{{.Product.ID}}" type="button" id="add">+</button>
+                                                        <input type="hidden" id="type-{{.Product.ID}}" value="{{.Product.Type}}">
+                                                    </div>
+
+                                                    {{if eq .Product.Type 2}}
+                                                        <span style="margin-left: -25px;margin-right: 40px;">g</span>
+                                                    {{end}}
+
+                                                    <li><a href="javascript:;" onclick="updateCart({{.Product.ID}})">Update</a></li>
+
+                                                    <li><a href="/delete-from-cart/{{.Key}}">Delete</a></li>
+
+                                                    {{if eq .Product.Type 1}}
+                                                        {{if .Product.IsInWishlist}}
+                                                            <li>Saved</li>
+                                                        {{else}}
+                                                            <li><a style="margin-left: -20px;" href="/add-wish/{{.Product.ID}}">Save for later</a></li>
+                                                        {{end}}
+                                                    {{end}}
+
+                                                </ul>
+                                                {{if eq .Product.Type 2}}
+                                                    <div class="row" id="min-max-custom" style="margin-left: 65px">
+                                                        <div class="col-md-2 min-grm"><p><b>Min:</b> {{.Product.Min}}</p></div>
+                                                        {{/*<div class="col-md-4 max-grm"><p><b>Max:</b> <script>document.write(({{.Product.Max}}).toString());</script></p></div>*/}}
+                                                    </div>
+                                                {{end}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {{end}}
+                    {{else}}
+                        <h6>&nbsp&nbsp&nbsp&nbsp{{.Lang.ConvertString "Your cart is empty."}}</h6>
+                    {{end}}
+
+                </div>
+                {{if .Carts}}
+                    <div class="cart-total">
+                        <div class="row">
+                            <div class="col-lg-6 offset-lg-6">
+                                <ul class="d-flex justify-content-md-end justify-content-center align-items-center">
+                                    <li class="cart-total-title">Subtotal</li>
+                                    <li class="cart-total-price">€ <script>document.write(({{.FinalCart.SubTotal}}).toString());</script></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {{end}}
+
+                <h5 class="save-product-title">
+                    Saved products <span>({{.LenWish}})</span>
+                </h5>
+                <div class="save-product">
+                    {{if .Wishlist}}
+                    {{range .Wishlist}}
+                        <div class="gold-single-cart">
+                            <div class="row align-items-center">
+                                <div class="col-md-3">
+                                    <div class="gold-cart-img">
+                                        <img src="/assets{{.Product.ImgUrl.String}}" class="img-fluid" alt="">
+                                    </div>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="gold-cart-info">
+                                        {{/*<div class="gold-cart-review">
+                                                <ul class="d-flex">
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star-half-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li class="gold-review-count">(234 Reviews)</li>
+                                                </ul>
+                                            </div>*/}}
+                                        <a style="color:#000000;" href="/product-details/{{.Product.ID}}"><h4 class="gold-cart-title">{{.Product.Title}}</h4></a>
+                                        <div class="gold-cart-price">
+                                            {{if .Product.Discount}}
+                                                <p><span>€ {{.Product.DiscountPrice}}</span><del>€ {{.Product.Price}}</del></p>
+                                            {{else}}
+                                                <p><span>€ {{.Product.Price}}</span></p>
+                                            {{end}}
+                                        </div>
+                                        <div class="gold-cart-option">
+                                            <ul class="d-flex align-items-center">
+                                                <li><a href="/remove-from-wishlist/{{.ID}}/0">Delete</a></li>
+                                                <li><a href="/add-cart/{{.Product.ID}}/1/cart">Add to cart</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {{end}}
+
+                    {{else}}
+                        <h6>&nbsp&nbsp&nbsp&nbsp{{.Lang.ConvertString "No saved product."}}</h6>
+                    {{end}}
+                </div>
+            </div>
+            {{if .Carts}}
+                <div class="col-lg-4">
+                    <div class="gold-cart-right">
+                        <h4 class="gold-total-cart-title">Cart ({{.Carts}})</h4>
+                        <ul class="gold-cart-price-count-total">
+                            <li class="d-flex justify-content-between">
+                                <span class="gold-cart-price-title">Subtotal</span>
+                                <span class="gold-cart-price-amount">€ <script>document.write(({{.FinalCart.SubTotal}}).toString());</script></span>
+                            </li>
+                            <li class="d-flex justify-content-between">
+                                <span class="gold-cart-price-title">Total Fees</span>
+                                <span class="gold-cart-price-amount">€ <script>document.write(({{.FinalCart.TotalFees}}).toString());</script></span>
+                            </li>
+                            {{/*<li class="d-flex justify-content-between">
+                                <span class="gold-cart-price-title">Total Discount</span>
+                                <span class="gold-cart-price-amount">€ <script>document.write(({{.FinalCart.TotalDiscount}}).toString());</script></span>
+                            </li>*/}}
+                            {{/*<li class="d-flex justify-content-between">
+                                <span class="gold-cart-price-title">shipping</span>
+                                <span class="gold-cart-price-amount">€ 3456098.00</span>
+                            </li>*/}}
+                        </ul>
+                        <p class="gold-cart-total-price d-flex justify-content-between">
+                            <span class="gold-cart-total-price-title">Grand Total</span>
+                            <span class="gold-cart-total-price-amount">€ <script>document.write(({{.FinalCart.GrandTotal}}).toString());</script></span>
+                        </p>
+                        <div class="gold-cart-payment-btn-area">
+                            <a href="/checkout" class="btn gold-payment-cart-btn">Continue with payment</a>
+                        </div>
+                    </div>
+                </div>
+            {{end}}
+        </div>
+    </div>
+</div>
+
+{{template "userFooterWithoutScripts" . }}
+
+
+{{template "userFooterWithScripts" . }}
+
+{{/*write scripts here*/}}
+
+
+<script>
+
+    $(document).on("click input", "#add, #sub, [name='amount']", function () {
+        let elem = this;
+        let amountElem;
+        let amount;
+        if (elem.id === "sub") {
+            amount = $(this).next().val();
+            amountElem = $(this).next();
+        } else if (elem.id === "add") {
+            amount = $(this).prev().val();
+            amountElem = $(this).prev();
+        } else if (elem.name === "amount") {
+            amount = $(this).val();
+        }
+        let grmAmount = parseFloat(amount);
+        if (grmAmount.countDecimals() > 1) {
+            grmAmount = grmAmount.toFixed(1);
+            $(amountElem).val(grmAmount);
+        }
+    });
+
+
+    function updateCart(proId) {
+
+        let type = $('#type-'+proId).val();
+        let qty = $('#proQty-'+proId).val();
+        let url = '/add-cart/'+proId+'/'+qty+'/cart?process=update&ajax=true';
+        let method = 'get';
+        let data = {};
+
+        if (type == 2) {
+            method = 'post';
+            url = '/add-cart?process=update&ajax=true';
+            data = {
+                'id': proId,
+                'amount': qty,
+                'data': "cart"
+            };
+        }
+
+        $.ajax({
+            url: url,
+            method: method,
+            data: data
+
+        }).done(function (data) {
+            window.location.reload();
+        }).fail(function (error) {
+            window.location.reload();
+        });
+    }
+
+</script>
+
+<script>
+    $(document).on("click", ".quantity-btn", function (event) {
+        let proId = $(this).data("pro-id");
+        let qty = parseInt($('#proQty-'+proId).val());
+        let min = parseInt($('#proQty-'+proId).attr("min"));
+        let max = parseInt($('#proQty-'+proId).attr("max"));
+        let type = $('#type-'+proId).val();
+
+        if (type == 2) {
+            if (qty < min) {
+                $('#proQty-' + proId).val(min);
+            } else if (qty > max) {
+                $('#proQty-' + proId).val(max);
+            }
+        }
+    });
+</script>
+
+
+{{template "userFooterFinal" . }}

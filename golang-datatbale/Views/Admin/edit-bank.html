@@ -1,0 +1,24 @@
+{{template "adminHeader" .}}
+
+
+<h2> Edit Admin Setting </h2>
+<form action="/update-bank" method="post">
+    <div class="row">
+        <input type="hidden" name="id" value="{{.Bank.ID}}">
+        <div class="col-md-6 form-group mb-3">
+            <label for="firstName1">Bank Name</label><input type="text" class="form-control"
+            id="firstName1" placeholder="Enter Bank Name" name="name" value="{{.Bank.Name}}">
+        </div>
+        <div class="col-md-6 form-group mb-3">
+            <label for="exampleInputEmail1">Bank Details</label>
+            <textarea class="form-control" aria-label="With textarea"
+                      name="details" rows="10">{{.Bank.Details}}</textarea>
+            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+        </div>
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+    </div>
+</form>
+
+{{template "adminFooter" .}}

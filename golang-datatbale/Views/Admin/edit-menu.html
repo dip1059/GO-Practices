@@ -1,0 +1,59 @@
+{{template "adminHeader" .}}
+
+<h2> Edit Page</h2>
+<form action="/update-menu" method="post">
+
+    <input type="hidden" name="id" value="{{.Menu.ID}}">
+    <div class="col-md-6 form-group mb-3">
+        <label for="firstName1">Menu Title</label>
+        <input type="text" class="form-control" id="firstName1"
+               placeholder="Enter Menu Title" value="{{.Menu.Title}}" name="title" required>
+    </div>
+
+    {{if gt .Menu.ID 7}}
+    <div class="col-md-6 form-group mb-3">
+        <label for="picker1">Select Position</label>
+        <select class="form-control" name="parent_id" required>
+            <option {{if eq .Menu.ParentID 1}} selected {{end}} value="1">Footer Left</option>
+            <option {{if eq .Menu.ParentID 2}} selected {{end}} value="2">Footer Middle</option>
+            <option {{if eq .Menu.ParentID 3}} selected {{end}} value="3">Footer Right</option>
+            <option {{if eq .Menu.ParentID 4}} selected {{end}} value="4">Top Right</option>
+        </select>
+    </div>
+
+    {{if eq .Menu.Type 2}}
+    <div class="col-md-6 form-group mb-3">
+        <label for="picker1">Select Page</label>
+        <select class="form-control" name="page_url">
+            {{$url := .Menu.PageUrl}}
+            <option value="">--</option>
+            {{range .Pages}}
+                <option {{if eq $url .Url}} selected {{end}} value="{{.Url}}">{{.Title}}</option>
+            {{end}}
+        </select>
+    </div>
+    {{else if eq .Menu.Type 1}}
+        <div class="col-md-6 form-group mb-3">
+            <label for="firstName1">Url</label>
+            <input type="text" class="form-control" id="firstName1"
+                   placeholder="Enter URL" name="page_url" value="{{.Menu.PageUrl}}" required>
+        </div>
+    {{end}}
+
+    {{end}}
+
+    {{if and (gt .Menu.ID 3) (lt .Menu.ID 8)}}
+    <div class="col-md-6 form-group mb-3">
+        <label for="firstName1">Add {{.Menu.Title}} Url</label>
+        <input type="text" class="form-control" id="firstName1"
+         placeholder="Enter URL" name="page_url" value="{{.Menu.PageUrl}}" required>
+    </div>
+    {{end}}
+
+    <div class="col-md-12">
+        <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+
+</form>
+
+{{template "adminFooter" .}}

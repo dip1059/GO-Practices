@@ -1,0 +1,134 @@
+{{template "adminHeader" .}}
+
+
+<h2> Edit Product </h2>
+<form action="/update-product" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <input type="hidden" name="id" value="{{.Product.ID}}">
+        <div class="col-md-6 form-group mb-3">
+            <label for="firstName1">Product Title</label>
+            <input type="text" class="form-control" id="firstName1" placeholder="Enter Product Title" value="{{.Product.Title}}" name="title" required>
+        </div>
+
+        {{/*<div class="col-md-6 form-group mb-3">
+            <label for="firstName1">Second Title</label>
+            <input type="text" class="form-control" id="firstName1" placeholder="Enter a Second Title" value="{{.Product.SecondTitle}}"
+                   name="second_title">
+        </div>*/}}
+
+        <div class="col-md-6 form-group mb-3">
+            <label for="picker1">Select Type</label>
+            <select class="form-control" name="type" id="type" required>
+                <option {{if eq .Product.Type 1}} selected {{end}} value="1">Fixed Product</option>
+                <option {{if eq .Product.Type 2}} selected {{end}} value="2">Custom Product</option>
+            </select>
+        </div>
+
+        <div class="col-md-6 form-group mb-3">
+            <label for="picker1">Select Karat Amount {{/*<span style="color: red">*</span>*/}}</label>
+            <select class="form-control" name="karat_id" id="karat" required>
+                <option value="">--</option>
+                {{$karatId := .Product.KaratID}}
+                {{range .Karats}}
+                    <option value="{{.ID}}" {{if eq .ID $karatId}} selected {{end}}>{{.Amount}}k</option>
+                {{end}}
+            </select>
+        </div>
+        
+        <div class="col-md-6 form-group mb-3">
+            <label for="lastName1">Amount in gram</label>
+            <input type="text" class="form-control" id="lastName1" placeholder="Enter Gold Amount in gram" name="grm_amount" value="{{.Product.GrmAmount}}"
+                   required>
+        </div>
+
+        {{if ne .Product.Type 1}}
+            <div class="col-md-6 form-group mb-3" id="min">
+                <label for="lastName1">Min Amount in gram (At least 0.1g)</label>
+                <input type="text" class="form-control" id="lastName1" placeholder="Enter Gold Amount in gram" name="min" value="{{.Product.Min}}" required>
+            </div>
+
+            {{/*<div class="col-md-3 form-group mb-3" id="max">
+                <label for="lastName1">Max Amount in gram</label>
+                <input type="text" class="form-control" id="lastName1" placeholder="Enter Gold Amount in gram" name="max" value="{{.Product.Max}}" required>
+            </div>*/}}
+        {{end}}
+
+        {{if eq .Product.Type 1}}
+        <div class="col-md-6 form-group mb-3" id="min" hidden>
+            <label for="lastName1">Min Amount in gram (At least 0.1g)</label>
+            <input type="text" class="form-control" id="lastName1" placeholder="Enter Gold Amount in gram" name="min" value="0" required>
+        </div>
+
+        {{/*<div class="col-md-3 form-group mb-3" id="max" hidden>
+            <label for="lastName1">Max Amount in gram</label>
+            <input type="text" class="form-control" id="lastName1" placeholder="Enter Gold Amount in gram" name="max" value="0" required>
+        </div>*/}}
+        {{end}}
+
+
+        {{/*<div class="col-md-6 form-group mb-3">
+            <label for="picker1">Select Display Position</label>
+            <select class="form-control" name="position" required id="type">
+                {{$ProductPosition := .Product.Position}}
+                {{range .Position}}
+                    <option value="{{.}}" {{if eq . $ProductPosition}} selected {{end}}>Position {{.}}</option>
+                {{end}}
+            </select>
+        </div>*/}}
+
+
+        <div class="col-md-6 form-group mb-3">
+            <label for="exampleInputEmail1">Product Description</label>
+            <textarea class="form-control" aria-label="With textarea" name="description" rows="3">{{.Product.Description.String}}</textarea>
+            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+        </div>
+
+        <div class="col-md-6 form-group mb-3">
+            <label for="phone">Price</label>
+            <input class="form-control" id="phone" placeholder="Enter Price" name="price" value="{{.Product.Price}}" required>
+        </div>
+
+        <div class="col-md-6 form-group mb-3">
+            <label for="phone">Discount(%)</label>
+            <input class="form-control" id="phone" placeholder="Enter Discount" name="discount" value="{{.Product.Discount}}" required>
+        </div>
+
+        <div class="col-md-6 form-group mb-3">
+            <label for="credit1">Upload Image</label>
+            <div id="file-upload" class="section">
+                <!--Default version-->
+                <div class="row section">
+                    <div class="col s6 m5 l9">
+                        <input type="file" id="file" ref="file" {{/*v-on:change="handleFileUpload()"*/}} data-default-file="/assets{{.Product.ImgUrl.String}}"
+                     type="file" name="img" id="input-file-now" class="dropify"/>
+                    </div>
+                </div>
+                <!--Default value-->
+                <div class="divider"></div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $("#type").change(function () {
+            var val = $("#type").val();
+            if (val == 2) {
+                $("#min").removeAttr("hidden");
+                $("#max").removeAttr("hidden");
+                $("#min").show();
+                $("#max").show();
+            } else if (val == 1) {
+                $("#min").hide();
+                $("#max").hide();
+            }
+        });
+    });
+</script>
+
+{{template "adminFooter" .}}
